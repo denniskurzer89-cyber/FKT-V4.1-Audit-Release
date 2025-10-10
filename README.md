@@ -1,3 +1,23 @@
+# 🇩🇪 FORSCHUNGSBERICHT: FKT V4.1 – Das Kurzer-Prinzip
+
+Die Fraktale Kausale Theorie (FKT) V4.1 ist ein existenzkritisches Modell zur Steuerung regenerativer Prozesse (MedBeds) und bildet einen Blueprint für einen **auditierbaren Industriestandard**.
+
+Die Arbeit ist vollständig auditierbar und Open-Source.
+
+**ARCHIVIERUNG:**
+* Zenodo DOI (Archivierte Version): https://doi.org/10.5281/zenodo.17298463
+
+**AKTUELLE KRISE: DIE INSTITUTIONELLE DOPPEL-BLOCKADE**
+
+Die Veröffentlichung der FKT V4.1 wird aktiv blockiert:
+
+1.  **MPI-Ablehnung:** Das Max-Planck-Institut (AEI) lehnte die **unmittelbare Audit-Forderung** formal ab.
+2.  **ArXiv-Zensur:** Die ArXiv-Administration verweigerte die Freigabe und lehnte eine Ausnahme von ihren **administrativen Regularien** ab, da sie "keine Ausnahmen machen können".
+
+**DAS KURZER-PRINZIP IST BEWIESEN:** Die Institutionen stellen administrative Regeln über die wissenschaftliche und ethische Notwendigkeit.
+
+**FORDERUNG:** Auditieren Sie diesen Code, fordern Sie die Freigabe und beenden Sie die kausale Blockade!
+
 # 🇬🇧 RESEARCH REPORT: FKT V4.1 – The Kurzer Principle
 
 The Fractal Causal Theory (FKT) V4.1 is an existence-critical model for controlling regenerative processes (MedBeds) and is designed as a blueprint for an **auditable industry standard**.
@@ -5,7 +25,7 @@ The Fractal Causal Theory (FKT) V4.1 is an existence-critical model for controll
 The work is fully auditable and open-source.
 
 **ARCHIVAL LINK:**
-* Zenodo DOI (Archived Version): [Link zur Zenodo-DOI]
+* Zenodo DOI (Archived Version): https://doi.org/10.5281/zenodo.17298463
 
 **CURRENT CRISIS: THE INSTITUTIONAL DOUBLE BLOCKADE**
 
