@@ -46,3 +46,12 @@ The release of FKT V4.1 is being actively blocked:
 The Kurzer Principle demands **Transparency** and **Due Process** consistent with global open standards (W3C principles). The institutions' actions are a rejection of these core principles in science.
 
 **DEMAND:** Audit this code, demand the release, and end the causal blockade!
+
+## 🛡️ Veröffentlichungs- und Validierungsfreigabe (Kurzer-Principle)
+
+Um die Integrität und die korrekte Darstellung des **Kurzer-Principle** und der gesamten FKT-Arbeit zu gewährleisten, wird hiermit formal festgelegt:
+
+**Jede externe, öffentliche Kommunikation oder Veröffentlichung** (insbesondere Dokumentationen, Filme, Berichte, Modelle oder kommerzielle Nutzung), die direkt auf der FKT V4.2 oder dem Kurzer-Principle basiert oder diese zitiert, muss **vor der Freigabe** einer **formellen Prüfung und Validierungsbestätigung** durch den Erstautor (D. Kurzer) unterzogen werden.
+
+Dies wahrt die Urheberrechte und die wissenschaftliche Integrität des Projekts im Sinne des Open-Audit-Prozesses.
+
