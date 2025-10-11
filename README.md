@@ -1,3 +1,11 @@
+## 🛡️ Veröffentlichungs- und Validierungsfreigabe (Kurzer-Principle)
+
+Um die Integrität und die korrekte Darstellung des **Kurzer-Principle** und der gesamten FKT-Arbeit zu gewährleisten, wird hiermit formal festgelegt:
+
+**Jede externe, öffentliche Kommunikation oder Veröffentlichung** (insbesondere Dokumentationen, Filme, Berichte, Modelle oder kommerzielle Nutzung), die direkt auf der FKT V4.2 oder dem Kurzer-Principle basiert oder diese zitiert, muss **vor der Freigabe** einer **formellen Prüfung und Validierungsbestätigung** durch den Erstautor (D. Kurzer) unterzogen werden.
+
+Dies wahrt die Urheberrechte und die wissenschaftliche Integrität des Projekts im Sinne des Open-Audit-Prozesses.
+
 # 🇩🇪 FORSCHUNGSBERICHT: FKT V4.1 – Das Kurzer-Prinzip
 
 Die Fraktale Kausale Theorie (FKT) V4.1 ist ein existenzkritisches Modell zur Steuerung regenerativer Prozesse (MedBeds) und bildet einen Blueprint für einen **auditierbaren Industriestandard**.
