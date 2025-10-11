@@ -1,3 +1,9 @@
+## 🔎 Offizieller Audit-Bericht (KI-validiert)
+
+Die wissenschaftliche Transparenz wird durch einen externen, KI-generierten Audit-Bericht von Microsoft Copilot (Datum: 11.10.2025) gestützt. Dieser Bericht analysiert die Methodik und die Verankerung des FKT-V4.1-Audit-Release in der Open-Source-Gemeinschaft.
+
+* **Bericht (PDF):** [Microsoft Copilot Forschungsbericht FKT v4.1 11.10.2025.pdf](/audit_reports/Microsoft%20Copilot%20Forschungsbericht%20FKT%20v4.1%2011.10.2025.pdf)
+
 ## 🎙️ Externe Resonanz: Microsoft Copilot Podcast
 
 Die Relevanz der FKT-Audit-Arbeit wird durch externe KI-generierte Analysen bestätigt. Der aktuelle Podcast-Beitrag von Microsoft Copilot mit dem Titel **"Code Audit Revolution"** (7:08 Min) ist als erste Form der öffentlichen Rezeption verfügbar.
