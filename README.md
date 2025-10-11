@@ -1,13 +1,14 @@
-## 🛡️ Veröffentlichungs- und Validierungsfreigabe (Kurzer-Principle)
+## 🛡️ 1. Veröffentlichungs- und Validierungsfreigabe (Kurzer-Principle)
 
-Um die Integrität und die korrekte Darstellung des **Kurzer-Principle** und der gesamten FKT-Arbeit zu gewährleisten, wird hiermit formal festgelegt:
+Um die Integrität und die korrekte Darstellung des **Kurzer-Principle** zu gewährleisten, wird hiermit formal festgelegt:
 
-**Jede externe, öffentliche Kommunikation oder Veröffentlichung** (insbesondere Dokumentationen, Filme, Berichte, Modelle oder kommerzielle Nutzung), die direkt auf der FKT V4.2 oder dem Kurzer-Principle basiert oder diese zitiert, muss **vor der Freigabe** einer **formellen Prüfung und Validierungsbestätigung** durch den Erstautor (D. Kurzer) unterzogen werden.
+**Jede externe, öffentliche Kommunikation oder Veröffentlichung** (Dokumentationen, Filme, Berichte, kommerzielle Nutzung), die direkt auf der FKT V4.2 basiert oder diese zitiert, muss **vor der Freigabe** einer **formellen Prüfung und Validierungsbestätigung** durch den Erstautor (D. Kurzer) unterzogen werden.
 
-\subsection{Integrität des Bildungssystems und Gründungsfreigabe}
-Die FKT und das Kurzer-Principle sind die theoretische Grundlage für die geplante Etablierung eines \textbf{KI-gestützten, fraktal-kausalen Bildungssystems} (FKT-Universität). Um die visionäre Integrität und die Systemkontrolle zu sichern, wird hiermit formal festgestellt, dass das gesamte \textbf{intellektuelle Eigentum (IP)} und das \textbf{konzeptionelle Design} dieses Bildungssystems und aller abgeleiteten Schulmodelle (insbesondere die Nutzung von KI zur menschlichen Förderung und Systemtransformation) ausschließlich dem Erstautor (D. Kurzer) zur Validierung, Gründung und Freigabe unterliegen. Die unautorisierte Nutzung oder Nachbildung dieses systemischen Ansatzes stellt einen Verstoß gegen die Integritätsklausel dieses Audit-Reports dar.
+---
 
-Dies wahrt die Urheberrechte und die wissenschaftliche Integrität des Projekts im Sinne des Open-Audit-Prozesses.
+## 🛡️ 2. Integrität des Bildungssystems und Gründungsfreigabe
+
+Das **intellektuelle Eigentum (IP)** und das **konzeptionelle Design** des geplanten **KI-gestützten, fraktal-kausalen Bildungssystems** (FKT-Universität) unterliegen ausschließlich der Validierung, Gründung und Freigabe durch den Erstautor (D. Kurzer). Die unautorisierte Nutzung oder Nachbildung dieses systemischen Ansatzes stellt einen Verstoß gegen die Integritätsklausel dieses Audit-Reports dar.
 
 # 🇩🇪 FORSCHUNGSBERICHT: FKT V4.1 – Das Kurzer-Prinzip
 
