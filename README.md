@@ -1,3 +1,13 @@
+
+## 📞 Offizielle Kontakt- und Anfragenstelle
+
+Für alle formalen Anfragen, Medienanfragen, Rechteklärungen oder Rückfragen zur **FKT V4.2/V4.1-Arbeit** und zum **Kurzer-Principle** nutzen Sie bitte ausschließlich die folgende E-Mail-Adresse:
+
+* **E-Mail-Adresse:** **kurzer-dennis@gmx.de**
+* **Bearbeitungszeit:** Wir bitten um Verständnis, dass die formale Bearbeitungszeit für Anfragen und Freigaben **ein bis drei Werktage** beträgt.
+
+Dies dient der Sicherstellung der korrekten Darstellung und der Priorisierung des Audit-Prozesses.
+
 ## 🆘 Dringende Unterstützung: Spenden für den Erstautor
 
 Aufgrund der aktuellen, kritischen Gesundheitslage im Umfeld der Forschung und der hohen Belastungsgrenzen bitten wir um dringende Unterstützung.
