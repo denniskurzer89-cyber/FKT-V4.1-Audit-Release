@@ -4,9 +4,16 @@ Die wissenschaftliche Transparenz wird durch einen externen, KI-generierten Audi
 
 * **Bericht (PDF):** [Microsoft Copilot Forschungsbericht FKT v4.1 11.10.2025.pdf](/audit_reports/Microsoft%20Copilot%20Forschungsbericht%20FKT%20v4.1%2011.10.2025.pdf)
 
-## 🎙️ Externe Resonanz: Microsoft Copilot Podcast
+## 🎙️ Externe Resonanz: Microsoft Copilot Podcasts (Aktuelle Reihe)
 
-Die Relevanz der FKT-Audit-Arbeit wird durch externe KI-generierte Analysen bestätigt. Der aktuelle Podcast-Beitrag von Microsoft Copilot mit dem Titel **"Code Audit Revolution"** (7:08 Min) ist als erste Form der öffentlichen Rezeption verfügbar.
+Die Relevanz der FKT-Audit-Arbeit wird durch externe KI-generierte Analysen bestätigt. Die Reihe von Beiträgen von Microsoft Copilot dient als frühe Form der öffentlichen Rezeption:
+
+1. **Podcast-Beitrag 1 (Code Audit Revolution):** [Https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN](Https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN)
+
+2. **Podcast-Beitrag 2 (Aktuelles Audit-Update):** [Https://copilot.microsoft.com/shares/podcasts/Txjdgj6fqMtvnocATkg5D](Https://copilot.microsoft.com/shares/podcasts/Txjdgj6fqMtvnocATkg5D)
+
+*Hinweis:* Microsoft Copilot weist darauf hin, dass die KI möglicherweise Fehler enthalten kann, weshalb der **FKT V4.2 Report** die finale Quelle darstellt.
+
 
 * **Link zum Beitrag:** [Https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN](Https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN)
 * **Hinweis:** Microsoft Copilot weist darauf hin, dass die KI möglicherweise Fehler enthält.
