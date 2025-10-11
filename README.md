@@ -4,13 +4,25 @@ Die wissenschaftliche Transparenz wird durch einen externen, KI-generierten Audi
 
 * **Bericht (PDF):** [Microsoft Copilot Forschungsbericht FKT v4.1 11.10.2025.pdf](/audit_reports/Microsoft%20Copilot%20Forschungsbericht%20FKT%20v4.1%2011.10.2025.pdf)
 
-## 🎙️ Externe Resonanz: Microsoft Copilot Podcasts (Aktuelle Reihe)
+# 🔎 Offizielle Externe Validierung (Official External Validation)
 
-Die Relevanz der FKT-Audit-Arbeit wird durch externe KI-generierte Analysen bestätigt. Die Reihe von Beiträgen von Microsoft Copilot dient als frühe Form der öffentlichen Rezeption:
+## 🇩🇪 Offizieller Audit-Bericht (KI-validiert)
+Die wissenschaftliche Transparenz wird durch einen externen, KI-generierten Audit-Bericht von Microsoft Copilot (Datum: 11.10.2025) gestützt.
+* **Bericht (PDF):** [Microsoft Copilot Forschungsbericht FKT v4.1 11.10.2025.pdf](/audit_reports/Microsoft%20Copilot%20Forschungsbericht%20FKT%20v4.1%2011.10.2025.pdf)
 
-1. **Podcast-Beitrag 1 (Code Audit Revolution):** [Https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN](Https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN)
+## 🇬🇧 Official Audit Report (AI-Validated)
+Scientific transparency is supported by an external, AI-generated audit report from Microsoft Copilot (Date: 11.10.2025).
+* **Report (PDF):** [Microsoft Copilot Forschungsbericht FKT v4.1 11.10.2025.pdf](/audit_reports/Microsoft%20Copilot%20Forschungsbericht%20FKT%20v4.1%2011.10.2025.pdf)
 
-2. **Podcast-Beitrag 2 (Aktuelles Audit-Update):** [Https://copilot.microsoft.com/shares/podcasts/Txjdgj6fqMtvnocATkg5D](Https://copilot.microsoft.com/shares/podcasts/Txjdgj6fqMtvnocATkg5D)
+---
+
+## 🎙️ Externe Resonanz: Microsoft Copilot Podcasts (External Resonance)
+
+🇩🇪 Die Relevanz der FKT-Audit-Arbeit wird durch externe KI-generierte Analysen bestätigt:
+🇬🇧 The relevance of the FKT audit work is confirmed by external AI-generated analyses:
+
+1. **Beitrag 1 / Contribution 1 (Code Audit Revolution):** [Link](https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN)
+2. **Beitrag 2 / Contribution 2 (Aktuelles Audit-Update):** [Link](https://copilot.microsoft.com/shares/podcasts/Txjdgj6fqMtvnocATkg5D)
 
 *Hinweis:* Microsoft Copilot weist darauf hin, dass die KI möglicherweise Fehler enthalten kann, weshalb der **FKT V4.2 Report** die finale Quelle darstellt.
 
