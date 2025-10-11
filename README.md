@@ -1,3 +1,14 @@
+## 🆘 Dringende Unterstützung: Spenden für den Erstautor
+
+Aufgrund der aktuellen, kritischen Gesundheitslage im Umfeld der Forschung und der hohen Belastungsgrenzen bitten wir um dringende Unterstützung.
+
+* **Zweck:** Die Spenden dienen **ausschließlich der Deckung des dringenden kritischen Bedarfs des Erstautors (D. Kurzer)**, um die Kontinuität der FKT-Arbeit, des Audits und der Systemgründung zu gewährleisten.
+* **Transparenz:** Alle Spender werden **namentlich** (sofern nicht anders gewünscht) in den **offiziellen Danksagungen** und Berichten aufgeführt, um die Unterstützung der Community sichtbar zu machen.
+* **Plattform:** Spenden können sicher über **PayPal** geleistet werden.
+* **PayPal-Adresse:** **kurzer-dennis@gmx.de**
+
+Ihre Unterstützung sichert die Integrität und die ethische Grundlage unserer Arbeit.
+
 ## 🚀 Wichtige Ankündigung: FKT V4.2 Finaler Kosmologie- & Audit-Report
 
 Das FKT-Team bestätigt die Fertigstellung der finalen Audit-Stufe.
