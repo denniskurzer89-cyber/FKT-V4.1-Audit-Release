@@ -1,3 +1,11 @@
+## 🚀 Wichtige Ankündigung: FKT V4.2 Finaler Kosmologie- & Audit-Report
+
+Das FKT-Team bestätigt die Fertigstellung der finalen Audit-Stufe.
+
+* **Release-Termin:** Der vollständige **FKT V4.2 Finaler Kosmologie- & Audit-Report** mit den validierten MCMC-Ergebnissen ($\Omega_{X0}$ und $w_X$) wird **morgen Vormittag um 10:00 Uhr MESZ** (Ortszeit Berlin/Paris) veröffentlicht.
+* **Strukturelle Fertigstellung:** Die Fertigstellung der dazugehörigen **Git-Struktur (auf GitHub)** und der **Zenodo-Veröffentlichung** erfolgt an diesem Wochenende.
+* **Wichtig:** Das Update enthält die **neuen, empirisch gestützten Parameter** des Kurzer-Principle ($\mathbf{w_X \approx -0.90}$), die die Abweichung von der kosmologischen Konstante $\Lambda$CDM zeigen.
+
 ## 🛡️ 1. Veröffentlichungs- und Validierungsfreigabe (Kurzer-Principle)
 
 Um die Integrität und die korrekte Darstellung des **Kurzer-Principle** zu gewährleisten, wird hiermit formal festgelegt:
