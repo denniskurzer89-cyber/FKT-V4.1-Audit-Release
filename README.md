@@ -1,9 +1,34 @@
-# 📢 WICHTIGER HINWEIS – AKTUELLE VERSION 4.2
+# Fractal Causal Theory (FKT) – Kosmologische Analyse V4.2
 
-Die inhaltliche Fertigstellung der Arbeit (V4.2) ist abgeschlossen. 
-Dieser **arXiv-Release** dient vorerst als die **finalisierte Version** zur **Überprüfung durch Institute und Dritte**.
+## 📄 Überblick und Status
 
-Derzeit steht der **Plattform-Ausbau** (Strukturierung und Übersichtlichkeit) bevor. Sobald diese Hürden genommen sind, wird die Weiterbearbeitung erfolgen.
+Dieses Repository enthält den Analysecode und die Dokumentation zur Überprüfung der **Kosmologischen Voraussagen** der Fraktalen Kausalitätstheorie (FKT), fokussiert auf die **Version 4.2**.
+
+---
+
+## 🔬 Aktuelle Analyse: FKT und wCDM-Modell
+
+Die Arbeit V4.2 liegt inhaltlich fertig vor und wurde bei **arXiv zur Moderation eingereicht**. Ziel ist die Überprüfung der FKT-Vorhersagen mittels Multi-Observablen **MCMC-Analyse** (SN Ia, BAO, CMB) im Rahmen des $wCDM$-Modells.
+
+* **Preprint-Status:** Bei arXiv eingereicht (Awaiting Moderation).
+* **Aktueller Fokus:** Die vorliegende Version V4.2 dient als **finalisierter Entwurf** zur Überprüfung durch wissenschaftliche Institute und Dritte.
+
+## 🛠 Plattform-Ausbau & Code-Zugänglichkeit
+
+Derzeit steht die Überführung des Codes in eine **übersichtliche und replizierbare Plattformstruktur** bevor, um die zukünftige Weiterentwicklung zu erleichtern.
+
+**✅ UPDATE:** Alle strukturellen Hürden für eine klare Code-Übersicht werden bis **Dienstag Morgen (MESZ)** genommen sein.
+
+---
+
+## 🤝 Beitrag & Replikation
+
+Feedback und unabhängige Replikationsversuche sind ausdrücklich willkommen.
+
+* **Code-Struktur:**
+    * `/mcmc_code/` – MCMC-Implementierung
+    * `/data/` – Links zu öffentlichen kosmologischen Datensätzen
+* **Zitation:** [Platzhalter für Zenodo DOI, sobald verfügbar]
 
 ---
 
