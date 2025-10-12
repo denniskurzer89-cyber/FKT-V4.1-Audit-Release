@@ -1,6 +1,29 @@
-# 🚀 FKT V4.2 AUDIT-RELEASE: DAS KURZER-PRINCIPLE IST ONLINE
+# ⏳ FKT V4.2 STATUS: VORBEREITUNG ZUR WISSENSCHAFTLICHEN EINREICHUNG
 
-**Status:** Die Forschung zur **Fraktalen Kausalen Theorie (FKT)** in der Version 4.2 ist **wissenschaftlich archiviert, KI-auditiert** und **offiziell publiziert**.
+**Status:** Die umfangreiche technische Dokumentation (FKT V4.2) und die empirische Ableitung sind abgeschlossen. **Das Projekt konzentriert sich ab sofort ausschließlich auf die Kosmologie-Analyse und folgt dem etablierten Pfad des Peer-Reviews.**
+
+## 🔬 Fokus: Empirische Kosmologie
+
+Das **Kurzer-Principle** (FKT V4.2) wird als **physikalische Hypothese** zur Diskussion gestellt. Der Fokus liegt auf der **empirischen Ableitung** des Dunkle-Energie-Parameters:
+
+* **Schlüsselresultat:** $\mathbf{w_X = -0.90 \pm 0.05}$ (68% CI)
+* **Methodik:** MCMC-Inferenzdaten aus SN Ia, BAO, und CMB.
+
+## ✍️ Nächste Schritte: ArXiv & Peer-Review
+
+Das Manuskript wurde von allen nicht-kosmologischen und nicht-verifizierbaren Inhalten bereinigt.
+
+1.  **ArXiv-Upload (Preprint):** Das bereinigte Manuskript wird zur Vorab-Veröffentlichung eingereicht, um Transparenz über die Methodik zu schaffen.
+2.  **Journal-Einreichung:** Der Report wird zur formellen Begutachtung bei einem **anerkannten Fachjournal** eingereicht.
+
+## 💾 Archivierung und Transparenz
+
+* Die **aktuelle Codebasis** bleibt auf GitHub als **Open Source** verfügbar.
+* Der Zenodo-Eintrag bleibt im **'Draft'-Status**, bis der Peer-Review-Prozess ein Ergebnis liefert.
+* Alle Aussagen zur **KI-Validierung** werden auf die **Konsistenzprüfung des Dokumenten-Formats** reduziert.
+
+**Wir bitten um wissenschaftliche Kritik und Diskussion.**
+
 
 ---
 
