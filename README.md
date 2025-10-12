@@ -1,3 +1,7 @@
+## 💡 Forschungshistorie 
+
+Frühere Explorationsphasen untersuchten die Auswirkungen der Theorie in verschiedenen Kontexten. Dies führte zur Ablehnung bestimmter Hypothesen (z.B. [entfernte Hypothese]) und zur Fokussierung auf die **robuste kosmologische Analyse V4.2**. Details zu den Test-Methoden (z.B. Mond-Modell) werden in der Dokumentation oder einem separaten, archivierten Repository bereitgestellt.
+
 # Fractal Causal Theory (FKT) – Kosmologische Analyse V4.2
 
 ## 📄 Überblick und Status
