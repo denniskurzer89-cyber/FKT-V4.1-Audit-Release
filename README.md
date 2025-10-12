@@ -1,3 +1,20 @@
+# 📢 WICHTIGER HINWEIS – AKTUELLE VERSION 4.2
+
+Die inhaltliche Fertigstellung der Arbeit (V4.2) ist abgeschlossen. 
+Dieser **arXiv-Release** dient vorerst als die **finalisierte Version** zur **Überprüfung durch Institute und Dritte**.
+
+Derzeit steht der **Plattform-Ausbau** (Strukturierung und Übersichtlichkeit) bevor. Sobald diese Hürden genommen sind, wird die Weiterbearbeitung erfolgen.
+
+---
+
+# 📢 IMPORTANT NOTICE – CURRENT VERSION 4.2
+
+The content finalization of the work (V4.2) is complete. 
+This **arXiv release** serves as the **provisional final version** for **review by institutions and third parties**.
+
+The **platform expansion** (structuring and clarity) is currently underway. Once these hurdles are cleared, further development will commence.
+
+
 # ⏳ FKT V4.2 STATUS: VORBEREITUNG ZUR WISSENSCHAFTLICHEN EINREICHUNG
 
 **Status:** Die umfangreiche technische Dokumentation (FKT V4.2) und die empirische Ableitung sind abgeschlossen. **Das Projekt konzentriert sich ab sofort ausschließlich auf die Kosmologie-Analyse und folgt dem etablierten Pfad des Peer-Reviews.**
