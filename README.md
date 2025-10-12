@@ -1,3 +1,8 @@
+### Theoretische Fundierung und Konstanten-Kalibrierung
+
+Die Ableitung der Fraktalen Kausalitätskonstante $\alpha_c$, die in dieser Arbeit verwendet wird, erfolgte initial durch eine heuristische Kalibrierung basierend auf dimensionslosen Planetenverhältnissen. Details zur Methodenhistorie und den Explorationsmodellen finden Sie in der vollständigen Methodendokumentation: [Methodology Details](/docs/methodology_details.md).
+
+
 ## 💡 Forschungshistorie 
 
 Frühere Explorationsphasen untersuchten die Auswirkungen der Theorie in verschiedenen Kontexten. Dies führte zur Ablehnung bestimmter Hypothesen (z.B. [entfernte Hypothese]) und zur Fokussierung auf die **robuste kosmologische Analyse V4.2**. Details zu den Test-Methoden (z.B. Mond-Modell) werden in der Dokumentation oder einem separaten, archivierten Repository bereitgestellt.
