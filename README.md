@@ -1,6 +1,6 @@
 ### Theoretische Fundierung und Konstanten-Kalibrierung
 
-Die Ableitung der Fraktalen Kausalitätskonstante $\alpha_c$, die in dieser Arbeit verwendet wird, erfolgte initial durch eine heuristische Kalibrierung basierend auf dimensionslosen Planetenverhältnissen. Details zur Methodenhistorie und den Explorationsmodellen finden Sie in der vollständigen Methodendokumentation: [Methodology Details](/docs/methodology_details.md).
+Die Ableitung der Fraktalen Kausalitätskonstante $\alpha_c$, die in dieser Arbeit verwendet wird, erfolgte initial durch eine heuristische Kalibrierung basierend auf dimensionslosen Planetenverhältnissen. Details zur Methodenhistorie und den Explorationsmodellen finden Sie in der vollständigen Methodendokumentation: [Methodology Details](/docs/methodology_details.md). (zur 4.2 Veröffentlichung Online)
 
 
 ## 💡 Forschungshistorie 
