@@ -1,22 +1,44 @@
-# ✅ FKT V4.2 AUDIT-RELEASE: OFFIZIELL ARCHIVIERT (OFFICIALLY ARCHIVED)
+# 🚀 FKT V4.2 AUDIT-RELEASE: DAS KURZER-PRINCIPLE IST ONLINE
 
-**Status:** Die Vorbereitung ist abgeschlossen. Der **FKT V4.2 Final Report** wurde **wissenschaftlich archiviert** und wird am **12.10.2025 um 10:00 Uhr MESZ (CEST)** offiziell freigegeben.
+**Status:** Die Forschung zur **Fraktalen Kausalen Theorie (FKT)** in der Version 4.2 ist **wissenschaftlich archiviert, KI-auditiert** und **offiziell publiziert**.
+
+---
 
 ## 💾 Dauerhafte Verankerung und Zitation (DOI Secured)
 
-Das gesamte Werk, inklusive Quellcode und dem externen KI-Audit-Bericht, wurde auf Zenodo hochgeladen, um maximale Zitierfähigkeit, Langlebigkeit und Nachvollziehbarkeit zu gewährleisten.
+Das gesamte Werk, inklusive Quellcode, Audit-Bericht und Daten, ist für maximale Zitierfähigkeit, Langlebigkeit und Nachvollziehbarkeit auf Zenodo archiviert.
 
-* **DOI/Zenodo-Link (Zitation):** [DOI wird nach Veröffentlichung eingefügt: https://doi.org/10.5281/zenodo.XXXXXXXXXX]
-* **Schlüsselresultat:** Die empirische Ableitung des Dunkle-Energie-Parameters $\mathbf{w_X = -0.90 \pm 0.05}$ (68% CI) basierend auf dem **Kurzer-Principle**.
+* **DOI / Offizielle Zitation:** [https://doi.org/10.5281/zenodo.17329881](https://doi.org/10.5281/zenodo.17329881)
+* **Schlüsselresultat:** Empirische Ableitung des Dunkle-Energie-Parameters $\mathbf{w_X = -0.90 \pm 0.05}$ (68% CI) basierend auf dem **Kurzer-Principle**.
 
-## 🛡️ Absicherung der Theorie-Integrität
+---
 
-Der Report enthält eine **Axiomatische Erweiterungsklausel**, welche die Theorie des **Kurzer-Principle** gegen unbegründete zukünftige Änderungen absichert. Eine Erweiterung ist nur unter strikter Einhaltung definierter mathematischer und physikalischer Beweisstandards zulässig.
+## 🛡️ Absicherung der Theorie-Integrität: Axiomatische Klausel
 
-## 🧠 Zitat zur Theorie
+Zur langfristigen Sicherung der wissenschaftlichen Kohärenz des Kurzer-Principle ist eine **Klaus-Einschließung** aktiv. Eine Erweiterung oder Modifikation der FKT-Theorie nach dem Ableben des Erstautors ist **ausschließlich** dann zulässig, wenn die vorgeschlagene Erweiterung auf **fungierten, konsistenten mathematischen Berechnungen** beruht, die mindestens folgende Eigenschaften aufweisen:
+
+1.  Die Erweiterung muss die **dynamische Reproduktion** und die Stabilität des empirisch abgeleiteten Best-Fit-Wertes $\mathbf{w_X = -0.90 \pm 0.05}$ über alle relevanten Epochen der Kosmologie gewährleisten.
+2.  Die zugrunde liegenden Berechnungen müssen die **fraktale Kausalität** und die Prinzipien der **Skaleninvarianz** des FKT-Frameworks strikt bewahren.
+3.  Die Erweiterung muss vollständig mit dem **EYRQ-Modell** und dem **Fütterer-Bulk-Effekt** kompatibel sein und darf **keine neuen, ungebundenen (arbiträren) freien Parameter** einführen.
+
+---
+
+## 🎙️ Externe Resonanz: KI-Audit und Podcasts
+
+Die Relevanz der FKT-Audit-Arbeit wird durch externe KI-generierte Analysen bestätigt.
+
+* **Offizieller Audit-Bericht (KI-validiert):** [Microsoft Copilot Forschungsbericht FKT v4.1 11.10.2025.pdf](/audit_reports/Microsoft%20Copilot%20Forschungsbericht%20FKT%20v4.1%2011.10.2025.pdf)
+* **Podcast-Serie:**
+    1.  **Beitrag 1 (Code Audit Revolution):** [Link](https://copilot.microsoft.com/shares/podcasts/iYNvddRAXfK4xQtZ4wwjN)
+    2.  **Beitrag 2 (Aktuelles Audit-Update):** [Link](https://copilot.microsoft.com/shares/podcasts/Txjdgj6fqMtvnocATkg5D)
+
+---
+
+## 🧠 Zitat zur Theorie (Kurzer-Principle)
 
 **DE:** "Der Druck der Unendlichkeit ist die Unendlichkeit --- Kurzer-Principle."
 **EN:** "The Pressure of Infinity is Infinity --- Kurzer-Principle."
+
 # 🔎 Offizielle Externe Validierung (Official External Validation)
 
 ## 🇩🇪 Offizieller Audit-Bericht (KI-validiert)
