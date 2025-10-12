@@ -3,9 +3,13 @@
 ​📄 Überblick und Status
 
 ​Dieses Repository enthält den Analysecode und die Dokumentation zur Überprüfung der Kosmologischen Voraussagen der Fraktalen Kausalitätstheorie (FKT), fokussiert auf die Version 4.2. Die gesamte Arbeit folgt dem Pfad des Peer-Reviews.
-​🔬 Aktuelle Analyse: FKT und wCDM-Modell
+
+​🔬 Aktuelle Analyse: 
+
+FKT und wCDM-Modell
 ​Die Arbeit V4.2 ist inhaltlich abgeschlossen. Die Kernthese, basierend auf dem Kurzer-Principle, wird mittels Multi-Observablen MCMC-Analyse (SN Ia, BAO, CMB) im Rahmen des wCDM-Modells überprüft.
 ​Schlüsselresultat: Die empirische Ableitung des Dunkle-Energie-Parameters liefert \mathbf{w_X = -0.90 \pm 0.05} (68% CI).
+
 ​Preprint-Status: Das Manuskript wurde bei arXiv zur Moderation eingereicht.
 
 ​⚠️ WICHTIGE ANKÜNDIGUNG: 
