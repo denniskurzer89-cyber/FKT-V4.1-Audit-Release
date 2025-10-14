@@ -1,10 +1,12 @@
 ​Fractal Causal Theory (FKT) – Kosmologische Analyse V4.2
 
 
+
 ​📄 Überblick und Status
 
 
 ​Dieses Repository enthält den Analysecode und die Dokumentation zur Überprüfung der Kosmologischen Voraussagen der Fraktalen Kausalitätstheorie (FKT), fokussiert auf die Version 4.2. Die gesamte Arbeit folgt dem Pfad des Peer-Reviews.
+
 
 
 ​🔬 Aktuelle Analyse: 
@@ -13,21 +15,27 @@
 FKT und wCDM-Modell
 
 ​Die Arbeit V4.2 ist inhaltlich abgeschlossen. Die Kernthese, basierend auf dem Kurzer-Principle, wird mittels Multi-Observablen MCMC-Analyse (SN Ia, BAO, CMB) im Rahmen des wCDM-Modells überprüft.
-​Schlüsselresultat: Die empirische Ableitung des Dunkle-Energie-Parameters liefert \mathbf{w_X = -0.90 \pm 0.05} (68% CI).
-
-
+​Schlüsselresultat (Vorläufig): Die empirische Ableitung des Dunkle-Energie-Parameters liefert \mathbf{w_X = -0.90 \pm 0.05} (68% CI).
 ​Preprint-Status: Das Manuskript wurde bei arXiv zur Moderation eingereicht.
 
 
-​⚠️ WICHTIGE ANKÜNDIGUNG: 
+
+​🛠️ UPDATE: 
+
+Validierung und Finale Berechnung
+​Die geplante finale Veröffentlichung wird verschoben, um die Integrität der Ergebnisse zu gewährleisten.
 
 
-VORLÄUFIGE VERZÖGERUNG
+​Laufender Audit: Die zwingend notwendige Kreuz-Validierung des MCMC-Frameworks gegen etablierte externe Pipelines (Cobaya) ist erfolgreich gestartet.
 
 
-​Die geplante finale Veröffentlichung des Audit-Reports und des aktualisierten Codes wird verschoben.
-​Grund: Zur Sicherstellung der maximalen wissenschaftlichen Integrität und Reproduzierbarkeit wird derzeit eine zwingend notwendige Kreuz-Validierung des MCMC-Frameworks gegen etablierte externe Pipelines (Cobaya) durchgeführt.
+
+​Finale Rechnungen: 
+
+Die finalen, audit-gesicherten Rechnungen des wCDM-Parameters w_X beginnen morgen Mittwoch (MESZ), sobald die Cobaya-Konsistenzprüfung abgeschlossen ist.
 ​Neues voraussichtliches Veröffentlichungsdatum: Nächsten Samstagmorgen (MESZ).
+
+
 ​Theoretische Fundierung und Konstanten-Kalibrierung
 ​Die Ableitung der Fraktalen Kausalitätskonstante \alpha_c, die in dieser Arbeit verwendet wird, erfolgte initial durch eine heuristische Kalibrierung basierend auf dimensionslosen Planetenverhältnissen. Details zur Methodenhistorie und den Explorationsmodellen finden Sie in der vollständigen Methodendokumentation: Methodology Details.
 
@@ -42,13 +50,16 @@ VORLÄUFIGE VERZÖGERUNG
 
 
 ​Derzeit steht die Überführung des MCMC-Codes in eine übersichtliche und replizierbare Plattformstruktur bevor.
+
+
 ​Code-Struktur:
+
 ​/mcmc_code/ – MCMC-Implementierung
 ​/data/ – Links zu öffentlichen kosmologischen Datensätzen
 
 ​✅ UPDATE: 
 
-Alle strukturellen Hürden für eine klare Code-Übersicht werden bis Dienstag Morgen (MESZ) genommen sein.
+Alle strukturellen Hürden für eine klare Code-Übersicht werden zeitnah genommen sein.
 
 ​🤝 Beitrag & Replikation
 
