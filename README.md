@@ -26,7 +26,8 @@ Validierung und Finale Berechnung
 ​Die geplante finale Veröffentlichung wird verschoben, um die Integrität der Ergebnisse zu gewährleisten.
 
 
-​Laufender Audit: Die zwingend notwendige Kreuz-Validierung des MCMC-Frameworks gegen etablierte externe Pipelines (Cobaya) ist erfolgreich gestartet.
+​Laufender Audit: 
+Die zwingend notwendige Kreuz-Validierung des MCMC-Frameworks gegen etablierte externe Pipelines (Cobaya) ist erfolgreich gestartet.
 
 
 
