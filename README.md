@@ -38,13 +38,15 @@ Die finalen, audit-gesicherten Rechnungen des wCDM-Parameters w_X beginnen morge
 
 
 ​Theoretische Fundierung und Konstanten-Kalibrierung
+
 ​Die Ableitung der Fraktalen Kausalitätskonstante \alpha_c, die in dieser Arbeit verwendet wird, erfolgte initial durch eine heuristische Kalibrierung basierend auf dimensionslosen Planetenverhältnissen. Details zur Methodenhistorie und den Explorationsmodellen finden Sie in der vollständigen Methodendokumentation: Methodology Details.
 
 
 ​💡 Forschungshistorie
 
 
-​Frühere Explorationsphasen dienten der Ableitung von Hypothesen und zur Kalibrierung. Diese Explorationsmodelle (z.B. Mond-Modell) sind in der Dokumentation archiviert. Die gesamte Forschungsarbeit fokussiert sich nun ausschließlich auf die robuste kosmologische Analyse V4.2.
+​Frühere Explorationsphasen dienten der Ableitung von Hypothesen und zur Kalibrierung. 
+Diese Explorationsmodelle (z.B. Mond-Modell) sind in der Dokumentation archiviert. Die gesamte Forschungsarbeit fokussiert sich nun ausschließlich auf die robuste kosmologische Analyse V4.2.
 
 
 ​🛠 Plattform-Ausbau & Code-Zugänglichkeit
