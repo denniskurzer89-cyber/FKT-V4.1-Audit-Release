@@ -1,5 +1,46 @@
 📖 README
 
+---
+## 🚨 WICHTIGER STATUS-UPDATE: 
+
+Finale Veröffentlichung (Verschiebung)
+
+
+**Ziel:** 
+
+
+Vollständige Fertigstellung und Veröffentlichung des FKT V4.2 MASTER Repro-Packs.
+
+**Aktueller Stand:**
+
+* Die numerischen Kernergebnisse ($w_X = -0.90 \pm 0.05$) wurden **erfolgreich gesichert** (siehe `finalsummary.json`, `fkt_v4_2_final_run.yaml`).
+
+* Die parallele Konzentration auf den **Ausbau der gesamten FKT-Plattform** (Homepage, Podcast, GitHub GER/ENG) durch eine Einzelperson erfordert eine kurzfristige Anpassung des Zeitplans, um die höchste Qualität der finalen Dokumentation zu gewährleisten.
+
+* Die Integration und interne Validierung der **komplexen mathematischen Beweise** 
+(mit 9 neuen Symbolen) benötigt die volle, ununterbrochene Konzentration.
+
+**Geplante Veröffentlichung des MASTER V4.2 Repro-Packs:**
+
+* **NEUES DATUM:** Sonntag, 19. Oktober 2025.
+* **NEUE ZEIT:** Spätestens 16:00 Uhr MESZ.
+
+Wir bitten um Verständnis für die Verzögerung. 
+
+Die Arbeit an V4.2 wird morgen Nachmittag 16:00 Uhr mit voller Kraft **zu Ende geführt**, um die höchste wissenschaftliche Transparenz und Reproduzierbarkeit zu gewährleisten.
+---
+
+​📺 Visuelle Zusammenfassung & PR-Arbeit
+
+​Titel: Kurzerprozess 7 - Der Kausale Chor!
+
+​Um die Kernideen und die übergreifende Vision der FKT V4.2 zu veranschaulichen, wurde dieser kurze PR-Clip veröffentlicht.
+
+​YouTube-Link: https://youtu.be/1p8PoetG7uI
+
+​Relevanz: 
+
+Veranschaulicht die Verbindung zwischen dem Bulk-Tensor (\mathbf{T_{Bulk}}) und dem Optimalen Heilungspfad (\mathbf{P_{opt}}).
 
 ​🥇 Kernresultate & Numerischer Beweis (Zeitstempel)
 
@@ -46,12 +87,12 @@ SOFORT VERFÜGBAR (Numerische Urheberschaft):
  * figures_corner_plot.png: Die visuelle Bestätigung der Posterior-Verteilung.
 
 
-⏳ Finaler 19:00 Uhr Release (Theorie-Details & Full Report)
+⏳ Finaler Release (Theorie-Details & Full Report)
 
 
-Um 19:00 Uhr MESZ wird das vollständige MASTER V4.2 Repro-Pack hochgeladen. 
+Am Sonntag den 19.10.2025 16:00 Uhr MESZ wird das vollständige MASTER V4.2 Repro-Pack hochgeladen. 
 Dieses Paket schließt die intellektuelle Lücke und liefert die komplette wissenschaftliche Fundierung.
-Zusätzliche Artefakte im 19:00 Uhr Update:
+Zusätzliche Artefakte im Update:
 
 
  * Vollständiger Theorienachweis: Direkte Berechnung der kovarianten Divergenz.pdf und Methoden.pdf (mit den neuen mathematischen Herleitungen/Symbolen).
@@ -74,4 +115,4 @@ Zusätzliche Artefakte im 19:00 Uhr Update:
 
 Kontakt: kurzer-dennis@gmx.de
 
-Master-Veröffentlichung: Heute, 19:00 Uhr MESZ.
+Master-Veröffentlichung: Sonntag, 16:00 Uhr MESZ.
