@@ -66,7 +66,7 @@ Dieses Repository enthält das MASTER V4.2 Reproduzierbarkeits-Paket der Fraktal
 > 
 
 
-Um die Urheberschaft der Kernresultate unwiderlegbar zu sichern und Plagiatsversuchen entgegenzuwirken, wurde ein gestaffelter Release durchgeführt. Die numerischen Kernergebnisse sind sofort gesichert. Die kompletten theoretischen Beweise (inklusive der 9 neuen Symbole) folgen pünktlich um 19:00 Uhr MESZ im finalen Report.
+Um die Urheberschaft der Kernresultate unwiderlegbar zu sichern und Plagiatsversuchen entgegenzuwirken, wurde ein gestaffelter Release durchgeführt. Die numerischen Kernergebnisse sind sofort gesichert. Die kompletten theoretischen Beweise (inklusive der 9 neuen Symbole) folgen am morgigen Sonntag um 16:00 Uhr MESZ im finalen Report.
 
 
 🥇 Kernresultate & Numerischer Beweis (Zeitstempel gesichert)
