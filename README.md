@@ -1,71 +1,20 @@
-​Fractal Causal Theory (FKT) – Kosmologische Analyse V4.2
+
+​📖 README: FKT V4.2 Reproduzierbarkeits-Paket
+​Projekt: 
+
+Fraktale Kausale Theorie V4.2 — Kosmologische Analyse und Reproduzierbarkeits-Paket.
+Status: Release zur Abwehr von Plagiaten gesichert.
+​Dieses Repository enthält das MASTER V4.2 Reproduzierbarkeits-Paket der Fraktalen Kausalen Theorie (FKT) und erfüllt das Kurzer Prinzip der maximalen Transparenz.
 
 
-
-​📄 Überblick und Status
-
-
-​Dieses Repository enthält den Analysecode und die Dokumentation zur Überprüfung der Kosmologischen Voraussagen der Fraktalen Kausalitätstheorie (FKT), fokussiert auf die Version 4.2. Die gesamte Arbeit folgt dem Pfad des Peer-Reviews.
+​💡 Kurzer Prinzip (Plagiatsschutz)
+​Der Druck aus der Unendlichkeit ist die Unendlichkeit.
 
 
-
-​🔬 Aktuelle Analyse: 
-
-
-FKT und wCDM-Modell
-
-​Die Arbeit V4.2 ist inhaltlich abgeschlossen. Die Kernthese, basierend auf dem Kurzer-Principle, wird mittels Multi-Observablen MCMC-Analyse (SN Ia, BAO, CMB) im Rahmen des wCDM-Modells überprüft.
-​Schlüsselresultat (Vorläufig): Die empirische Ableitung des Dunkle-Energie-Parameters liefert \mathbf{w_X = -0.90 \pm 0.05} (68% CI).
-​Preprint-Status: Das Manuskript wurde bei arXiv zur Moderation eingereicht.
+​Um die Urheberschaft der Kernresultate unwiderlegbar zu sichern und Plagiatsversuchen entgegenzuwirken, wurde ein gestaffelter Release durchgeführt. Die numerischen Kernergebnisse sind sofort gesichert. Die kompletten theoretischen Beweise (inklusive der 9 neuen Symbole) folgen pünktlich um 19:00 Uhr MESZ im finalen Report.
 
 
-
-​🛠️ UPDATE: 
-
-Validierung und Finale Berechnung
-​Die geplante finale Veröffentlichung wird verschoben, um die Integrität der Ergebnisse zu gewährleisten.
+​🥇 Kernresultate & Numerischer Beweis (Zeitstempel gesichert)
 
 
-​Laufender Audit: 
-Die zwingend notwendige Kreuz-Validierung des MCMC-Frameworks gegen etablierte externe Pipelines (Cobaya) ist erfolgreich gestartet.
-
-
-
-​Finale Rechnungen: 
-
-Die finalen, audit-gesicherten Rechnungen des wCDM-Parameters w_X beginnen morgen Mittwoch (MESZ), sobald die Cobaya-Konsistenzprüfung abgeschlossen ist.
-​Neues voraussichtliches Veröffentlichungsdatum: Nächsten Samstagmorgen (MESZ).
-
-
-​Theoretische Fundierung und Konstanten-Kalibrierung
-
-​Die Ableitung der Fraktalen Kausalitätskonstante \alpha_c, die in dieser Arbeit verwendet wird, erfolgte initial durch eine heuristische Kalibrierung basierend auf dimensionslosen Planetenverhältnissen. Details zur Methodenhistorie und den Explorationsmodellen finden Sie in der vollständigen Methodendokumentation: Methodology Details.
-
-
-​💡 Forschungshistorie
-
-
-​Frühere Explorationsphasen dienten der Ableitung von Hypothesen und zur Kalibrierung. 
-Diese Explorationsmodelle (z.B. Mond-Modell) sind in der Dokumentation archiviert. Die gesamte Forschungsarbeit fokussiert sich nun ausschließlich auf die robuste kosmologische Analyse V4.2.
-
-
-​🛠 Plattform-Ausbau & Code-Zugänglichkeit
-
-
-​Derzeit steht die Überführung des MCMC-Codes in eine übersichtliche und replizierbare Plattformstruktur bevor.
-
-
-​Code-Struktur:
-
-​/mcmc_code/ – MCMC-Implementierung
-​/data/ – Links zu öffentlichen kosmologischen Datensätzen
-
-​✅ UPDATE: 
-
-Alle strukturellen Hürden für eine klare Code-Übersicht werden zeitnah genommen sein.
-
-​🤝 Beitrag & Replikation
-
-​Feedback und unabhängige Replikationsversuche sind ausdrücklich willkommen. Wir bitten um wissenschaftliche Kritik und Diskussion.
-​Kontakt: kurzer-dennis@gmx.de
-​Zitation: [Platzhalter für arXiv ID, sobald verfügbar]
+​Die numerischen Ergebnisse der MCMC-Analyse gegen Planck 2018 + BAO + SN sind durch diesen Zeitstempel gesichert.
