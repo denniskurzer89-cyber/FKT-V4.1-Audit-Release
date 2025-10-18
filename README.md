@@ -1,7 +1,7 @@
 📖 README
 
 
-​🥇 Kernresultate & Numerischer Beweis (Zeitstempel 
+​🥇 Kernresultate & Numerischer Beweis (Zeitstempel)
 
 
 FKT V4.2 Reproduzierbarkeits-Paket Projekt: 
