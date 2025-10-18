@@ -27,7 +27,7 @@ Vollständige Fertigstellung und Veröffentlichung des FKT V4.2 MASTER Repro-Pac
 
 Wir bitten um Verständnis für die Verzögerung. 
 
-Die Arbeit an V4.2 wird morgen Nachmittag 16:00 Uhr mit voller Kraft **zu Ende geführt**, um die höchste wissenschaftliche Transparenz und Reproduzierbarkeit zu gewährleisten.
+Die Arbeit an V4.2 wird morgen Nachmittag 16:00 Uhr mit voller Kraft **zum Ende geführt werden**, um die höchste wissenschaftliche Transparenz und Reproduzierbarkeit zu gewährleisten.
 ---
 
 ​📺 Visuelle Zusammenfassung & PR-Arbeit
