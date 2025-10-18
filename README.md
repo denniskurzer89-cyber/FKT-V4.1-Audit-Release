@@ -41,6 +41,8 @@ Die Arbeit an V4.2 wird morgen Nachmittag 16:00 Uhr mit voller Kraft **zum Ende 
 ​Relevanz: 
 
 Veranschaulicht die Verbindung zwischen dem Bulk-Tensor (\mathbf{T_{Bulk}}) und dem Optimalen Heilungspfad (\mathbf{P_{opt}}).
+---
+
 
 ​🥇 Kernresultate & Numerischer Beweis (Zeitstempel)
 
