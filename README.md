@@ -22,7 +22,7 @@ Vollständige Fertigstellung und Veröffentlichung des FKT V4.2 MASTER Repro-Pac
 
 **Geplante Veröffentlichung des MASTER V4.2 Repro-Packs:**
 
-* **NEUES DATUM:** Sonntag, 21. Oktober 2025.
+* **NEUES DATUM:** Dienstag, 21. Oktober 2025.
 * **NEUE ZEIT:** Spätestens 16:00 Uhr MESZ.
 
 Wir bitten um Verständnis für die Verzögerung. 
