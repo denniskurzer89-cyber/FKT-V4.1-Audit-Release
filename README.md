@@ -3,7 +3,7 @@
 ---
 ## 🚨 WICHTIGER STATUS-UPDATE: 
 
-Finale Veröffentlichung (Verschiebung findet demnächst statt) 
+Finale Veröffentlichung (findet demnächst statt) 
 
 
 **Ziel:** 
