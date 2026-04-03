@@ -68,9 +68,6 @@ Mit der Veröffentlichung des Buches und der Freigabe von FKT V4.3 wird die Theo
 
 ---
 
-Hier ist der Link zum offiziellen GitHub-Repository, das als zentrales Archiv für die Audit-Artefakte, numerischen Ergebnisse und Simulations-Konfigurationen der **Fraktalen Kausalen Theorie (FKT)** dient:
-
-*   **GitHub-Repository:** [denniskurzer89-cyber/FKT-V4.1-Audit-Release](https://github.com/denniskurzer89-cyber/FKT-V4.1-Audit-Release),,.
 
 ### **Inhalte des Repositories für die Simulation:**
 Dieses Repository fungiert als das in den Quellen beschriebene **„MASTER Repro-Pack“** und enthält unter anderem,,:
@@ -83,4 +80,4 @@ Falls du die **MCMC-Simulationen direkt im Browser** ausführen oder die visuali
 *   **Simulation Version 4.3:** [Direkt-Link zur Simulation V4.3](https://claude.ai/public/artifacts/fff3c804-c2bc-4748-9993-5dd73d3478c6).
 *   **Simulation Version 4.2:** [Direkt-Link zur Simulation V4.2](https://claude.ai/public/artifacts/f317ee3b-7b2b-468e-b6d0-3e103d3e5aca).
 
-Zudem sind die Kernresultate zur langfristigen Sicherung unter der **DOI 10.5281/zenodo.17329881** auf Zenodo hinterlegt,,. ⬢
+Zudem sind die Kernresultate zur langfristigen Sicherung unter der **DOI 10.5281/zenodo.17329881** auf Zenodo hinterlegt.
