@@ -67,4 +67,20 @@ Dieses Repository dient weiterhin als:
 Mit der Veröffentlichung des Buches und der Freigabe von FKT V4.3 wird die Theorie nun vollständig offen, reproduzierbar und für jeden zugänglich.
 
 ---
-  
+
+Hier ist der Link zum offiziellen GitHub-Repository, das als zentrales Archiv für die Audit-Artefakte, numerischen Ergebnisse und Simulations-Konfigurationen der **Fraktalen Kausalen Theorie (FKT)** dient:
+
+*   **GitHub-Repository:** [denniskurzer89-cyber/FKT-V4.1-Audit-Release](https://github.com/denniskurzer89-cyber/FKT-V4.1-Audit-Release),,.
+
+### **Inhalte des Repositories für die Simulation:**
+Dieses Repository fungiert als das in den Quellen beschriebene **„MASTER Repro-Pack“** und enthält unter anderem,,:
+*   **MCMC-Konfigurationen:** Die notwendigen YAML-Dateien für Cobaya, um die numerischen Resultate (z. B. den Best-Fit von $w_X = -0,90 \pm 0,05$) zu reproduzieren,.
+*   **SymPy-Skripte:** Zur symbolischen Herleitung und Verifikation der Feldgleichungen (EYRQ),.
+*   **Audit-Artefakte:** JSON-Dateien mit Posterior-Statistiken und Konfidenzintervallen (z. B. `finalsummary.json`),.
+
+### **Zusätzliche Simulations-Links:**
+Falls du die **MCMC-Simulationen direkt im Browser** ausführen oder die visualisierten Ergebnisse (Corner-Plots) einsehen möchtest, wurden in den Quellen auch folgende direkte Links zu Claude-Artifacts bereitgestellt,:
+*   **Simulation Version 4.3:** [Direkt-Link zur Simulation V4.3](https://claude.ai/public/artifacts/fff3c804-c2bc-4748-9993-5dd73d3478c6).
+*   **Simulation Version 4.2:** [Direkt-Link zur Simulation V4.2](https://claude.ai/public/artifacts/f317ee3b-7b2b-468e-b6d0-3e103d3e5aca).
+
+Zudem sind die Kernresultate zur langfristigen Sicherung unter der **DOI 10.5281/zenodo.17329881** auf Zenodo hinterlegt,,. ⬢
