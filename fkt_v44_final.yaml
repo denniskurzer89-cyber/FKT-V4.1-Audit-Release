@@ -1,0 +1,64 @@
+output: chains/fkt_v444_thermodynamic_guard
+likelihood:
+  fkt_stability:
+    external: fktkernel.stability_likelihood
+  fkt_sloshiness:
+    external: fktkernel.sloshiness_likelihood
+  fkt_flerovium_anomaly:
+    external: fktkernel.flerovium_anomaly_likelihood
+  fkt_hardware:
+    external: fktkernel.hardware_prior
+  fkt_muon_anchor:
+    external: fktkernel.muon_anchor_likelihood
+  fkt_thermodynamic_guard:
+    external: fktkernel.thermodynamic_guard_likelihood
+  desi_2024_bao:
+    path: ./data/desi_bao_y1
+    stop_at_error: True
+theory:
+  kfem_bulk:
+    path: ./kfem_bulk
+    extra_args:
+      mesh_elements: 1200000
+      pml_thickness: 4.4
+      gradient_threshold: 10000
+params:
+  muon_anchor_status:
+    value: BRANCH_LOCKED
+    fixed: yes
+  thermodynamic_mode:
+    value: GEO_RESHUFFLING
+    fixed: yes
+  waste_heat_limit:
+    value: 0.00127
+    fixed: yes
+  active_h2_sync:
+    value: 7.50
+    fixed: yes
+  schumann_neutralizer:
+    value: 0.33
+    fixed: yes
+  log10_nu_X:
+    prior: {min: -3.0, max: 12.0}
+    ref: 2.80099
+    proposal: 0.01
+    latex: \log_{10}(\nu_X / \mathrm{Hz})
+  kappa_tor:
+    prior: {min: 0.300, max: 0.500}
+    ref: 0.3870
+    proposal: 0.005
+  t_bulk_pressure:
+    prior: {min: 1.120, max: 1.135}
+    ref: 1.1273
+    proposal: 0.0001
+  F_c:
+    value: 0.99873
+    fixed: yes
+  E_p:
+    derived: 'lambda F_c: 1 - F_c'
+sampler:
+  mcmc:
+    Rminus1_stop: 0.0097
+    max_samples: 100000
+    burn_in: 5000
+    learn_proposal: true
