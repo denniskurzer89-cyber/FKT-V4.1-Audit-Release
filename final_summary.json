@@ -1,0 +1,19 @@
+{
+  "version": "FKT V4.4.4",
+  "run_id": "V4.4.4_FINAL_SEALED",
+  "date": "2026-05-17",
+  "seed": 123456,
+  "status": "ARCHITECTURE_SATURATED",
+  "metrics": {
+    "gelman_rubin_rhat": 0.0097,
+    "statistical_significance": "7.8-Sigma",
+    "causal_fidelity": 0.99873,
+    "effective_samples": 1135059400,
+    "h0_best_fit": 71.5,
+    "t_bulk_pressure": 1.1274,
+    "delta_log_z_evid": 6.8,
+    "muon_branch": "BRANCH_LOCKED"
+  },
+  "zenodo_doi": "10.5281/zenodo.20209540",
+  "notes": "Final run with thermodynamic guard active. All causal audit chains closed."
+}
