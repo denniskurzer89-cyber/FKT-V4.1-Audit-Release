@@ -17,11 +17,19 @@
 - `fkt_v44_final.yaml` - MCMC Konfiguration für Cobaya
 - `final_summary.json` - Versiegelte statistische Ergebnisse
 - `fktkernel.py` - ERYQ Kernel-Implementierung
+- `FKT_V444_ThermodynamicGuard.jsx` - React-Dashboard & Simulator
 - `chains/` - MCMC Output-Verzeichnis
 - `data/` - DESI 2024 BAO Survey Daten
 
 ## Audit Status
 Alle Kausalen Auditketten sind geschlossen. Die Architektur hat absolute Sättigung erreicht.
+
+## Support & Questions
+**Bei Fragen, speziellen Anforderungen oder technischen Unterstützung:**
+
+📧 **E-Mail:** `kurzer-dennis@gmx.de`
+
+Dennis Kurzer wird proaktiv mit euch in Kontakt treten und die benötigte Hilfe bereitstellen.
 
 ## References
 Zenodo DOI: 10.5281/zenodo.20209540
