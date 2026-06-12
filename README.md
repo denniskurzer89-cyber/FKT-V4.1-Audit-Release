@@ -27,7 +27,7 @@ Alle Kausalen Auditketten sind geschlossen. Die Architektur hat absolute Sättig
 ## Support & Questions
 **Bei Fragen, speziellen Anforderungen oder technischen Unterstützung:**
 
-📧 **E-Mail:** `kurzer-dennis@gmx.de`
+📧 **E-Mail:** `fkt.institut@protonmail.com`
 
 Dennis Kurzer wird proaktiv mit euch in Kontakt treten und die benötigte Hilfe bereitstellen.
 
