@@ -1,0 +1,9 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'FKTV4-2FinalReport.blg'
+[177] biber:340> INFO - === So Okt 12, 2025, 00:40:33
+[204] Biber.pm:419> INFO - Reading 'FKTV4-2FinalReport.bcf'
+[350] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[382] bbl.pm:660> INFO - Writing 'FKTV4-2FinalReport.bbl' with encoding 'UTF-8'
+[382] bbl.pm:763> INFO - Output to FKTV4-2FinalReport.bbl
+[382] Biber.pm:131> WARN - The file 'FKTV4-2FinalReport.bcf' does not contain any citations!
+[382] Biber.pm:133> INFO - WARNINGS: 1

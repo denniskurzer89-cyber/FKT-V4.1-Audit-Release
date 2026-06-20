@@ -1,0 +1,72 @@
+# fkt_v4_2_final_run.yaml - Korrigiert für A_s/tau und Primordial-Theorie
+
+# 0. Cosmology provider
+cosmology:
+  # DIESE LISTE MUSS DEN LINEAREN CAMB-PARAMETER ENTHALTEN: A_s
+  params: [H0, ombh2, omch2, A_s, n_s, tau, OmegaX0, wX]
+# 1. Theory backend (CAMB)
+theory:
+  camb:
+    stop_at_error: true
+    extra_args:
+      dark_energy_model: fluid
+    renames:
+      OmegaX0: omk
+      wX: w
+# 2. Likelihoods
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: /home/dennis/Downloads/clik_w_planck_2018_lkls.zip
+  planck_2018_lowl_EE:
+    path: /home/dennis/Downloads/clik_w_planck_2018_lkls.zip
+  planck_2018_lensing:
+    path: /home/dennis/Downloads/clik_w_planck_2018_lkls.zip
+  sn.jla: {}
+  bao.sdss_dr16_bao_elg: {}
+# 3. Parameters (Stellen Sie sicher, dass H0, ombh2, etc. nur einmal vorkommen!)
+params:
+  H0:
+    prior: [40, 100]
+    proposal: 2.0
+  ombh2:
+    prior: [0.015, 0.03]
+    proposal: 0.0001
+  omch2:
+    prior: [0.08, 0.2]
+    proposal: 0.001
+  tau:
+    prior: [0.01, 0.5]
+    proposal: 0.005
+  n_s:
+    prior: [0.9, 1.1]
+    proposal: 0.001
+  OmegaX0:
+    prior: [0.0, 1.0]
+    proposal: 0.01
+  wX:
+    prior: [-2.0, 0.0]
+    proposal: 0.01
+  # 1. Der gesampelte Parameter (logA = ln(10^10 * A_s))
+  logA:
+    prior: [1.8, 4.0] 
+    proposal: 0.05
+    ref: 3.0  
+  # 2. Das MAPPING: Erzeugt den linearen CAMB-Parameter A_s (A_s = 10^-10 * exp(logA))
+  A_s: 'lambda logA: 1e-10 * exp(logA)'
+# 4. Derived parameters (flat universe approximation)
+derived:
+  Omega_m:
+    derived: 'lambda OmegaX0: 1 - OmegaX0'
+# 5. Sampler configuration (MCMC)
+sampler:
+  mcmc:
+    Rminus1_stop: 0.01   # Geändert von R_minus_one_stop
+    max_tries: 50000
+    learn_every: 1000
+    # start_chains: 3    # Entfernt
+    oversample_power: 0.4
+# 6. Output settings
+output: fktv42_final_run_output
+# 7. Requested products
+Cl: l_max
+
