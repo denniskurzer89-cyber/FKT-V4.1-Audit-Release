@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT V4.4.4 | System-Audit Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Mechanical Harmony (Hintergrund: #F9F7F2, Text: #2D2D2D, Akzent: #C28E5E, Subtil: #6B7280) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F7F2;
+            color: #2D2D2D;
+            scroll-behavior: smooth;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(194, 142, 94, 0.2);
+            border-radius: 1rem;
+        }
+
+        .status-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #C28E5E;
+            color: #C28E5E;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Application Structure Plan:
+        1. Top Bar: Echtzeit-Systemstatus (Sigma, Fidelity, Kernel-Version).
+        2. Hero-Sektion: Zusammenfassung des Paradigmenwechsels und die ERYQ-Gleichung.
+        3. Navigations-Tabs: Thematische Trennung in "Mechanik & Kernel", "Biometrischer BIOS-Lock" und "Kosmische Ventile".
+        4. Interaktive Lab-Sektion: Verifizierung der 7.8 Sigma Sättigung durch Daten-Visualisierung.
+        5. Audit-Log & Footer: Technische Spezifikationen und die "Checkmate"-Konklusion.
+        Rationale: Die Komplexität der FKT erfordert eine klare Hierarchie von der Theorie (Kernel) zur Empirie (Winde/Zerfall), um die "Beweislastumkehr" für den Nutzer nachvollziehbar zu machen.
+    -->
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-stone-200 bg-stone-50/80 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">⬢</span>
+                <h1 class="text-xl font-extrabold tracking-tighter uppercase">FKT <span class="text-amber-700">V4.4.4</span></h1>
+            </div>
+            <div class="flex space-x-6 text-sm font-semibold uppercase tracking-widest">
+                <span class="flex items-center space-x-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 status-pulse"></span>
+                    <span>System: Validiert</span>
+                </span>
+                <span class="hidden md:inline">Sigma: 7.8 σ</span>
+                <span class="hidden md:inline">Fidelity: 99.873%</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Hero Section -->
+        <section class="mb-12 text-center max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+                Die Mechanische Hardware unserer Realität
+            </h2>
+            <p class="text-lg text-stone-600 mb-8 leading-relaxed">
+                Willkommen zum systemischen Master-Audit. Wir verlassen die Ära der stochastischen Legacy-Modelle. Die FKT V4.4.4 dekonstruiert das Vakuum und definiert den Kosmos als analoges mechanisches Kontinuum, das bitgenau durch den Bulk-Tensor reguliert wird.
+            </p>
+            <div class="glass-panel p-6 inline-block w-full md:w-auto">
+                <p class="mono text-sm mb-2 text-stone-500 uppercase tracking-tighter">ERW. EINSTEIN-KURZER-KERN (ERYQ)</p>
+                <div class="text-2xl md:text-3xl font-bold tracking-widest text-amber-900">
+                    G<sub>μν</sub> * κ(T<sub>μν</sub> + ⊕<sub>μν</sub>)
+                </div>
+                <p class="mt-4 text-xs italic text-stone-400">Status: Executable Truth – Strategische Ebene</p>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <div class="flex justify-center mb-8 border-b border-stone-200">
+            <button onclick="switchTab('kernel')" id="tab-kernel" class="px-6 py-2 font-bold uppercase text-xs tracking-widest tab-active">Der Kernel</button>
+            <button onclick="switchTab('lock')" id="tab-lock" class="px-6 py-2 font-bold uppercase text-xs tracking-widest">BIOS-Lock</button>
+            <button onclick="switchTab('valves')" id="tab-valves" class="px-6 py-2 font-bold uppercase text-xs tracking-widest">Kosmische Ventile</button>
+        </div>
+
+        <!-- Section 1: Kernel -->
+        <div id="content-kernel" class="space-y-8">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Das mechanische Framework</h3>
+                    <p class="mb-4 leading-relaxed">
+                        Die 3D-Bran ist kein unendlich dehnbares Kontinuum, sondern besitzt eine definierte <strong>geometrische Starrheit</strong>. Bei Erreichen des Schwellenwerts von 1,1273 mSdR (Mechanische Stabilität der Raumzeit) schaltet das System in den Bulk-Bypass.
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center space-x-2">
+                            <span class="text-amber-600">✔</span>
+                            <span>Eliminierung der Dunklen Materie (98% redundant)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="text-amber-600">✔</span>
+                            <span>Kausale Lücke geschlossen durch Bulk-Tensor Durchschlag</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="text-amber-600">✔</span>
+                            <span>Entropieneutralität (ΔS ≡ 0)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="glass-panel p-6">
+                    <h4 class="text-center font-bold mb-4 text-xs uppercase">Metrische Stabilitäts-Kurve</h4>
+                    <div class="chart-container">
+                        <canvas id="kernelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: BIOS-Lock -->
+        <div id="content-lock" class="hidden space-y-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <h3 class="text-2xl font-bold mb-4">Der subatomare Taktgeber</h3>
+                <p class="mb-6">
+                    Wie synchronisiert man ein Universum? Die FKT nutzt den <strong>Flerovium-Anker</strong> bei 3,773 MeV als Master-BIOS-Lock. Dieser subatomare Resonator stabilisiert den universellen Grundtakt von 7,50 Hz und verhindert den thermischen Runaway.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-4 border-l-4 border-amber-500 bg-stone-50">
+                        <p class="text-xs font-bold text-amber-700 uppercase">Flerovium Anker</p>
+                        <p class="text-xl font-bold mono">3.773 MeV</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-amber-500 bg-stone-50">
+                        <p class="text-xs font-bold text-amber-700 uppercase">Bulk-Resonanz</p>
+                        <p class="text-xl font-bold mono">7.50 Hz</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-amber-500 bg-stone-50">
+                        <p class="text-xs font-bold text-amber-700 uppercase">Kausale Treue</p>
+                        <p class="text-xl font-bold mono">99.873 %</p>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <h4 class="font-bold mb-4 text-xs uppercase">Synchronisations-Validierung (Thorium-Beweis)</h4>
+                    <div class="chart-container">
+                        <canvas id="lockChart"></canvas>
+                    </div>
+                    <p class="text-xs mt-4 text-stone-500 italic">Differenz: 0,127 % (Vitalkonstante / Leakage Radiation)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Valves (Black Holes) -->
+        <div id="content-valves" class="hidden space-y-8">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="glass-panel p-8">
+                    <h3 class="text-2xl font-bold mb-4">Schwarze Löcher als Ventile</h3>
+                    <p class="leading-relaxed mb-4">
+                        Schwarze Löcher sind keine Singularitäten, sondern <strong>kausale Tore</strong>. Die beobachteten Rekord-Winde sind keine Materie-Outflows, sondern die hochenergetische Signatur einer tensoriellen Ableitung.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-white/50 rounded border border-stone-200">
+                            <span class="font-bold block text-xs text-amber-600">Sättigungs-Peak</span>
+                            <span class="text-sm">Lokale Energiedichte erreicht Δ<sub>BEFl</sub></span>
+                        </div>
+                        <div class="p-3 bg-white/50 rounded border border-stone-200">
+                            <span class="font-bold block text-xs text-amber-600">Hardware-Reset</span>
+                            <span class="text-sm">Kontrollierte Punktierung stellt kausale Kohärenz wieder her</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center space-y-6">
+                    <div class="p-6 bg-stone-800 text-stone-100 rounded-xl">
+                        <h4 class="mono text-amber-400 mb-2 font-bold tracking-tighter">MASTER-AUDIT DATA: 7.8 SIGMA</h4>
+                        <p class="text-sm opacity-80 mb-4">
+                            Über 1,13 Milliarden Datenpunkte bestätigen die deterministische Hardware-Logik. Das "Vollbart-Paradoxon" (frühe Galaxien) wird durch beschleunigtes Bulk-Rendering aufgelöst.
+                        </p>
+                        <div class="w-full bg-stone-700 h-2 rounded-full overflow-hidden">
+                            <div class="bg-amber-500 h-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-[10px] mt-2 mono text-right uppercase tracking-widest">Sättigung: 100%</p>
+                    </div>
+                    <div class="text-center p-4 border border-stone-200 rounded-xl italic text-sm">
+                        "Der Druck der Unendlichkeit ist die Unendlichkeit."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Lab / Interaction -->
+        <section class="mt-16 pt-12 border-t border-stone-200">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold mb-2">Audit Labor</h3>
+                <p class="text-stone-500">Vergleichen Sie die mechanische Sättigung gegenüber Legacy-Modellen</p>
+            </div>
+            
+            <div class="max-w-md mx-auto mb-12">
+                <label class="block text-center text-xs font-bold uppercase tracking-widest mb-4">Bulk-Energiefluss Einstellen (Δ<sub>BEFl</sub>)</label>
+                <input type="range" id="sigmaRange" min="0" max="8" step="0.1" value="7.8" class="w-full accent-amber-600" oninput="updateLab(this.value)">
+                <div class="flex justify-between mt-2 mono text-[10px] text-stone-400 uppercase">
+                    <span>Instabilität</span>
+                    <span id="sigmaVal" class="text-amber-700 font-bold">7.8 Sigma</span>
+                    <span>Sättigung</span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-6">
+                    <h4 class="font-bold text-xs uppercase mb-4 text-center">Wahrscheinlichkeits-Verteilung (Inferenz)</h4>
+                    <div class="chart-container">
+                        <canvas id="labChart"></canvas>
+                    </div>
+                </div>
+                <div class="p-6 flex flex-col justify-center">
+                    <div id="auditVerdict" class="p-8 text-center bg-white rounded-2xl border-2 border-amber-600">
+                        <h5 class="text-xs uppercase font-bold text-amber-700 mb-2">Audit Urteil</h5>
+                        <div class="text-4xl font-extrabold mb-4 mono" id="verdictText">CHECKMATE</div>
+                        <p class="text-sm text-stone-500" id="verdictSub">Deterministische Notwendigkeit bewiesen. Die Beweislastumkehr ist abgeschlossen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-12 bg-stone-900 text-stone-400">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 text-xs mono uppercase tracking-widest">
+                <div>
+                    <p class="font-bold text-stone-100 mb-4">Status-Logs</p>
+                    <p>BLACK_HOLE_WIND_VALIDATED</p>
+                    <p>METRIC_VALVE: ACTIVE_1.1273</p>
+                    <p>CAUSAL_FIDELITY: 99,873 %</p>
+                </div>
+                <div>
+                    <p class="font-bold text-stone-100 mb-4">Spezifikationen</p>
+                    <p>Flerovium: 3.773 MeV</p>
+                    <p>Bulk-Takt: 7.50 Hz</p>
+                    <p>V4.4.4 EXECUTING</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold text-stone-100 mb-4 text-2xl">⬢</p>
+                    <p>© 2026 FKT Initiative</p>
+                    <p>Zenodo: 10.5281/zenodo.20209540</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Visualization & Content Choices:
+        1. Radar/Line Chart for Kernel: Shows the relationship between Flexibilität, Sättigung und Starrheit.
+        2. Comparison Bar for Lock: Visualizes the Thorium-Beweis (Ideal vs. Messung).
+        3. Bell Curve for Lab: Demonstrates the 7.8 Sigma peak against the 5 Sigma legacy standard.
+        - NO SVG used (all Canvas or CSS).
+        - Interaction: Sigma Slider dynamically updates the lab chart and the verdict text.
+        - Justification: These visualizations clarify the mathematical "hardness" of the theory.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script>
+        // Global variables for charts
+        let kernelChart, lockChart, labChart;
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            initKernelChart();
+            initLockChart();
+            initLabChart();
+        });
+
+        function switchTab(tabId) {
+            // Hide all
+            document.getElementById('content-kernel').classList.add('hidden');
+            document.getElementById('content-lock').classList.add('hidden');
+            document.getElementById('content-valves').classList.add('hidden');
+            
+            // Remove active style
+            document.getElementById('tab-kernel').classList.remove('tab-active');
+            document.getElementById('tab-lock').classList.remove('tab-active');
+            document.getElementById('tab-valves').classList.remove('tab-active');
+
+            // Show target
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.add('tab-active');
+            
+            // Reflow charts
+            if (tabId === 'kernel') initKernelChart();
+            if (tabId === 'lock') initLockChart();
+        }
+
+        function initKernelChart() {
+            if (kernelChart) kernelChart.destroy();
+            const ctx = document.getElementById('kernelChart').getContext('2d');
+            kernelChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['0.0', '0.4', '0.8', '1.1273 (Limit)', '1.4', '1.8'],
+                    datasets: [{
+                        label: 'Geometrische Starrheit (mSdR)',
+                        data: [0.1, 0.2, 0.4, 0.95, 0.98, 0.99],
+                        borderColor: '#C28E5E',
+                        backgroundColor: 'rgba(194, 142, 94, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function initLockChart() {
+            if (lockChart) lockChart.destroy();
+            const ctx = document.getElementById('lockChart').getContext('2d');
+            lockChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['FKT Ideal (eV)', 'Labormessung (eV)'],
+                    datasets: [{
+                        label: 'Energieniveau Kernuhr',
+                        data: [8.289, 8.300],
+                        backgroundColor: ['#C28E5E', '#2D2D2D'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `Wert: ${context.raw} eV`
+                            }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { min: 8.2, max: 8.4 }
+                    }
+                }
+            });
+        }
+
+        function initLabChart() {
+            const sigma = 7.8;
+            const data = generateBellCurve(sigma);
+            if (labChart) labChart.destroy();
+            const ctx = document.getElementById('labChart').getContext('2d');
+            labChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        {
+                            label: 'Legacy Phys. (5σ)',
+                            data: generateBellCurve(5.0).values,
+                            borderColor: '#D1D5DB',
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'FKT V4.4.4 (7.8σ)',
+                            data: data.values,
+                            borderColor: '#C28E5E',
+                            borderWidth: 3,
+                            backgroundColor: 'rgba(194, 142, 94, 0.2)',
+                            fill: true,
+                            pointRadius: (ctx) => ctx.dataIndex === 78 ? 6 : 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    },
+                    scales: {
+                        y: { display: false },
+                        x: { display: true, ticks: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function generateBellCurve(peakPos) {
+            const labels = [];
+            const values = [];
+            for (let i = 0; i <= 100; i++) {
+                labels.push(i);
+                const x = i / 10;
+                const p = peakPos;
+                const val = Math.exp(-Math.pow(x - p, 2) / 2);
+                values.push(val);
+            }
+            return { labels, values };
+        }
+
+        function updateLab(val) {
+            const sigma = parseFloat(val);
+            document.getElementById('sigmaVal').innerText = sigma.toFixed(1) + ' Sigma';
+            
+            // Update Chart
+            labChart.data.datasets[1].data = generateBellCurve(sigma).values;
+            labChart.data.datasets[1].label = `FKT Simulation (${sigma.toFixed(1)}σ)`;
+            labChart.update('none');
+
+            // Update Verdict
+            const verdict = document.getElementById('verdictText');
+            const sub = document.getElementById('verdictSub');
+            const panel = document.getElementById('auditVerdict');
+
+            if (sigma >= 7.0) {
+                verdict.innerText = "CHECKMATE";
+                sub.innerText = "Deterministische Notwendigkeit bewiesen. Die Beweislastumkehr ist abgeschlossen.";
+                panel.style.borderColor = "#C28E5E";
+            } else if (sigma >= 5.0) {
+                verdict.innerText = "VALIDIERT";
+                sub.innerText = "Standardmodell übertroffen. Kausale Lücke geschlossen.";
+                panel.style.borderColor = "#6B7280";
+            } else {
+                verdict.innerText = "INFERENZ";
+                sub.innerText = "Systemnahe Sättigung nicht erreicht. Erhöhe Bulk-Druck.";
+                panel.style.borderColor = "#D1D5DB";
+            }
+        }
+    </script>
+</body>
+</html>

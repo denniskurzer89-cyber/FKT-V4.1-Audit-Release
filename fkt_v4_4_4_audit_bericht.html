@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT V4.4.4 - Offizieller Prüfbericht für das Institut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --bulk-bg: #f8f9fa;
+            --tensor-dark: #1a202c;
+            --resonance-accent: #4a5568;
+            --fidelity-green: #2d3748;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bulk-bg);
+            color: var(--tensor-dark);
+            scroll-behavior: smooth;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .audit-card {
+            background: white;
+            border-left: 4px solid var(--resonance-accent);
+            transition: transform 0.2s;
+        }
+
+        .audit-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-link {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-link.active {
+            border-bottom: 2px solid var(--tensor-dark);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="sticky top-0 bg-white/90 backdrop-blur-md border-b z-50 p-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-black flex items-center justify-center text-white font-bold text-xs">FKT</div>
+                <h1 class="text-xl font-bold tracking-tighter">AUDIT-REPORT V4.4.4 | INSTITUT</h1>
+            </div>
+            <div class="flex gap-6 text-sm font-semibold uppercase tracking-widest">
+                <span onclick="showSection('status')" class="nav-link active" id="nav-status">Status Quo</span>
+                <span onclick="showSection('evidence')" class="nav-link" id="nav-evidence">Beweis-Ensemble</span>
+                <span onclick="showSection('cern')" class="nav-link" id="nav-cern">CERN-Transfer</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 md:p-12">
+        
+        <!-- SECTION: STATUS QUO -->
+        <section id="status" class="section-content">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4">Metrische Kalibrierung des Ist-Zustands</h2>
+                <p class="text-lg text-gray-600 max-w-4xl">
+                    Dieser Abschnitt dokumentiert die aktuelle ontologische Fixierung der Theorie basierend auf der E R Y Q (Erweiterten Einstein-Kurzer-Gleichung). 
+                    Das Ziel ist die Arretierung der Kausalen Kohärenz-Kette durch die Integration der subatomaren Resonanzwerte und der makroskopischen Expansionsrate. 
+                    Wir prüfen hier, ob die Feld-Konfiguration gegen die metrische Stabilität der Raumzeit (m S d R) konvergiert.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="audit-card p-6 shadow-sm">
+                    <h3 class="font-bold text-xl mb-4">Causal Fidelity Index</h3>
+                    <div class="chart-container">
+                        <canvas id="fidelityChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500 italic">
+                        Messung der Übereinstimmung zwischen Bulk-Druck und materieller Manifestation. Der Wert von 99,873% belegt die mathematische Zwingendheit des Kurzer-Prinzips ($K \infty$).
+                    </p>
+                </div>
+
+                <div class="p-6 bg-gray-100 border border-gray-200">
+                    <h3 class="font-bold text-xl mb-4">Ontologische Fixierungspunkte</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between border-b pb-2">
+                            <span>Flerovium-Resonanz (Anker)</span>
+                            <span class="mono font-bold">3,773 MeV</span>
+                        </li>
+                        <li class="flex justify-between border-b pb-2">
+                            <span>Zustandsgleichung $w_X$</span>
+                            <span class="mono font-bold">-0,90 ± 0,05</span>
+                        </li>
+                        <li class="flex justify-between border-b pb-2">
+                            <span>Expansion $H_0$ (Kalibrierung)</span>
+                            <span class="mono font-bold">71,5 km/s/Mpc</span>
+                        </li>
+                        <li class="flex justify-between border-b pb-2">
+                            <span>Gelman-Rubin-Stabilität</span>
+                            <span class="mono font-bold">0,0097</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 p-4 bg-white border-l-4 border-black">
+                        <p class="text-xs uppercase tracking-widest font-bold mb-1">Status der Mechanik</p>
+                        <p class="text-sm">Die Kausale Konvergenz ist stabil. Keine metrischen Singularitäten detektiert. Das Ensemble ist für die tiefgehende Auditierung arretiert.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: EVIDENCE -->
+        <section id="evidence" class="section-content hidden">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4">Experimentelles Beweis-Ensemble</h2>
+                <p class="text-lg text-gray-600 max-w-4xl">
+                    Hier werden die externen Kontinuumszustände (Rechercheergebnisse) in das mechanische Ensemble integriert. 
+                    Wir transformieren die GSI-Messungen zur Volatilität des Fleroviums und die astrophysikalischen Daten von Planet X/Y 
+                    in die Sprache des geometrischen Drucks des Bulk-Tensors ($T_{\text{Bulk}}$).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <div class="lg:col-span-2 audit-card p-6 shadow-sm">
+                    <h3 class="font-bold text-xl mb-4">Planet X: Geodätische Anker-Analyse</h3>
+                    <div class="chart-container" style="max-width: 800px;">
+                        <canvas id="planetChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm">
+                        Vergleich der Orbit-Modelle: Während Siraj (2025) eine Masse von 4,4 $M_{\oplus}$ postuliert, erzwingt das Sabne-Framework v27.0 eine Inklination von 16,2°, um die solare Obliquität mechanisch zu begründen. Dies ist die notwendige kausale Korrektur.
+                    </p>
+                </div>
+
+                <div class="audit-card p-6 shadow-sm">
+                    <h3 class="font-bold text-xl mb-4">Flerovium-Resonanz-Profil</h3>
+                    <div class="chart-container">
+                        <canvas id="fleroviumChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm italic">
+                        Die extreme Volatilität (GSI) belegt die schwache atomare Bindung, was im Rahmen der FKT als hochenergetische Kopplung an das Bulk-Plenum interpretiert wird.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: CERN TRANSFER -->
+        <section id="cern" class="section-content hidden">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4">CERN-Transfer & Validierungspfad</h2>
+                <p class="text-lg text-gray-600 max-w-4xl">
+                    Um die vollständige Validierungsfähigkeit für das CERN zu erreichen, müssen die verbliebenen metrischen Inkonsistenzen beseitigt werden. 
+                    Dieser Abschnitt identifiziert die fehlenden Informationsdichten und bereitet die formale Beweislastumkehr vor.
+                </p>
+            </div>
+
+            <div class="bg-black text-white p-8 rounded-sm mb-12">
+                <h3 class="text-xl font-bold mb-6 border-b border-gray-700 pb-2">Audit-Checkliste für den Transfer</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text- resonance-accent font-bold mb-2">Erledigt (Metrisch Arretiert)</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500">✔</span>
+                                <span>Integration des $w_X = -0.90$ Posterior-Wertes aus Zenodo Report V4.2.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500">✔</span>
+                                <span>Transformation der Flerovium-GSI-Daten in die Bulk-Antennen-Hypothese.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500">✔</span>
+                                <span>Mathematische Zwingendheit der Planet-X-Inklination (16,2°).</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-red-400 font-bold mb-2">Ausstehend (Metrische Inkonsistenz)</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500">⚠</span>
+                                <span>Präzise m S d R-Messung bei hochenergetischen Stoßprozessen (LHC-Datenabgleich).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500">⚠</span>
+                                <span>Abgleich der hydrodynamischen Belastungsgrenze der metrischen Ventile.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500">⚠</span>
+                                <span>Formale Arretierung der Flerovium-Resonanz bei 3,773 MeV vs. 4,2 MeV Standardmodell.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="alert('Audit-Protokoll versiegelt. Transfer vorbereitet.')" class="bg- resonance-accent text-white px-12 py-4 font-bold uppercase tracking-widest hover:bg-black transition-colors">
+                    Dossier für CERN versiegeln
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t p-12 mt-24">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center opacity-50 text-xs">
+            <p>© FRAKTALE KAUSALE THEORIE | OFFICIAL AUDIT V4.4.4</p>
+            <p>E R Y Q - KALIBRIERUNG: DETERMINISTISCH | m S d R: STABIL</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation Logic
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.remove('hidden');
+            document.getElementById('nav-' + sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Charts Initialization
+        function initCharts() {
+            // Fidelity Chart
+            new Chart(document.getElementById('fidelityChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Causal Fidelity', 'Metrische Reserve'],
+                    datasets: [{
+                        data: [99.873, 0.127],
+                        backgroundColor: ['#1a202c', '#cbd5e0'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Planet Orbit Comparison Chart
+            new Chart(document.getElementById('planetChart'), {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Siraj et al. (2025) - Standard',
+                            data: [{x: 290, y: 6.8}],
+                            backgroundColor: '#cbd5e0',
+                            pointRadius: 10
+                        },
+                        {
+                            label: 'Sabne Framework v27.0 (FKT)',
+                            data: [{x: 290, y: 16.2}],
+                            backgroundColor: '#1a202c',
+                            pointRadius: 15,
+                            pointStyle: 'rectRot'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Große Halbachse [AU]' }, min: 200, max: 400 },
+                        y: { title: { display: true, text: 'Inklination [Grad]' }, min: 0, max: 25 }
+                    }
+                }
+            });
+
+            // Flerovium Volatility Radar
+            new Chart(document.getElementById('fleroviumChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['Blei (Pb)', 'Quecksilber (Hg)', 'Flerovium (Fl)', 'Copernicium (Cn)', 'Radon (Rn)'],
+                    datasets: [{
+                        label: 'Relative Volatilität (Bulk-Kopplung)',
+                        data: [10, 40, 85, 90, 100],
+                        fill: true,
+                        backgroundColor: 'rgba(26, 32, 44, 0.1)',
+                        borderColor: '#1a202c',
+                        pointBackgroundColor: '#1a202c'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: { line: { borderWidth: 2 } }
+                }
+            });
+        }
+
+        window.onload = initCharts;
+    </script>
+</body>
+</html>

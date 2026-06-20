@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT V4.4.4: Raumzeit-Kristallisation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf7;
+            color: #2d2a26;
+            scroll-behavior: smooth;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 220, 200, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(12px, 1fr));
+            gap: 2px;
+        }
+
+        .phase-cell {
+            aspect-ratio: 1;
+            border-radius: 1px;
+            transition: background-color 0.5s ease;
+        }
+
+        input[type=range] {
+            accent-color: #8b7355;
+        }
+
+        .nav-link {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #8b7355;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container { height: 300px; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Chosen Palette: Cosmic Sand (Warme Neutrale & Erdige Akzente) -->
+    <!-- Application Structure Plan: 
+        Die SPA ist in vier thematische Layer unterteilt: 
+        1. 'Die Theorie' (Kontextueller Einstieg), 
+        2. 'Der Prozess' (Interaktive Simulation der Kristallisation), 
+        3. 'Daten-Explorer' (Quantitative Visualisierung der Entropie-Änderung), 
+        4. 'Synthese' (Zusammenfassung der Erkenntnisse).
+        Dieser Aufbau wurde gewählt, um die extrem abstrakte Physik der FKT V4.4.4 schrittweise von der qualitativen Idee bis hin zur quantitativen Auswirkung begreifbar zu machen, anstatt nur den Text des Berichts zu replizieren.
+    -->
+    <!-- Visualization & Content Choices: 
+        - Phasen-Simulator: Ein HTML-Grid nutzt CSS-Klassen, um die Verdichtung der Raumzeit-Struktur visuell darzustellen (Vom Gas zum Kristall).
+        - Chart.js: Ein Liniendiagramm vergleicht die klassische Hawking-Entropie mit der FKT-Kristallisationskurve.
+        - Interaktive Slider: Erlauben die Manipulation der BH-Masse, was Echtzeit-Updates in Text und Grafik auslöst.
+        - JS State Management: Ein zentrales Objekt steuert die Synchronität zwischen Slider, Textblöcken und Visuals.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-stone-200">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <span class="font-bold tracking-tight text-stone-800">FKT <span class="text-amber-700">V4.4.4</span></span>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
+                <a onclick="scrollToSection('intro')" class="nav-link">Theorie</a>
+                <a onclick="scrollToSection('simulator')" class="nav-link">Simulator</a>
+                <a onclick="scrollToSection('data')" class="nav-link">Analytik</a>
+                <a onclick="scrollToSection('conclusion')" class="nav-link">Fazit</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-12 px-4">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Section: Intro -->
+            <section id="intro" class="mb-20 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight">Raumzeit-Kristallisation an Schwarzen Löchern</h1>
+                <p class="text-lg text-stone-600 max-w-3xl mx-auto leading-relaxed">
+                    Der Bericht FKT V4.4.4 stellt ein revolutionäres Modell vor: Schwarze Löcher sind keine Singularitäten, sondern Orte, an denen die Raumzeit selbst einen Phasenübergang durchläuft. Erforschen Sie hier interaktiv, wie Information erhalten bleibt, wenn Geometrie kristallisiert.
+                </p>
+            </section>
+
+            <!-- Section: Simulator -->
+            <section id="simulator" class="mb-24">
+                <div class="glass-panel rounded-3xl p-8 md:p-12 shadow-sm">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-bold text-stone-800 mb-4">Der Kristallisations-Prozess</h2>
+                        <p class="text-stone-600">
+                            Dieser Bereich visualisiert den Übergang der Raumzeit-Matrix. Nutzen Sie den Regler, um die Verdichtung der Information am Ereignishorizont zu simulieren. Beobachten Sie, wie sich die Struktur von einem ungeordneten Zustand (links) in ein hochgeordnetes Gitter (rechts) wandelt.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <div class="mb-8">
+                                <label class="block text-sm font-semibold text-stone-500 uppercase tracking-wider mb-2">Kristallisationsgrad: <span id="phase-label" class="text-amber-700">Flüssig</span></label>
+                                <input type="range" id="stage-slider" min="0" max="100" value="20" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                            
+                            <div id="status-card" class="bg-stone-50 border border-stone-200 rounded-xl p-6">
+                                <h3 id="stage-title" class="font-bold text-lg mb-2">Quantenflüssigkeit</h3>
+                                <p id="stage-desc" class="text-sm text-stone-600 leading-relaxed">
+                                    Die Raumzeit ist noch flexibel. Information wird chaotisch verteilt, aber die ersten Keime der Ordnung bilden sich am Horizont.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center">
+                            <div class="w-full max-w-[300px] p-4 bg-white rounded-2xl shadow-inner border border-stone-100">
+                                <div id="visual-grid" class="phase-grid">
+                                    <!-- Cells generated via JS -->
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs text-stone-400 italic">Abstraktion der Raumzeit-Gitterstruktur</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Data -->
+            <section id="data" class="mb-24">
+                <div class="flex flex-col items-center mb-12">
+                    <h2 class="text-3xl font-bold text-stone-800 mb-4">Entropie-Verlauf im FKT-Modell</h2>
+                    <p class="text-stone-600 text-center max-w-2xl">
+                        Im Gegensatz zur klassischen Theorie, in der die Entropie unendlich wächst, zeigt das FKT V4.4.4 Modell eine Sättigung durch Kristallisation. Dies löst das Informationsparadoxon auf.
+                    </p>
+                </div>
+
+                <div class="chart-container glass-panel rounded-2xl p-4 md:p-6 shadow-sm">
+                    <canvas id="entropyChart"></canvas>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 mt-12">
+                    <div class="p-6 border-l-4 border-amber-600 bg-white shadow-sm">
+                        <div class="text-2xl font-bold text-stone-800">Symmetrie</div>
+                        <p class="text-sm text-stone-500 mt-2">Wiederherstellung der globalen Symmetrie durch Gitterordnung.</p>
+                    </div>
+                    <div class="p-6 border-l-4 border-stone-400 bg-white shadow-sm">
+                        <div class="text-2xl font-bold text-stone-800">Speicherung</div>
+                        <p class="text-sm text-stone-500 mt-2">Information wird in den Gitterdefekten (Dislokationen) stabilisiert.</p>
+                    </div>
+                    <div class="p-6 border-l-4 border-stone-800 bg-white shadow-sm">
+                        <div class="text-2xl font-bold text-stone-800">Endzustand</div>
+                        <p class="text-sm text-stone-500 mt-2">Der 'Gefrorene Stern' als finale Auflösung der Singularität.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Conclusion -->
+            <section id="conclusion" class="mb-20">
+                <div class="bg-stone-900 text-stone-100 rounded-3xl p-8 md:p-16 overflow-hidden relative">
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-bold mb-6">Wissenschaftliche Synthese</h2>
+                        <div class="grid md:grid-cols-2 gap-10">
+                            <div>
+                                <p class="text-stone-400 leading-relaxed mb-4">
+                                    Die Anwendung der FKT (Fraktalen Quanten Theorie) auf Schwarze Löcher transformiert unser Verständnis von Extremereignissen. Anstatt des Kollapses in einen punktförmigen Zustand zeigt die Analyse eine strukturelle Festigung.
+                                </p>
+                                <p class="text-stone-400 leading-relaxed">
+                                    Dies bedeutet, dass Schwarze Löcher die stabilsten Archivierungssysteme des Universums sind – Raumzeit-Kristalle von höchster Reinheit.
+                                </p>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <ul class="space-y-4">
+                                    <li class="flex items-center space-x-3">
+                                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                        <span>Keine Singularität, keine Unendlichkeit</span>
+                                    </li>
+                                    <li class="flex items-center space-x-3">
+                                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                        <span>Information ist geometrisch codiert</span>
+                                    </li>
+                                    <li class="flex items-center space-x-3">
+                                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                        <span>Quanten-Geometrie folgt Kristallgesetzen</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative background element via CSS -->
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-amber-900/20 rounded-full blur-3xl"></div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-stone-100 py-12 border-t border-stone-200">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-stone-500 text-sm">
+            <p>© 2024 FKT Analysis Group | Projekt-ID: V4.4.4</p>
+            <div class="mt-4 md:mt-0 flex space-x-6">
+                <span>Methodik: Fraktale Quanten-Modellierung</span>
+                <span>Status: Validiert</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- State Management ---
+        const state = {
+            stage: 20,
+            phases: [
+                { threshold: 0, title: "Quanten-Gas", desc: "Maximale Entropie. Die Raumzeit fluktuiert wild ohne feste Struktur.", color: "#e7e5e4", label: "Gasförmig" },
+                { threshold: 30, title: "Raumzeit-Flüssigkeit", desc: "Erste Nahordnung tritt auf. Kohärenzbereiche beginnen zu wachsen.", color: "#d6d3d1", label: "Flüssig" },
+                { threshold: 60, title: "Kritische Sättigung", desc: "Der Punkt ohne Wiederkehr. Das Gitter wird starr und Information fixiert.", color: "#a8a29e", label: "Viskos" },
+                { threshold: 85, title: "Vollendeter Kristall", desc: "Perfekte Ordnung. Die Geometrie ist vollständig kristallisiert und stabil.", color: "#78716c", label: "Kristallin" }
+            ]
+        };
+
+        // --- UI Elements ---
+        const slider = document.getElementById('stage-slider');
+        const phaseLabel = document.getElementById('phase-label');
+        const stageTitle = document.getElementById('stage-title');
+        const stageDesc = document.getElementById('stage-desc');
+        const visualGrid = document.getElementById('visual-grid');
+        const statusCard = document.getElementById('status-card');
+
+        // --- Initialize Grid ---
+        function createGrid() {
+            visualGrid.innerHTML = '';
+            for (let i = 0; i < 256; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'phase-cell bg-stone-200';
+                visualGrid.appendChild(cell);
+            }
+        }
+
+        // --- Update Logic ---
+        function updateUI() {
+            const val = parseInt(slider.value);
+            const currentPhase = [...state.phases].reverse().find(p => val >= p.threshold);
+            
+            // Text Update
+            phaseLabel.innerText = currentPhase.label;
+            stageTitle.innerText = currentPhase.title;
+            stageDesc.innerText = currentPhase.desc;
+            
+            // Grid Visual Update
+            const cells = document.querySelectorAll('.phase-cell');
+            cells.forEach((cell, idx) => {
+                const probability = val / 100;
+                // Add some pseudo-randomness for organic growth look
+                const isOrdered = (Math.sin(idx * 0.5) + 1) / 2 < (probability * 1.2);
+                
+                if (val > 80) {
+                    // Regular pattern for crystal
+                    cell.style.backgroundColor = (idx % 2 === 0) ? '#8b7355' : '#57534e';
+                } else if (isOrdered) {
+                    cell.style.backgroundColor = '#a8a29e';
+                } else {
+                    cell.style.backgroundColor = '#e7e5e4';
+                }
+            });
+
+            statusCard.style.borderLeft = `4px solid ${val > 50 ? '#8b7355' : '#d6d3d1'}`;
+        }
+
+        slider.addEventListener('input', updateUI);
+
+        // --- Chart.js Configuration ---
+        let entropyChart;
+        function initChart() {
+            const ctx = document.getElementById('entropyChart').getContext('2d');
+            
+            const labels = ['Start', 'Phase 1', 'Phase 2', 'Phase 3', 'Phase 4', 'Gleichgewicht'];
+            const dataHawking = [10, 30, 60, 90, 130, 180];
+            const dataFKT = [10, 35, 55, 65, 70, 72];
+
+            entropyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Klassische Entropie (Hawking)',
+                            data: dataHawking,
+                            borderColor: '#d6d3d1',
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'FKT Kristallisations-Entropie',
+                            data: dataFKT,
+                            borderColor: '#8b7355',
+                            backgroundColor: 'rgba(139, 115, 85, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 12, family: 'Inter' },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Entropie-Maß (S/k)' },
+                            grid: { color: '#f3f4f6' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Navigation ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Startup ---
+        window.onload = () => {
+            createGrid();
+            updateUI();
+            initChart();
+        };
+
+    </script>
+</body>
+</html>
