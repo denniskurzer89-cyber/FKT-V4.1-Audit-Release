@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT-Audit: Planetenforschung & Ozeanwelten</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fcfaf7; color: #333; }
+        .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        .nav-link.active { border-bottom: 2px solid #8b5cf6; color: #8b5cf6; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Chosen Palette: Celestial Sand (Warm Neutrals, Soft Slate, Deep Indigo Accents) -->
+<!-- Application Structure Plan: Die Anwendung ist als thematischer Explorer konzipiert. Statt einer linearen Berichtsstruktur nutzt sie ein Dashboard-Layout mit vier Hauptbereichen (Übersicht, Mars, Ozeanwelten, Exoplaneten). Dies ermöglicht es dem Nutzer, gezielt in spezifische Forschungsgebiete einzutauchen. Die Navigation erfolgt über ein fixiertes Menü. Jede Sektion beginnt mit einer Einleitung, gefolgt von interaktiven Diagrammen und Detail-Karten, um quantitative Daten (Zusammensetzung, Masse) und qualitative Erkenntnisse (Habitabilität) zu verknüpfen. -->
+<!-- Visualization & Content Choices: 
+    1. Mars-Atmosphäre -> Balkendiagramm (Chart.js) -> Vergleich der Gase -> Zeigt die Dominanz von CO2.
+    2. Ozeanwelten-Vergleich -> Interaktive Detail-Karten (JS) -> Klick auf Mond zeigt spezifische Daten -> Vergleicht chemische Signaturen von Europa/Enceladus.
+    3. Exoplaneten-Masse-Radius -> Scatter Plot (Plotly.js) -> Verteilung der Planeten -> Hilft bei der Einordnung der Erdhähnlichkeit.
+    4. Missions-Timeline -> HTML/Tailwind Stepper -> Zeitliche Einordnung -> Strukturierung der Forschungsphasen.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <span class="font-bold text-lg tracking-tight text-stone-800">FKT-AUDIT <span class="text-indigo-600">RESEARCH</span></span>
+        <div class="hidden md:flex space-x-8">
+            <button onclick="switchTab('overview')" class="nav-link active px-1 py-5 text-sm font-medium transition-colors">Übersicht</button>
+            <button onclick="switchTab('mars')" class="nav-link px-1 py-5 text-sm font-medium transition-colors">Mars-Analyse</button>
+            <button onclick="switchTab('oceans')" class="nav-link px-1 py-5 text-sm font-medium transition-colors">Ozeanwelten</button>
+            <button onclick="switchTab('exoplanets')" class="nav-link px-1 py-5 text-sm font-medium transition-colors">Exoplaneten</button>
+        </div>
+        <div class="md:hidden">
+            <select onchange="switchTab(this.value)" class="bg-stone-100 border-none text-sm rounded-lg p-2">
+                <option value="overview">Übersicht</option>
+                <option value="mars">Mars</option>
+                <option value="oceans">Ozeanwelten</option>
+                <option value="exoplanets">Exoplaneten</option>
+            </select>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-12 px-4 max-w-6xl mx-auto">
+    
+    <section id="overview" class="tab-content active space-y-12">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl font-bold text-stone-900 mb-4">Synthese der planetaren Forschung</h1>
+            <p class="text-lg text-stone-600 leading-relaxed">
+                Dieser Bericht fasst die Ergebnisse des FKT-Audits zu den drei zentralen Säulen der modernen Astrobiologie zusammen: Unser Nachbar Mars, die eisigen Ozeanmonde des äußeren Sonnensystems und die statistische Vielfalt der Exoplaneten. In diesem Abschnitt erhalten Sie einen Überblick über die Kernbotschaften und die methodische Herangehensweise der Analyse.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl glass-card shadow-sm border border-stone-200">
+                <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center mb-4 text-xl">⌬</div>
+                <h3 class="font-bold text-stone-800 mb-2">Mars Habitabilität</h3>
+                <p class="text-sm text-stone-500 italic">Analyse der Wasservergangenheit und der heutigen atmosphärischen Barrieren für Leben.</p>
+            </div>
+            <div class="p-6 rounded-2xl glass-card shadow-sm border border-stone-200">
+                <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4 text-xl">≋</div>
+                <h3 class="font-bold text-stone-800 mb-2">Ocean Worlds</h3>
+                <p class="text-sm text-stone-500 italic">Untersuchung von Enceladus und Europa als potenzielle Träger flüssigen Wassers unter Eiskrusten.</p>
+            </div>
+            <div class="p-6 rounded-2xl glass-card shadow-sm border border-stone-200">
+                <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4 text-xl">⛭</div>
+                <h3 class="font-bold text-stone-800 mb-2">Exoplaneten Bulk</h3>
+                <p class="text-sm text-stone-500 italic">Statistische Einordnung von über 5.000 Planeten basierend auf Dichte und Zusammensetzung.</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border border-stone-200">
+            <h2 class="text-2xl font-bold mb-6">Forschungstrends & Meilensteine</h2>
+            <div class="relative pl-8 border-l-2 border-indigo-100 space-y-8">
+                <div>
+                    <div class="absolute -left-2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-white"></div>
+                    <h4 class="font-bold text-stone-800">Fokus Mars (2020-2024)</h4>
+                    <p class="text-stone-500 text-sm">Probenentnahme durch Perseverance und Suche nach organischen Molekülen in Sedimentgestein.</p>
+                </div>
+                <div>
+                    <div class="absolute -left-2 w-4 h-4 bg-emerald-500 rounded-full border-4 border-white"></div>
+                    <h4 class="font-bold text-stone-800">Ozean-Exploration (Geplant)</h4>
+                    <p class="text-stone-500 text-sm">Vorbereitung der Europa Clipper Mission zur Kartierung der chemischen Energiequellen im Ozean.</p>
+                </div>
+                <div>
+                    <div class="absolute -left-2 w-4 h-4 bg-amber-500 rounded-full border-4 border-white"></div>
+                    <h4 class="font-bold text-stone-800">Exoplaneten-Charakterisierung</h4>
+                    <p class="text-stone-500 text-sm">Einsatz des JWST zur Analyse von Atmosphären kleiner Gesteinsplaneten im TRAPPIST-System.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mars" class="tab-content space-y-8">
+        <div class="max-w-3xl">
+            <h2 class="text-3xl font-bold text-stone-900 mb-4">Mars: Die Grenzen der Biosphäre</h2>
+            <p class="text-stone-600">
+                Die Mars-Analyse des FKT-Audits konzentriert sich auf die drastische Veränderung der Atmosphäre und den Verlust des flüssigen Wassers. Während die Oberfläche heute lebensfeindlich ist, deuten geochemische Daten auf eine feuchte Vergangenheit hin. Hier sehen Sie die aktuelle atmosphärische Bilanz im Vergleich.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="bg-white p-6 rounded-2xl border border-stone-100 shadow-sm">
+                <h3 class="text-lg font-semibold mb-6 text-center text-stone-700">Atmosphärische Zusammensetzung (%)</h3>
+                <div class="chart-container">
+                    <canvas id="marsChart"></canvas>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="p-5 bg-stone-50 rounded-xl border-l-4 border-orange-400">
+                    <h4 class="font-bold text-stone-800">Herausforderung: Niedriger Druck</h4>
+                    <p class="text-sm text-stone-600 mt-1">Mit nur 0,6% des Erddrucks kann flüssiges Wasser auf dem Mars nicht stabil existieren; es sublimiert sofort oder gefriert.</p>
+                </div>
+                <div class="p-5 bg-stone-50 rounded-xl border-l-4 border-indigo-400">
+                    <h4 class="font-bold text-stone-800">Spurengase & Methan</h4>
+                    <p class="text-sm text-stone-600 mt-1">Die variablen Methan-Detektionen bleiben rätselhaft und könnten entweder auf geologische oder biologische Aktivität hindeuten.</p>
+                </div>
+                <div class="p-5 bg-stone-50 rounded-xl border-l-4 border-stone-400">
+                    <h4 class="font-bold text-stone-800">Regolith-Chemie</h4>
+                    <p class="text-sm text-stone-600 mt-1">Perchlorate im Boden machen die Oberfläche toxisch, könnten aber für Mikroben als Energiequelle dienen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="oceans" class="tab-content space-y-8">
+        <div class="max-w-3xl">
+            <h2 class="text-3xl font-bold text-stone-900 mb-4">Ozeanwelten: Leben im Dunkeln</h2>
+            <p class="text-stone-600">
+                Im Gegensatz zum Mars bieten die Eismonde Enceladus und Europa geschützte Umgebungen. Das Audit bewertet hier die "In-situ"-Daten von Flybys und die Wahrscheinlichkeit hydrothermaler Aktivität am Meeresgrund. Wählen Sie einen Himmelskörper, um Details zu sehen.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div id="card-europa" onclick="selectOcean('europa')" class="cursor-pointer transition-all hover:scale-[1.02] p-8 rounded-3xl bg-blue-50 border-2 border-blue-100 text-center shadow-lg shadow-blue-900/5">
+                <div class="text-5xl mb-4">❄️</div>
+                <h3 class="text-2xl font-bold text-blue-900">Europa (Jupiter)</h3>
+                <p class="text-blue-700/70 mt-2 text-sm uppercase tracking-widest font-semibold">Starke Gezeitenkräfte</p>
+            </div>
+            <div id="card-enceladus" onclick="selectOcean('enceladus')" class="cursor-pointer transition-all hover:scale-[1.02] p-8 rounded-3xl bg-slate-50 border-2 border-slate-200 text-center">
+                <div class="text-5xl mb-4">🌋</div>
+                <h3 class="text-2xl font-bold text-slate-800 text-center">Enceladus (Saturn)</h3>
+                <p class="text-slate-500 mt-2 text-sm uppercase tracking-widest font-semibold">Aktive Kryovulkane</p>
+            </div>
+        </div>
+
+        <div id="ocean-detail" class="bg-white p-8 rounded-3xl border border-stone-200 min-h-[200px] flex flex-col justify-center items-center text-center">
+            <p class="text-stone-400 italic">Wählen Sie oben einen Mond aus, um die Analyse-Ergebnisse anzuzeigen.</p>
+        </div>
+    </section>
+
+    <section id="exoplanets" class="tab-content space-y-8">
+        <div class="max-w-3xl">
+            <h2 class="text-3xl font-bold text-stone-900 mb-4">Exoplaneten: Die galaktische Inventur</h2>
+            <p class="text-stone-600">
+                Das Audit wertet die Daten der Kepler- und TESS-Missionen aus. Die zentrale Erkenntnis: "Super-Erden" und "Mini-Neptune" dominieren die Galaxis, obwohl sie in unserem Sonnensystem fehlen. Das Diagramm zeigt das Verhältnis von Masse zu Radius, welches Rückschlüsse auf die Dichte zulässt.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm overflow-hidden">
+            <div id="exoplanetPlot" class="w-full h-[500px]"></div>
+            <div class="mt-4 p-4 bg-amber-50 rounded-xl text-sm text-amber-800 border border-amber-100">
+                <strong>Hinweis:</strong> Planeten oberhalb der Erddichte-Kurve sind vermutlich massiv eisenhaltig, während Planeten weit darunter dicke Gashüllen oder einen hohen Wasseranteil besitzen müssen.
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="mt-20 border-t border-stone-200 bg-stone-50 py-12 px-4 text-center">
+    <p class="text-stone-400 text-xs uppercase tracking-widest">&copy; 2024 FKT-Audit Research Initiative | Alle Daten basieren auf simulierten Audit-Parametern.</p>
+</footer>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const indexMap = { 'overview': 0, 'mars': 1, 'oceans': 2, 'exoplanets': 3 };
+        if (navLinks[indexMap[tabId]]) navLinks[indexMap[tabId]].classList.add('active');
+        
+        if (tabId === 'mars') initMarsChart();
+        if (tabId === 'exoplanets') initExoplanetPlot();
+    }
+
+    let marsChartInstance = null;
+    function initMarsChart() {
+        const ctx = document.getElementById('marsChart').getContext('2d');
+        if (marsChartInstance) marsChartInstance.destroy();
+        
+        marsChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['CO2', 'Stickstoff', 'Argon', 'Sauerstoff', 'Sonstige'],
+                datasets: [{
+                    label: 'Anteil in %',
+                    data: [95.3, 2.7, 1.6, 0.13, 0.27],
+                    backgroundColor: ['#f97316', '#818cf8', '#94a3b8', '#34d399', '#cbd5e1'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    function selectOcean(type) {
+        const detail = document.getElementById('ocean-detail');
+        const cardE = document.getElementById('card-europa');
+        const cardEn = document.getElementById('card-enceladus');
+        
+        cardE.classList.remove('ring-4', 'ring-blue-400');
+        cardEn.classList.remove('ring-4', 'ring-slate-400');
+
+        if (type === 'europa') {
+            cardE.classList.add('ring-4', 'ring-blue-400');
+            detail.innerHTML = `
+                <div class="animate-in fade-in duration-500">
+                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Fokus: Europa</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <span class="block text-xs font-bold text-stone-400 uppercase">Ozeantiefe</span>
+                            <span class="text-xl font-bold text-blue-600">60 - 150 km</span>
+                        </div>
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <span class="block text-xs font-bold text-stone-400 uppercase">Salinität</span>
+                            <span class="text-xl font-bold text-blue-600">Ähnlich der Erde</span>
+                        </div>
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <span class="block text-xs font-bold text-stone-400 uppercase">Energiequelle</span>
+                            <span class="text-xl font-bold text-blue-600">Gezeitenreibung</span>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-stone-600 max-w-2xl mx-auto leading-relaxed">
+                        Das Audit hebt hervor, dass die Strahlung von Jupiter die Oberfläche sterilisiert, aber gleichzeitig Oxidantien erzeugt, die durch Risse in den Ozean gelangen könnten – ein kritischer Faktor für den Stoffwechsel von Leben.
+                    </p>
+                </div>
+            `;
+        } else {
+            cardEn.classList.add('ring-4', 'ring-slate-400');
+            detail.innerHTML = `
+                <div class="animate-in fade-in duration-500">
+                    <h3 class="text-2xl font-bold text-stone-800 mb-4">Fokus: Enceladus</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <span class="block text-xs font-bold text-stone-400 uppercase">Geysire</span>
+                            <span class="text-xl font-bold text-slate-700">Wasserdampf & Eis</span>
+                        </div>
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <span class="block text-xs font-bold text-stone-400 uppercase">Moleküle</span>
+                            <span class="text-xl font-bold text-slate-700">Organische Stoffe</span>
+                        </div>
+                        <div class="p-4 bg-stone-50 rounded-lg">
+                            <span class="block text-xs font-bold text-stone-400 uppercase">pH-Wert</span>
+                            <span class="text-xl font-bold text-slate-700">~ 9-11 (Alkalisch)</span>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-stone-600 max-w-2xl mx-auto leading-relaxed">
+                        Enceladus ist der Favorit des Audits für eine kurzfristige Lebenssuche, da die Geysire am Südpol Proben direkt in den Weltraum schleudern, ohne dass eine Landung oder Bohrung durch das Eis nötig ist.
+                    </p>
+                </div>
+            `;
+        }
+    }
+
+    function initExoplanetPlot() {
+        const data = [
+            {
+                x: [1, 1.2, 0.8, 4, 3, 11, 15, 20, 2, 5],
+                y: [1, 1.1, 0.9, 1.8, 1.5, 4, 3.8, 10, 1.3, 2],
+                mode: 'markers',
+                type: 'scatter',
+                name: 'Planeten',
+                marker: { 
+                    size: 12, 
+                    color: '#8b5cf6',
+                    opacity: 0.6,
+                    line: { width: 1, color: 'white' }
+                },
+                text: ['Erde', 'Venus', 'Mars', 'Super-Erde A', 'Super-Erde B', 'Neptun', 'Uranus', 'Jupiter', 'FKT-Exo-1', 'FKT-Exo-2']
+            },
+            {
+                x: [0, 25],
+                y: [0, 10.5],
+                mode: 'lines',
+                name: 'Erd-Dichte-Referenz',
+                line: { color: '#fbbf24', dash: 'dash' }
+            }
+        ];
+
+        const layout = {
+            title: 'Masse-Radius-Verteilung (Erd-Einheiten)',
+            xaxis: { title: 'Relative Masse (M⊕)', gridcolor: '#f3f4f6' },
+            yaxis: { title: 'Relativer Radius (R⊕)', gridcolor: '#f3f4f6' },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            hovermode: 'closest',
+            margin: { t: 50, b: 50, l: 50, r: 20 }
+        };
+
+        const config = { responsive: true, displayModeBar: false };
+        Plotly.newPlot('exoplanetPlot', data, layout, config);
+    }
+
+    window.onload = () => {
+        // Initialisierung
+    };
+</script>
+</body>
+</html>
