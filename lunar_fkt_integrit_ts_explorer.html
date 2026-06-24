@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunar-FKT Integritäts-Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .nav-link.active {
+            border-bottom: 2px solid #3b82f6;
+            color: #1d4ed8;
+        }
+
+        .moon-phase-indicator {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .moon-shadow {
+            position: absolute;
+            height: 100%;
+            background: #1e293b;
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Chosen Palette: Celestial Calm (Deep Indigo, Soft Slate, Azure Blue, Warm Pearl) -->
+
+<!-- Application Structure Plan: 
+Die Anwendung ist als hybrides Analyse-Dashboard konzipiert. 
+1. Header & Navigation: Ermöglicht schnellen Zugriff auf verschiedene Analyse-Ebenen.
+2. Echtzeit-Status: Eine Zusammenfassung der aktuellen Mondphase und der globalen FKT-Integritätsrate als Einstieg.
+3. Zyklische Analyse (Thematisch): Visualisiert die Korrelation zwischen Mondereignissen und Systemfehlern über Zeitreihen.
+4. Tiefenanalyse (Funktional): Erlaubt das Filtern nach Systemtypen (Elektronik vs. Mechanik).
+5. Strategie-Sektion: Bietet textliche Handlungsempfehlungen basierend auf den Daten.
+Dieser Aufbau wurde gewählt, um den Übergang von abstrakten astronomischen Daten zu konkreten technischen Auswirkungen intuitiv zu gestalten. -->
+
+<!-- Visualization & Content Choices: 
+1. Mondphasen-Status -> Information -> Canvas-basierter Indikator -> Vermittelt sofortigen Kontext der aktuellen Zyklusposition.
+2. Fehlerhäufigkeit vs. Mondphase -> Vergleich -> Bar Chart (Chart.js) -> Zeigt Spitzenwerte bei Voll- und Neumond.
+3. EMF-Fluktuationen -> Veränderung -> Line Chart (Chart.js) -> Visualisiert die atmosphärische Belastung.
+4. Integritäts-Matrix -> Organisation -> Interaktive Grid-Elemente -> Detailansicht spezifischer Systemkomponenten.
+Justierung: Alle Diagramme nutzen Canvas, kein SVG/Mermaid. Chart-Container sind für Responsivität optimiert. -->
+
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<nav class="sticky top-0 z-50 bg-white shadow-sm border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <span class="text-xl font-bold text-blue-900">LUNAR-FKT <span class="font-light italic text-slate-500">Monitor</span></span>
+            </div>
+            <div class="flex space-x-8">
+                <button onclick="showSection('dashboard')" class="nav-link active px-3 py-5 text-sm font-medium transition-colors">Dashboard</button>
+                <button onclick="showSection('analysis')" class="nav-link px-3 py-5 text-sm font-medium transition-colors text-slate-500 hover:text-blue-600">Korrelations-Analyse</button>
+                <button onclick="showSection('strategy')" class="nav-link px-3 py-5 text-sm font-medium transition-colors text-slate-500 hover:text-blue-600">Strategie</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboard" class="space-y-8 animate-fadeIn">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <h1 class="text-2xl font-bold text-slate-800 mb-2">System-Integrität & Mondzyklus</h1>
+            <p class="text-slate-600 max-w-3xl">
+                Willkommen im Analyse-Portal. Dieser Bereich verknüpft astronomische Ereignisse mit der funktionalen Integrität (FKT) kritischer Infrastrukturen. Erfahren Sie, wie gravitative Kräfte und EMF-Änderungen während der Mondphasen die Fehlerraten in hochsensiblen Systemen beeinflussen.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-xl flex items-center space-x-6">
+                <div id="moonIndicator" class="moon-phase-indicator">
+                    <div id="moonShadow" class="moon-shadow" style="width: 50%; left: 50%;"></div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Aktuelle Phase</h3>
+                    <p id="phaseName" class="text-xl font-bold text-slate-800">Zunehmender Mond</p>
+                    <p class="text-xs text-slate-400">Beleuchtung: 64%</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-xl">
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">FKT-Integritätsindex</h3>
+                <div class="flex items-end space-x-2">
+                    <span id="integrityValue" class="text-3xl font-bold text-green-600">98.4%</span>
+                    <span class="text-sm text-slate-400 mb-1">Status: Stabil</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full mt-4">
+                    <div class="bg-green-500 h-2 rounded-full" style="width: 98.4%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-xl">
+                <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Nächstes Ereignis</h3>
+                <p class="text-lg font-bold text-slate-800">Vollmond</p>
+                <p class="text-sm text-blue-600 mt-1">In 4 Tagen (Kritische Phase)</p>
+                <p class="text-xs text-slate-400 mt-2">Empfehlung: Wartungsintervall vorziehen.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Fehlerraten nach Zyklus (28 Tage)</h3>
+                <p class="text-sm text-slate-500 mb-6">Diese Grafik zeigt die durchschnittliche Anzahl an Systemanomalien pro Tag im Verlauf eines Mondzyklus. Beachten Sie die Amplituden bei Extremphasen.</p>
+                <div class="chart-container">
+                    <canvas id="errorChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">EMF-Resonanz-Stärken</h3>
+                <p class="text-sm text-slate-500 mb-6">Messung der elektromagnetischen Hintergrundrauschwerte. Erhöhte Werte korrelieren oft mit instabilen Datenübertragungsraten (FKT-I).</p>
+                <div class="chart-container">
+                    <canvas id="emfChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANALYSIS SECTION -->
+    <section id="analysis" class="hidden space-y-8 animate-fadeIn">
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl">
+            <h2 class="text-xl font-bold text-blue-900 mb-2">Tiefenanalyse der Korrelationen</h2>
+            <p class="text-blue-800 opacity-90">
+                In diesem Abschnitt explorieren wir die spezifischen Auswirkungen auf verschiedene Systemklassen. Interagieren Sie mit den Schaltern, um die Datensätze für elektronische Komponenten und mechanische Strukturen zu vergleichen.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mb-6">
+            <button onclick="updateAnalysisData('all')" class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition">Alle Systeme</button>
+            <button onclick="updateAnalysisData('elec')" class="bg-white border border-slate-200 text-slate-600 px-6 py-2 rounded-full text-sm font-medium hover:border-blue-300 transition">Elektronik (FKT-E)</button>
+            <button onclick="updateAnalysisData('mech')" class="bg-white border border-slate-200 text-slate-600 px-6 py-2 rounded-full text-sm font-medium hover:border-blue-300 transition">Mechanik (FKT-M)</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-4 bg-white rounded-xl border border-slate-100 text-center">
+                <p class="text-xs text-slate-400 uppercase font-bold">Signal-Rausch-Verhältnis</p>
+                <p id="stat1" class="text-2xl font-bold text-blue-600">-4.2 dB</p>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-slate-100 text-center">
+                <p class="text-xs text-slate-400 uppercase font-bold">Thermische Drift</p>
+                <p id="stat2" class="text-2xl font-bold text-orange-500">+1.1%</p>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-slate-100 text-center">
+                <p class="text-xs text-slate-400 uppercase font-bold">Gezeitenkraft-Spannung</p>
+                <p id="stat3" class="text-2xl font-bold text-indigo-600">Low-Impact</p>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-slate-100 text-center">
+                <p class="text-xs text-slate-400 uppercase font-bold">Integritäts-Score</p>
+                <p id="stat4" class="text-2xl font-bold text-green-600">Optimiert</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <h3 class="text-lg font-bold text-slate-800 mb-6">Vergleichende Analyse: Integrität vs. Gezeiten-Koeffizient</h3>
+            <div class="chart-container" style="height: 400px;">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- STRATEGY SECTION -->
+    <section id="strategy" class="hidden space-y-8 animate-fadeIn">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Strategische Mitigation der FKT-Risiken</h2>
+            <p class="text-slate-600">
+                Basierend auf den beobachteten Mustern haben unsere Experten vier Kernstrategien entwickelt, um die Systemintegrität während lunarer Peaks zu sichern.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-slate-50 rounded-2xl border-t-4 border-blue-500">
+                <h4 class="font-bold text-blue-900 mb-3">1. Dynamische Redundanz</h4>
+                <p class="text-sm text-slate-600">Aktivierung zusätzlicher Fehlerkorrekturprotokolle 24h vor dem Vollmond-Apex. Dies reduziert das Risiko von Paketverlusten bei hohen EMF-Werten.</p>
+            </div>
+            <div class="p-6 bg-slate-50 rounded-2xl border-t-4 border-indigo-500">
+                <h4 class="font-bold text-indigo-900 mb-3">2. Kalibrierungs-Zyklen</h4>
+                <p class="text-sm text-slate-600">Verschiebung sensibler mechanischer Kalibrierungen in die Phase des "Abnehmenden Mondes", um gravitative Störvariablen zu minimieren.</p>
+            </div>
+            <div class="p-6 bg-slate-50 rounded-2xl border-t-4 border-emerald-500">
+                <h4 class="font-bold text-emerald-900 mb-3">3. Schirmungs-Optimierung</h4>
+                <p class="text-sm text-slate-600">Einsatz von Mu-Metall-Komponenten an kritischen Schaltknoten, um die während Neumond-Ereignissen auftretenden Mikro-Einstrahlungen zu blockieren.</p>
+            </div>
+            <div class="p-6 bg-slate-50 rounded-2xl border-t-4 border-amber-500">
+                <h4 class="font-bold text-amber-900 mb-3">4. Prognostisches Monitoring</h4>
+                <p class="text-sm text-slate-600">Integration lunarer Ephemeriden-Daten direkt in das SCADA-System zur proaktiven Lastensteuerung bei kritischen Konjunktionen.</p>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 text-white p-8 rounded-2xl text-center">
+            <h3 class="text-xl font-semibold mb-4">Interaktiver Readiness-Check</h3>
+            <p class="text-slate-400 mb-6">Sind Ihre Systeme bereit für das nächste lunare Maximum?</p>
+            <button onclick="alert('Analyse gestartet... Prüfe Systemparameter...')" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-xl font-bold transition">Check jetzt ausführen</button>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-12 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-slate-400 text-sm">© 2026 Forschungszentrum für System-Integrität & Lunare Dynamik</p>
+        <p class="text-slate-300 text-xs mt-2 italic">Datenbasis: Report 88-X-12 "Mondereignisse und FKT-Integrität"</p>
+    </div>
+</footer>
+
+<script>
+    // DATA REPOSITORY
+    const reportData = {
+        labels: ['Neumond', 'Zun. Sichel', 'Halbmond', 'Zun. Dreiviertel', 'Vollmond', 'Abn. Dreiviertel', 'Letztes Viertel', 'Abn. Sichel'],
+        errorRates: [45, 12, 18, 25, 88, 30, 22, 15],
+        emfValues: [2.1, 1.8, 1.9, 2.4, 3.8, 2.7, 2.0, 1.9],
+        integrityAnalysis: {
+            all: { stats: ['-4.2 dB', '+1.1%', 'Moderate', 'Stabil'], data: [98, 97, 95, 96, 90, 94, 97, 98] },
+            elec: { stats: ['-6.8 dB', '+0.4%', 'Low', 'Sensitiv'], data: [99, 98, 96, 94, 85, 92, 98, 99] },
+            mech: { stats: ['-1.2 dB', '+2.4%', 'High', 'Vulnerable'], data: [95, 95, 94, 96, 93, 95, 96, 96] }
+        }
+    };
+
+    let errorChart, emfChart, comparisonChart;
+
+    // NAVIGATION LOGIC
+    function showSection(sectionId) {
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(sectionId).classList.remove('hidden');
+        
+        document.querySelectorAll('.nav-link').forEach(btn => {
+            btn.classList.remove('active', 'text-blue-600');
+            btn.classList.add('text-slate-500');
+            if(btn.textContent.toLowerCase().includes(sectionId.substring(0,4))) {
+                btn.classList.add('active', 'text-blue-600');
+            }
+        });
+        
+        // Refresh charts on visibility change
+        if (sectionId === 'analysis') updateAnalysisData('all');
+    }
+
+    // INITIALIZATION
+    window.onload = function() {
+        initCharts();
+        updateMoonIndicator(64); // Example value
+    };
+
+    function initCharts() {
+        // Error Chart
+        const ctxError = document.getElementById('errorChart').getContext('2d');
+        errorChart = new Chart(ctxError, {
+            type: 'bar',
+            data: {
+                labels: reportData.labels,
+                datasets: [{
+                    label: 'Fehlerfrequenz',
+                    data: reportData.errorRates,
+                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                    borderColor: '#2563eb',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // EMF Chart
+        const ctxEmf = document.getElementById('emfChart').getContext('2d');
+        emfChart = new Chart(ctxEmf, {
+            type: 'line',
+            data: {
+                labels: reportData.labels,
+                datasets: [{
+                    label: 'EMF Belastung',
+                    data: reportData.emfValues,
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Comparison Chart
+        const ctxComp = document.getElementById('comparisonChart').getContext('2d');
+        comparisonChart = new Chart(ctxComp, {
+            type: 'line',
+            data: {
+                labels: reportData.labels,
+                datasets: [{
+                    label: 'Integritäts-Verlauf (%)',
+                    data: reportData.integrityAnalysis.all.data,
+                    borderColor: '#10b981',
+                    borderWidth: 3,
+                    tension: 0.2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { min: 80, max: 100 } }
+            }
+        });
+    }
+
+    function updateAnalysisData(type) {
+        const set = reportData.integrityAnalysis[type];
+        
+        // Update stats
+        document.getElementById('stat1').innerText = set.stats[0];
+        document.getElementById('stat2').innerText = set.stats[1];
+        document.getElementById('stat3').innerText = set.stats[2];
+        document.getElementById('stat4').innerText = set.stats[3];
+
+        // Update Chart
+        comparisonChart.data.datasets[0].data = set.data;
+        comparisonChart.data.datasets[0].label = `Integrität (${type === 'elec' ? 'Elektronik' : type === 'mech' ? 'Mechanik' : 'Gesamt'})`;
+        comparisonChart.update();
+
+        // Update Button Styles
+        event.target.parentElement.querySelectorAll('button').forEach(b => {
+            b.classList.remove('bg-blue-600', 'text-white');
+            b.classList.add('bg-white', 'text-slate-600');
+        });
+        event.target.classList.add('bg-blue-600', 'text-white');
+        event.target.classList.remove('bg-white', 'text-slate-600');
+    }
+
+    function updateMoonIndicator(percent) {
+        const shadow = document.getElementById('moonShadow');
+        if (percent <= 50) {
+            shadow.style.width = (100 - percent * 2) + '%';
+            shadow.style.left = (percent * 2) + '%';
+        } else {
+            shadow.style.width = (percent - 50) * 2 + '%';
+            shadow.style.left = '0';
+            shadow.style.background = '#e2e8f0';
+            document.getElementById('moonIndicator').style.background = '#1e293b';
+        }
+    }
+</script>
+
+</body>
+</html>
