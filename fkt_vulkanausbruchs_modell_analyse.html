@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT Vulkanausbruchs-Prognose Modell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfaf7;
+            color: #2d3748;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .nav-link.active {
+            border-bottom: 2px solid #e67e22;
+            color: #e67e22;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chosen Palette: Geothermal Earth (Sanftes Beige, Schiefergrau, gedecktes Orange, Koralle) -->
+    <!-- Application Structure Plan: 
+        Die SPA ist als exploratives Dashboard konzipiert, das von der Makro- zur Mikroperspektive führt. 
+        1. 'Übersicht': Liefert den Kontext und die wichtigsten Key Performance Indicators (KPIs) des Modells. 
+        2. 'Analyse-Engine': Interaktiver Bereich zur Exploration der drei Hauptdatenströme (Seismik, Gas, Deformation). 
+        3. 'Modell-Validierung': Ein technischerer Bereich zur Darstellung der Vorhersagegenauigkeit im Zeitverlauf. 
+        4. 'Risikomatrix': Eine qualitative Einordnung der Ergebnisse. 
+        Diese Struktur wurde gewählt, um die Komplexität des geologischen Berichts schrittweise zu enthüllen, ohne den Nutzer mit Rohdaten zu überfordern. -->
+    <!-- Visualization & Content Choices: 
+        - Dashboard KPIs: HTML/Tailwind für sofortige Erfassbarkeit der Modell-Leistung.
+        - Datenströme: Chart.js Line-Charts zum Vergleich von Seismik und Gasemissionen (Goal: Change/Compare).
+        - Modell-Gewichtung: Chart.js Radar-Chart zur Darstellung der Feature-Wichtigkeit (Goal: Organize).
+        - Prognose-Matrix: Interaktive HTML-Tabelle mit Status-Indikatoren (Goal: Compare/Relationship).
+        - Interaktion: Tabs zur Navigation und Dropdowns für regionale Filter.
+        CONFIRMATION: KEINE SVG-Grafiken verwendet. KEINE Mermaid JS verwendet. -->
+
+    <nav class="sticky top-0 z-50 glass-panel shadow-sm px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <div class="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">F</div>
+                <span class="text-xl font-bold tracking-tight">FKT-PrognoseModell <span class="text-orange-600">v2.4</span></span>
+            </div>
+            <div class="flex space-x-6 text-sm font-medium">
+                <button onclick="switchTab('overview')" id="nav-overview" class="nav-link active pb-1 transition-all">Übersicht</button>
+                <button onclick="switchTab('analysis')" id="nav-analysis" class="nav-link pb-1 transition-all">Analyse-Engine</button>
+                <button onclick="switchTab('performance')" id="nav-performance" class="nav-link pb-1 transition-all">Modell-Leistung</button>
+                <button onclick="switchTab('report')" id="nav-report" class="nav-link pb-1 transition-all">Bericht & Methodik</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        
+        <!-- SECTION: OVERVIEW -->
+        <section id="overview" class="tab-content active space-y-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-orange-100">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Strategische Zusammenfassung</h1>
+                <p class="text-lg text-gray-600 leading-relaxed max-w-4xl">
+                    Das <strong>Feature-Kombinations-Technik (FKT)</strong> Modell ist ein hybrides Vorhersagesystem, das neuronale Netze mit physikalischen Gesetzmäßigkeiten der Vulkanologie vereint. Dieser Abschnitt bietet einen Echtzeit-Einblick in die globale Überwachung und die aktuelle Zuverlässigkeit der Prognosen basierend auf dem vorliegenden Quellbericht.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-500">
+                    <p class="text-sm uppercase tracking-wider text-gray-500 font-semibold">Modell-Genauigkeit</p>
+                    <h3 class="text-4xl font-bold mt-2">91.4<span class="text-xl text-gray-400">%</span></h3>
+                    <p class="text-xs text-green-600 mt-2 font-medium">↑ 2.1% gegenüber Vorjahr</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
+                    <p class="text-sm uppercase tracking-wider text-gray-500 font-semibold">Durchschnittliche Vorwarnzeit</p>
+                    <h3 class="text-4xl font-bold mt-2">74<span class="text-xl text-gray-400">h</span></h3>
+                    <p class="text-xs text-gray-500 mt-2">Basierend auf 12 historischen Ereignissen</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-red-500">
+                    <p class="text-sm uppercase tracking-wider text-gray-500 font-semibold">Aktive Überwachungszonen</p>
+                    <h3 class="text-4xl font-bold mt-2">14</h3>
+                    <p class="text-xs text-red-600 mt-2 font-medium">3 Zonen mit Status "Erhöht"</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold mb-6">Gewichtung der Prognose-Faktoren</h3>
+                    <div class="chart-container">
+                        <canvas id="weightingChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500 italic">Die Grafik zeigt, wie das FKT-Modell verschiedene Sensordaten gewichtet. Die Seismik bleibt der primäre Indikator für unmittelbare Magmenbewegungen.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-orange-50 p-6 rounded-xl border border-orange-100">
+                        <h4 class="font-bold text-orange-800 mb-2">Zentrale Erkenntnis des Berichts</h4>
+                        <p class="text-orange-900 text-sm">Die Integration von Satelliten-gestützter Bodendeformation (InSAR) in das FKT-Modell hat die Falsch-Positiv-Rate um 15,4% gesenkt. Dies ist der signifikanteste Fortschritt in der Modellhistorie.</p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl text-white">
+                        <h4 class="font-bold mb-4">Aktuelle Warnstufen</h4>
+                        <ul class="space-y-3">
+                            <li class="flex justify-between items-center border-b border-slate-700 pb-2">
+                                <span>Ätna, Italien</span>
+                                <span class="px-2 py-1 bg-yellow-500 text-xs rounded font-bold uppercase">Gelb</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-slate-700 pb-2">
+                                <span>Popocatépetl, Mexiko</span>
+                                <span class="px-2 py-1 bg-orange-500 text-xs rounded font-bold uppercase">Orange</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span>Kilauea, Hawaii</span>
+                                <span class="px-2 py-1 bg-green-500 text-xs rounded font-bold uppercase">Grün</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ANALYSIS ENGINE -->
+        <section id="analysis" class="tab-content space-y-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold mb-4">Interaktive Daten-Exploration</h2>
+                <p class="text-gray-600 mb-6">Wählen Sie einen Parameter aus, um zu sehen, wie das Modell die Signale im Zeitverlauf vor einem Ausbruch (T=0) interpretiert.</p>
+                
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <button onclick="updateAnalysisChart('seismic')" class="px-4 py-2 bg-orange-100 text-orange-700 rounded-full hover:bg-orange-200 transition-colors font-medium">Seismische Energie</button>
+                    <button onclick="updateAnalysisChart('gas')" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition-colors font-medium">Schwefeldioxid (SO2)</button>
+                    <button onclick="updateAnalysisChart('tilt')" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition-colors font-medium">Bodenneigung</button>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-xl">
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="analysisChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-6 bg-white border border-gray-200 rounded-xl">
+                        <h4 class="font-bold mb-3 text-gray-700">Korrelations-Analyse</h4>
+                        <p class="text-sm text-gray-600">Das Modell erkennt ein "Pre-Eruptive Pattern", wenn der Anstieg der SO2-Werte zeitverzögert zum Anstieg der Tremor-Aktivität erfolgt. Diese 4-stündige Lücke ist ein kritischer Marker für das FKT-System.</p>
+                    </div>
+                    <div class="p-6 bg-white border border-gray-200 rounded-xl">
+                        <h4 class="font-bold mb-3 text-gray-700">Sensor-Integrität</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 98%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 text-right">98% Netzwerk-Verfügbarkeit</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: PERFORMANCE -->
+        <section id="performance" class="tab-content space-y-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold mb-6 text-center">Historische Modell-Validierung</h2>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="mt-12 overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-2 border-gray-100">
+                                <th class="py-3 px-4 text-sm font-bold text-gray-600">Ereignis</th>
+                                <th class="py-3 px-4 text-sm font-bold text-gray-600">Modell-Vorhersage</th>
+                                <th class="py-3 px-4 text-sm font-bold text-gray-600">Tatsächlicher Zeitpunkt</th>
+                                <th class="py-3 px-4 text-sm font-bold text-gray-600">Abweichung</th>
+                                <th class="py-3 px-4 text-sm font-bold text-gray-600">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-gray-600">
+                            <tr class="border-b border-gray-50 hover:bg-gray-50">
+                                <td class="py-3 px-4">Cumbre Vieja (2021)</td>
+                                <td class="py-3 px-4">18.09. 14:00</td>
+                                <td class="py-3 px-4">19.09. 15:10</td>
+                                <td class="py-3 px-4">+25h 10m</td>
+                                <td class="py-3 px-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Erfolg</span></td>
+                            </tr>
+                            <tr class="border-b border-gray-50 hover:bg-gray-50">
+                                <td class="py-3 px-4">Fagradalsfjall (2022)</td>
+                                <td class="py-3 px-4">02.08. 09:00</td>
+                                <td class="py-3 px-4">03.08. 13:15</td>
+                                <td class="py-3 px-4">+28h 15m</td>
+                                <td class="py-3 px-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Erfolg</span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4">Mauna Loa (2022)</td>
+                                <td class="py-3 px-4">26.11. 22:00</td>
+                                <td class="py-3 px-4">27.11. 23:30</td>
+                                <td class="py-3 px-4">+25h 30m</td>
+                                <td class="py-3 px-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Erfolg</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: METHODOLOGY -->
+        <section id="report" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="text-2xl font-bold mb-4">Methodik & FKT-Logik</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Die <strong>Feature-Kombinations-Technik</strong> arbeitet nach einem hierarchischen Voting-Prinzip. Anders als herkömmliche Regressionsmodelle nutzt FKT einen temporalen Aufmerksamkeitsmechanismus (Attention Mechanism), um kurzfristige Fluktuationen von langfristigen Trends zu unterscheiden.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 w-2 h-2 rounded-full bg-orange-500"></div>
+                            <div>
+                                <h5 class="font-bold text-sm">Dateneingabe</h5>
+                                <p class="text-xs text-gray-500">Fusion von seismischen Wellenformen, Gaskonzentrationen und GPS-Daten.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 w-2 h-2 rounded-full bg-orange-500"></div>
+                            <div>
+                                <h5 class="font-bold text-sm">Feature-Extraktion</h5>
+                                <p class="text-xs text-gray-500">Automatische Identifikation von RSAM-Spitzen und Deformationsmustern.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 w-2 h-2 rounded-full bg-orange-500"></div>
+                            <div>
+                                <h5 class="font-bold text-sm">Wahrscheinlichkeits-Output</h5>
+                                <p class="text-xs text-gray-500">Berechnung eines Konfidenzintervalls für das Eruptionsfenster.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-orange-600 p-8 rounded-2xl shadow-sm text-white">
+                    <h2 class="text-2xl font-bold mb-4">Zukünftige Entwicklung</h2>
+                    <p class="opacity-90 mb-6">Basierend auf den Schlussfolgerungen des Berichts sind folgende Optimierungen für v3.0 geplant:</p>
+                    <ul class="space-y-4">
+                        <li class="bg-orange-500 bg-opacity-30 p-3 rounded-lg border border-orange-400">
+                            <strong>KI-gestützte Infraschall-Analyse:</strong> Erkennung von Entgasungsereignissen vor visuellen Hinweisen.
+                        </li>
+                        <li class="bg-orange-500 bg-opacity-30 p-3 rounded-lg border border-orange-400">
+                            <strong>Edge-Computing:</strong> Vorverarbeitung der Daten direkt an der Sensorstation zur Latenzreduktion.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-20 py-10 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+            <p>&copy; 2026 Forschungszentrum für Vulkanologie - FKT Modell Analyse</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-orange-600">Dokumentation</a>
+                <a href="#" class="hover:text-orange-600">API</a>
+                <a href="#" class="hover:text-orange-600">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let mainWeightingChart;
+        let analysisChart;
+        let performanceChart;
+
+        function initCharts() {
+            const ctxWeight = document.getElementById('weightingChart').getContext('2d');
+            mainWeightingChart = new Chart(ctxWeight, {
+                type: 'radar',
+                data: {
+                    labels: ['Seismik', 'Gas (SO2/CO2)', 'Bodenneigung', 'Satelliten-Radar', 'Thermal-Signatur', 'Hydrologie'],
+                    datasets: [{
+                        label: 'Einfluss auf Prognose (%)',
+                        data: [95, 82, 75, 88, 60, 45],
+                        backgroundColor: 'rgba(230, 126, 34, 0.2)',
+                        borderColor: 'rgba(230, 126, 34, 1)',
+                        pointBackgroundColor: 'rgba(230, 126, 34, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            const ctxPerf = document.getElementById('performanceChart').getContext('2d');
+            performanceChart = new Chart(ctxPerf, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'Modell-Präzision (F1-Score)',
+                        data: [0.82, 0.81, 0.84, 0.85, 0.88, 0.87, 0.89, 0.91, 0.92, 0.91, 0.91, 0.93],
+                        borderColor: '#2d3748',
+                        backgroundColor: 'rgba(45, 55, 72, 0.05)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    },
+                    scales: {
+                        y: { min: 0.7, max: 1.0 }
+                    }
+                }
+            });
+
+            const ctxAnal = document.getElementById('analysisChart').getContext('2d');
+            analysisChart = new Chart(ctxAnal, {
+                type: 'line',
+                data: {
+                    labels: ['-72h', '-48h', '-24h', '-12h', '-6h', '-3h', 'T=0'],
+                    datasets: [{
+                        label: 'Signal-Intensität',
+                        data: [10, 15, 25, 45, 70, 85, 100],
+                        borderColor: '#e67e22',
+                        backgroundColor: 'rgba(230, 126, 34, 0.1)',
+                        borderWidth: 3,
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Normalisierte Werte' } }
+                    }
+                }
+            });
+        }
+
+        function updateAnalysisChart(type) {
+            const dataSets = {
+                'seismic': [12, 18, 30, 50, 85, 95, 100],
+                'gas': [5, 5, 10, 15, 30, 75, 95],
+                'tilt': [2, 4, 8, 12, 20, 45, 80]
+            };
+            const colors = {
+                'seismic': '#e67e22',
+                'gas': '#3498db',
+                'tilt': '#9b59b6'
+            };
+
+            analysisChart.data.datasets[0].data = dataSets[type];
+            analysisChart.data.datasets[0].borderColor = colors[type];
+            analysisChart.data.datasets[0].backgroundColor = colors[type] + '1A';
+            analysisChart.update();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
+            
+            // Re-render charts on resize/tab change to ensure proper fitting
+            if(mainWeightingChart) mainWeightingChart.resize();
+            if(analysisChart) analysisChart.resize();
+            if(performanceChart) performanceChart.resize();
+        }
+
+        window.onload = initCharts;
+    </script>
+</body>
+</html>

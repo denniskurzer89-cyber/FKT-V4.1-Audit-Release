@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT Audit: Planet 9/10 & Vulkan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Cosmic Sand (Warm Neutrals with Deep Indigo Accents) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfaf7;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(220, 220, 220, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-link {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #4338ca;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .audit-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tag-confirmed { background-color: #dcfce7; color: #166534; }
+        .tag-hypothesis { background-color: #fef9c3; color: #854d0e; }
+        .tag-debunked { background-color: #fee2e2; color: #991b1b; }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Application Structure Plan: 
+        1. Navigation: Horizontale Leiste zur Filterung der Audit-Themen (Alles, Planet 9, Planet 10, Vulkan).
+        2. Hero-Sektion: Zusammenfassung des Audits und zentrale wissenschaftliche Fragestellung.
+        3. Dashboard-Grid: 
+            - Vergleichende Statistik (Entfernung/Masse) via Chart.js.
+            - Interaktive Timeline der Entdeckungsversuche.
+            - Detail-Karten mit Evidenz-Check (Fakt vs. Fiktion).
+        4. Synthese: Abschließende Bewertung der Wahrscheinlichkeit.
+        Dieses Design wurde gewählt, um die trockene wissenschaftliche Analyse in eine intuitive 'Ermittlungs-Akte' zu verwandeln, bei der der Nutzer die Evidenz selbst abwägen kann.
+    -->
+
+    <!-- Visualization & Content Choices:
+        - Chart.js (Bar/Bubble): Vergleich der vorhergesagten Massen und Entfernungen von P9/P10 im Vergleich zur Erde/Neptun. Ziel: Größenverhältnisse greifbar machen.
+        - Interaktive Info-Karten: Nutzung von JS-Zuständen, um zwischen 'Wissenschaftlicher Evidenz' und 'Offenen Fragen' zu wechseln.
+        - Timeline-Modul: HTML/Tailwind-basiertes vertikales Layout zur Visualisierung der Vulkan-Hypothese bis zur Widerlegung durch Einstein.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <header class="sticky top-0 z-50 w-full glass-panel border-b px-6 py-4">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight">FKT AUDIT</h1>
+                    <p class="text-xs text-slate-500 uppercase tracking-widest">Kosmische Anomalien</p>
+                </div>
+            </div>
+            <nav class="flex gap-6 text-sm font-medium text-slate-600">
+                <span onclick="filterAudit('all')" class="nav-link active" id="nav-all">Übersicht</span>
+                <span onclick="filterAudit('p9')" class="nav-link" id="nav-p9">Planet 9</span>
+                <span onclick="filterAudit('p10')" class="nav-link" id="nav-p10">Planet 10</span>
+                <span onclick="filterAudit('vulkan')" class="nav-link" id="nav-vulkan">Vulkan</span>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        
+        <!-- Intro Section -->
+        <section class="mb-16 text-center md:text-left">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">
+                Die Suche nach den <br><span class="text-indigo-600">unsichtbaren Welten</span>.
+            </h2>
+            <p class="text-lg text-slate-600 max-w-3xl leading-relaxed mb-8">
+                In diesem Audit untersuchen wir die mathematischen Vorhersagen und historischen Irrtümer unseres Sonnensystems. Von Einsteins Widerlegung des Planeten Vulkan bis zu den neuesten gravitativen Hinweisen auf massive Objekte in den äußeren Regionen – erfahren Sie, was Wissenschaft ist und was (noch) Spekulation bleibt.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                <div class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span> 8 Planeten bestätigt
+                </div>
+                <div class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full"></span> 2 Starke Hypothesen
+                </div>
+                <div class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 bg-red-500 rounded-full"></span> 1 Historisch widerlegt
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Visualization Area -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <div class="lg:col-span-2 glass-panel p-8 rounded-3xl">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold mb-2">Skalierung der Unsichtbarkeit</h3>
+                    <p class="text-sm text-slate-500 italic">Vergleich der vermuteten Entfernung (Astronomische Einheiten AU) und Masse.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="auditChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-indigo-900 text-white p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Audit-Zusammenfassung</h3>
+                    <div id="statBox" class="space-y-6">
+                        <!-- Dynamic Content via JS -->
+                        <div>
+                            <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Status Quo</p>
+                            <p class="text-2xl font-semibold">Vier Anomalien</p>
+                            <p class="text-sm text-indigo-100 opacity-80">Gegenwärtig werden Bahnstörungen bei KBOs (Kuiper Belt Objects) als primäres Indiz für zusätzliche Masse gewertet.</p>
+                        </div>
+                        <hr class="border-indigo-800">
+                        <div>
+                            <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Entdeckungschance</p>
+                            <p class="text-4xl font-bold text-yellow-400">40-60%</p>
+                            <p class="text-sm text-indigo-100 opacity-80">Innerhalb der nächsten Dekade durch das Vera C. Rubin Observatory.</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('deep-dive').scrollIntoView()" class="mt-8 w-full py-3 bg-white text-indigo-900 rounded-xl font-bold hover:bg-indigo-50 transition-colors">Details ansehen</button>
+            </div>
+        </section>
+
+        <!-- Interactive Content Cards -->
+        <div id="deep-dive" class="mb-12">
+            <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="w-8 h-1 bg-indigo-600 inline-block"></span>
+                Detaillierte Analyse-Ergebnisse
+            </h3>
+            
+            <div id="cardGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards will be injected/filtered by JS -->
+            </div>
+        </div>
+
+        <!-- History/Process Section -->
+        <section class="mt-24 p-10 bg-slate-100 rounded-3xl">
+            <div class="max-w-3xl mx-auto">
+                <h3 class="text-2xl font-bold mb-6 text-center">Historische Lehre: Der Fall Vulkan</h3>
+                <div class="relative border-l-2 border-indigo-200 ml-4 pl-8 space-y-10">
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-0 w-4 h-4 bg-indigo-600 rounded-full"></div>
+                        <h4 class="font-bold text-lg">1859: Die Vorhersage</h4>
+                        <p class="text-slate-600 text-sm">Urbain Le Verrier vermutet einen Planeten innerhalb der Merkurbahn, um dessen Periheldrehung zu erklären.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-0 w-4 h-4 bg-indigo-400 rounded-full"></div>
+                        <h4 class="font-bold text-lg">1878: "Sichtungen"</h4>
+                        <p class="text-slate-600 text-sm">Während einer Sonnenfinsternis melden Astronomen die Entdeckung Vulkans. Die wissenschaftliche Welt ist überzeugt.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-0 w-4 h-4 bg-red-500 rounded-full"></div>
+                        <h4 class="font-bold text-lg">1915: Die Auflösung</h4>
+                        <p class="text-slate-600 text-sm">Albert Einstein zeigt mit der Allgemeinen Relativitätstheorie, dass die Raumkrümmung die Merkurbahn erklärt. Vulkan wird als mathematisches Artefakt entlarvt.</p>
+                    </div>
+                </div>
+                <div class="mt-10 p-6 bg-white rounded-2xl border border-indigo-100 text-center italic text-slate-700">
+                    "Wissenschaftliche Modelle sind so lange wahr, bis eine elegantere Wahrheit sie ersetzt."
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-200 py-12 px-6 text-center text-slate-500 text-sm">
+        <p>© 2024 FKT Audit - Basierend auf astronomischen Forschungsdaten von Batygin, Brown & Volk.</p>
+        <p class="mt-2 italic">Diese Anwendung dient der interaktiven Wissensvermittlung.</p>
+    </footer>
+
+    <script>
+        const auditData = [
+            {
+                id: 'p9',
+                category: 'p9',
+                title: 'Planet Neun (P9)',
+                subtitle: 'Der Hirte der KBOs',
+                status: 'hypothesis',
+                statusLabel: 'Hypothese',
+                description: 'Ein massiver Planet, etwa 5-10 mal so schwer wie die Erde, der sich auf einer extrem weiten, elliptischen Umlaufbahn befindet.',
+                evidence: 'Die Clusterbildung der Bahnen entfernter Kuipergürtel-Objekte ist statistisch ohne eine externe Masse kaum erklärbar (Wahrscheinlichkeit 1:10.000).',
+                fact: 'Existenz mathematisch wahrscheinlich, visuell unbestätigt.',
+                mass: 7,
+                distance: 500
+            },
+            {
+                id: 'p10',
+                category: 'p10',
+                title: 'Planet Zehn',
+                subtitle: 'Die Mars-Große Störung',
+                status: 'hypothesis',
+                statusLabel: 'Hypothese',
+                description: 'Ein hypothetisches Objekt von der Masse des Mars, das die Neigung der Bahnen mittlerer KBOs beeinflusst.',
+                evidence: 'Beobachtete "Warping"-Effekte im äußeren Sonnensystem bei ca. 60-100 AE Entfernung deuten auf ein nähergelegenes Objekt hin.',
+                fact: 'Könnte ein eingefangener Exoplanet oder ursprünglicher Baustein sein.',
+                mass: 0.1,
+                distance: 70
+            },
+            {
+                id: 'vulkan',
+                category: 'vulkan',
+                title: 'Vulkan',
+                subtitle: 'Das mathematische Phantom',
+                status: 'debunked',
+                statusLabel: 'Widerlegt',
+                description: 'Ein einst vermuteter Planet zwischen Merkur und Sonne zur Erklärung von Bahnstörungen.',
+                evidence: 'Urbain Le Verrier nutzte die gleichen Methoden wie bei Neptun, scheiterte aber an der fehlenden Relativität.',
+                fact: 'Wurde durch Einsteins Relativitätstheorie 1915 obsolet.',
+                mass: 0.05,
+                distance: 0.1
+            },
+            {
+                id: 'erde',
+                category: 'confirmed',
+                title: 'Erde (Referenz)',
+                subtitle: 'Unser Heimatplanet',
+                status: 'confirmed',
+                statusLabel: 'Fakt',
+                description: 'Dient in diesem Audit als Referenzwert für Masse und Entfernung.',
+                evidence: 'Direkte Beobachtung und Anwesenheit.',
+                fact: 'Basis für die AE-Skala (Astronomische Einheit).',
+                mass: 1,
+                distance: 1
+            },
+            {
+                id: 'neptun',
+                category: 'confirmed',
+                title: 'Neptun',
+                subtitle: 'Der letzte Grenzstein',
+                status: 'confirmed',
+                statusLabel: 'Fakt',
+                description: 'Der äußerste bestätigte Gasriese des Sonnensystems.',
+                evidence: 'Entdeckt 1846 basierend auf mathematischen Berechnungen.',
+                fact: 'Markiert das Ende des klassischen Planetensystems.',
+                mass: 17,
+                distance: 30
+            }
+        ];
+
+        let currentChart;
+
+        function initChart(filteredData) {
+            const ctx = document.getElementById('auditChart').getContext('2d');
+            
+            if(currentChart) currentChart.destroy();
+
+            const chartData = {
+                datasets: [{
+                    label: 'Objekte im Vergleich',
+                    data: filteredData.map(item => ({
+                        x: item.distance,
+                        y: item.mass,
+                        r: Math.sqrt(item.mass) * 8 + 5,
+                        label: item.title
+                    })),
+                    backgroundColor: filteredData.map(item => {
+                        if(item.status === 'confirmed') return 'rgba(79, 70, 229, 0.6)';
+                        if(item.status === 'hypothesis') return 'rgba(234, 179, 8, 0.6)';
+                        return 'rgba(239, 68, 68, 0.6)';
+                    }),
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            };
+
+            currentChart = new Chart(ctx, {
+                type: 'bubble',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'logarithmic',
+                            title: { display: true, text: 'Entfernung zur Sonne (log AE)', font: { weight: 'bold' } },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                        y: {
+                            type: 'linear',
+                            title: { display: true, text: 'Masse (Erdmassen)', font: { weight: 'bold' } },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const obj = context.raw;
+                                    return `${context.dataset.data[context.dataIndex].label}: ${obj.x} AE, ${obj.y} M⊕`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderCards(filter = 'all') {
+            const container = document.getElementById('cardGrid');
+            const filtered = filter === 'all' 
+                ? auditData 
+                : auditData.filter(d => d.category === filter || d.category === 'confirmed');
+
+            container.innerHTML = filtered.map(item => `
+                <div class="glass-panel p-6 rounded-2xl flex flex-col h-full border border-slate-100">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="audit-tag tag-${item.status}">${item.statusLabel}</span>
+                        <span class="text-xs font-mono text-slate-400">ID: ${item.id.toUpperCase()}</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900">${item.title}</h4>
+                    <p class="text-sm text-indigo-600 font-medium mb-3">${item.subtitle}</p>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow">${item.description}</p>
+                    
+                    <div class="space-y-3 mt-4 pt-4 border-t border-slate-100">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Hauptindiz:</span>
+                            <span class="font-semibold text-slate-700 text-right max-w-[150px] truncate">${item.evidence}</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Audit-Fazit:</span>
+                            <span class="font-semibold text-slate-900">${item.fact}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            initChart(filtered);
+        }
+
+        function filterAudit(cat) {
+            // Update Navigation UI
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.getElementById(`nav-${cat}`).classList.add('active');
+
+            // Update Statistics and Content
+            const statBox = document.getElementById('statBox');
+            if (cat === 'p9') {
+                statBox.innerHTML = `
+                    <div>
+                        <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Status</p>
+                        <p class="text-2xl font-semibold">Mathematisch Robust</p>
+                        <p class="text-sm text-indigo-100 opacity-80">Gilt als eleganteste Erklärung für das Verhalten transneptunischer Objekte.</p>
+                    </div>
+                    <hr class="border-indigo-800">
+                    <div>
+                        <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Audit-Urteil</p>
+                        <p class="text-4xl font-bold text-green-400">PLOTTED</p>
+                        <p class="text-sm text-indigo-100 opacity-80">Warten auf photographischen Beweis.</p>
+                    </div>
+                `;
+            } else if (cat === 'vulkan') {
+                statBox.innerHTML = `
+                    <div>
+                        <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Status</p>
+                        <p class="text-2xl font-semibold">Geklärt</p>
+                        <p class="text-sm text-indigo-100 opacity-80">Wissenschaftlicher Irrtum aufgrund unvollständiger physikalischer Gesetze.</p>
+                    </div>
+                    <hr class="border-indigo-800">
+                    <div>
+                        <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Audit-Urteil</p>
+                        <p class="text-4xl font-bold text-red-400">FALSE</p>
+                        <p class="text-sm text-indigo-100 opacity-80">Ersetzt durch die Relativitätstheorie.</p>
+                    </div>
+                `;
+            } else {
+                statBox.innerHTML = `
+                    <div>
+                        <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Status Quo</p>
+                        <p class="text-2xl font-semibold">Vier Anomalien</p>
+                        <p class="text-sm text-indigo-100 opacity-80">Gegenwärtig werden Bahnstörungen als primäres Indiz gewertet.</p>
+                    </div>
+                    <hr class="border-indigo-800">
+                    <div>
+                        <p class="text-indigo-300 text-xs uppercase font-bold tracking-widest mb-1">Entdeckungschance</p>
+                        <p class="text-4xl font-bold text-yellow-400">40-60%</p>
+                        <p class="text-sm text-indigo-100 opacity-80">Projektion für das nächste Jahrzehnt.</p>
+                    </div>
+                `;
+            }
+
+            renderCards(cat);
+        }
+
+        // Initial Load
+        window.onload = () => {
+            renderCards('all');
+        };
+    </script>
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</body>
+</html>

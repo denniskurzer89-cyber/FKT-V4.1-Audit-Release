@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT Audit: Analyse Schwarze Löcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --space-dark: #0a0a0c;
+            --space-accent: #f59e0b;
+            --space-muted: #1f2937;
+            --text-light: #f9fafb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .bh-gradient {
+            background: radial-gradient(circle, #000 40%, #f59e0b 70%, transparent 100%);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #f59e0b;
+            color: #f59e0b;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-stone-50">
+
+    <!-- Chosen Palette: Cosmic Harmony (Creme-Hintergrund, Tiefschwarze Akzente, Bernstein-Highlights) -->
+    <!-- Application Structure Plan: 
+        Die SPA ist als modulares Dashboard konzipiert. 
+        1. Einführung: Kontext des Audits und grundlegende Definitionen.
+        2. Interaktive Klassifizierung: Vergleich der Typen (Stellar bis Supermassiv) mittels dynamischer Filter.
+        3. Physikalischer Simulator: Ein Echtzeit-Rechner für den Schwarzschild-Radius zur Veranschaulichung der Kompressionsrate.
+        4. Daten-Vergleich: Visuelle Gegenüberstellung bekannter Objekte (M87*, Sgr A*) mittels Chart.js.
+        Dieses Layout wurde gewählt, um komplexe astrophysikalische Daten schrittweise von der Theorie zur praktischen Berechnung zu führen.
+    -->
+    <!-- Visualization & Content Choices: 
+        - Typologie -> Interaktive Karten -> Ermöglicht direkten Vergleich der Massenbereiche.
+        - Schwarzschild-Rechner -> JS-Logik -> Macht die abstrakte Formel (Rs = 2GM/c²) greifbar.
+        - Massenvergleich -> Chart.js Bar Chart -> Visualisiert die extremen Skalenunterschiede.
+        - Anatomie -> CSS-Visualisierung (KEIN SVG) -> Erklärt Ereignishorizont und Akkretionsscheibe rein über DOM-Elemente.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <span class="font-bold text-xl tracking-tight text-stone-900 uppercase">FKT <span class="text-amber-600">Audit</span></span>
+                <div class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#uebersicht" class="hover:text-amber-600 transition">Übersicht</a>
+                    <a href="#typen" class="hover:text-amber-600 transition">Klassifizierung</a>
+                    <a href="#rechner" class="hover:text-amber-600 transition">Labor</a>
+                    <a href="#daten" class="hover:text-amber-600 transition">Audit-Daten</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        
+        <!-- Intro Section -->
+        <header id="uebersicht" class="mb-20 text-center">
+            <h1 class="text-5xl font-extrabold text-stone-900 mb-6">Analysebericht: Schwarze Löcher</h1>
+            <p class="text-xl text-stone-600 max-w-3xl mx-auto leading-relaxed">
+                Dieses Audit untersucht die physikalische Integrität und die Auswirkungen gravitativer Singularitäten im bekannten Universum. Wir analysieren Daten von stellaren Endstadien bis hin zu galaktischen Zentren, um die Mechanismen der Raumzeit-Krümmung zu verstehen.
+            </p>
+        </header>
+
+        <!-- Dynamic Content Tabs -->
+        <section id="typen" class="mb-24">
+            <div class="mb-10">
+                <h2 class="text-3xl font-bold mb-4">1. Typologie der Singularitäten</h2>
+                <p class="text-stone-600">Wählen Sie eine Kategorie, um die spezifischen Parameter und Audit-Ergebnisse der jeweiligen Objektklasse zu explorieren. Jede Klasse repräsentiert unterschiedliche Entstehungsmechanismen.</p>
+            </div>
+
+            <div class="flex space-x-4 mb-8 overflow-x-auto pb-2">
+                <button onclick="updateType('stellar')" id="btn-stellar" class="px-6 py-2 rounded-full border border-stone-300 font-semibold transition active-tab">Stellare Löcher</button>
+                <button onclick="updateType('intermediate')" id="btn-intermediate" class="px-6 py-2 rounded-full border border-stone-300 font-semibold transition">Mittelschwere Löcher</button>
+                <button onclick="updateType('supermassive')" id="btn-supermassive" class="px-6 py-2 rounded-full border border-stone-300 font-semibold transition">Supermassive Löcher</button>
+            </div>
+
+            <div id="type-display" class="grid md:grid-cols-2 gap-12 items-center bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <div>
+                    <h3 id="type-title" class="text-4xl font-bold mb-4 text-amber-600">Stellare Löcher</h3>
+                    <p id="type-desc" class="text-lg text-stone-700 leading-relaxed mb-6">
+                        Diese entstehen durch den Gravitationskollaps massereicher Sterne am Ende ihres Lebenszyklus. Sie sind die am häufigsten nachgewiesenen Singularitäten in unserer Galaxie.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-stone-50 p-4 rounded-lg">
+                            <span class="block text-sm text-stone-500 uppercase">Masse</span>
+                            <span id="type-mass" class="text-xl font-bold">3 - 100 M☉</span>
+                        </div>
+                        <div class="bg-stone-50 p-4 rounded-lg">
+                            <span class="block text-sm text-stone-500 uppercase">Häufigkeit</span>
+                            <span id="type-freq" class="text-xl font-bold">Hoch</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div id="visual-element" class="w-64 h-64 rounded-full bh-gradient flex items-center justify-center shadow-2xl animate-pulse">
+                        <div class="w-32 h-32 bg-black rounded-full shadow-[0_0_50px_#f59e0b]"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Calculator -->
+        <section id="rechner" class="mb-24 bg-stone-900 text-white p-10 rounded-3xl">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 text-amber-400">2. Schwarzschild-Labor</h2>
+                    <p class="text-stone-300 mb-8 leading-relaxed">
+                        Berechnen Sie die kritische Grenze, an der ein Objekt zur Singularität wird. Der Schwarzschild-Radius (Event Horizon) definiert den Punkt, an dem die Fluchtgeschwindigkeit die Lichtgeschwindigkeit überschreitet.
+                    </p>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Masse in Sonnenmassen (M☉)</label>
+                            <input type="number" id="massInput" value="1" min="0.1" step="0.1" oninput="calculateRadius()" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-3 text-2xl focus:ring-2 focus:ring-amber-500 outline-none">
+                        </div>
+                        <div class="p-6 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+                            <span class="text-amber-500 text-sm font-bold uppercase">Ergebnis: Schwarzschild-Radius</span>
+                            <div class="text-4xl font-mono font-bold" id="radiusResult">2.95 km</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center space-y-4">
+                    <div class="inline-block p-4 border border-stone-700 rounded-lg bg-stone-800">
+                        <p class="text-sm text-stone-400 italic">Vergleichsobjekt:</p>
+                        <p id="comparisonText" class="text-xl font-semibold">Größe einer Kleinstadt</p>
+                    </div>
+                    <div class="h-64 flex items-end justify-center space-x-4">
+                        <div class="w-12 bg-amber-500 transition-all duration-500" id="bar-earth" style="height: 5%"></div>
+                        <div class="w-12 bg-stone-400 transition-all duration-500" id="bar-calc" style="height: 20%"></div>
+                    </div>
+                    <div class="flex justify-center space-x-12 text-xs uppercase tracking-widest text-stone-500">
+                        <span>Erde (9mm)</span>
+                        <span>Eingabe</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparative Data Chart -->
+        <section id="daten" class="mb-24">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold mb-4">3. Quantitativer Massenvergleich</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">Vergleich der signifikantesten im Audit erfassten Objekte. Beachten Sie die logarithmische Skalierung der Machtverhältnisse.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-stone-100 shadow-sm mb-12">
+                <div class="chart-container">
+                    <canvas id="massChart"></canvas>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-xl">
+                    <h4 class="font-bold text-amber-600 mb-2">Cygnus X-1</h4>
+                    <p class="text-sm text-stone-600">Erstes sicher identifiziertes Schwarzes Loch. Ein stellarer Klassiker.</p>
+                    <div class="mt-4 font-mono text-lg">21 M☉</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl border-l-4 border-amber-500">
+                    <h4 class="font-bold text-amber-600 mb-2">Sagittarius A*</h4>
+                    <p class="text-sm text-stone-600">Das Herz unserer Milchstraße. Kompakt, aber ein Schwergewicht.</p>
+                    <div class="mt-4 font-mono text-lg">4,1 Mio M☉</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <h4 class="font-bold text-amber-600 mb-2">M87*</h4>
+                    <p class="text-sm text-stone-600">Zentrum von Messier 87. Erstes direkt fotografiertes Objekt.</p>
+                    <div class="mt-4 font-mono text-lg">6,5 Mrd M☉</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Anatomy Section (CSS Based) -->
+        <section class="mb-24 py-16 bg-stone-100 rounded-3xl px-8 overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="w-full md:w-1/2 relative h-80 flex items-center justify-center">
+                    <!-- Black Hole Visual Core -->
+                    <div class="absolute w-40 h-40 bg-black rounded-full z-20 shadow-[0_0_80px_rgba(245,158,11,0.6)]"></div>
+                    <!-- Accretion Disk Simulation -->
+                    <div class="absolute w-72 h-12 bg-amber-500/40 rounded-[100%] blur-md animate-pulse transform -rotate-12 z-10"></div>
+                    <div class="absolute w-80 h-16 border-t-8 border-amber-600/30 rounded-[100%] animate-spin duration-1000 z-30"></div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">4. Anatomische Befunde</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-4">
+                            <span class="w-6 h-6 rounded-full bg-amber-500 flex-shrink-0 mt-1"></span>
+                            <div>
+                                <strong class="block text-stone-900">Ereignishorizont</strong>
+                                <p class="text-sm text-stone-600">Die Point-of-no-Return-Grenze. Hier ist die Raumzeit so stark gekrümmt, dass nichts entkommen kann.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-6 h-6 rounded-full bg-stone-400 flex-shrink-0 mt-1"></span>
+                            <div>
+                                <strong class="block text-stone-900">Akkretionsscheibe</strong>
+                                <p class="text-sm text-stone-600">Ultra-heißes Gas und Staub, die um die Singularität wirbeln und hochenergetische Strahlung abgeben.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></span>
+                            <div>
+                                <strong class="block text-stone-900">Singularität</strong>
+                                <p class="text-sm text-stone-600">Das Zentrum mit unendlicher Dichte, wo unsere aktuellen physikalischen Modelle versagen.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-500 py-12 px-4 border-t border-stone-800">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div>
+                <p class="font-bold text-stone-200">FKT AUDIT ANALYSE</p>
+                <p class="text-xs">Wissenschaftliches Dokument #2024-BH-01</p>
+            </div>
+            <div class="text-sm text-center md:text-right">
+                <p>&copy; 2024 Forschungsstelle für Kosmische Topologie</p>
+                <p>Keine Rückgabe von Informationen hinter dem Ereignishorizont möglich.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Store
+        const bhTypes = {
+            stellar: {
+                title: "Stellare Löcher",
+                desc: "Entstehen durch den Kollaps von Sternen mit mehr als der 20-fachen Sonnenmasse. Sie sind die 'Bausteine' der gravitativen Evolution.",
+                mass: "3 - 100 M☉",
+                freq: "Häufig",
+                color: "#f59e0b"
+            },
+            intermediate: {
+                title: "Mittelschwere Löcher",
+                desc: "Ein bisher seltenerer Fund im Audit. Sie könnten durch die Verschmelzung stellarer Löcher in dichten Sternhaufen entstehen.",
+                mass: "100 - 100.000 M☉",
+                freq: "Selten",
+                color: "#d97706"
+            },
+            supermassive: {
+                title: "Supermassive Löcher",
+                desc: "Giganten im Zentrum fast jeder Galaxie. Ihre Entstehung ist noch Gegenstand aktiver Audit-Diskussionen (frühes Universum vs. Akkretion).",
+                mass: "Mio. - Mrd. M☉",
+                freq: "Zentral",
+                color: "#92400e"
+            }
+        };
+
+        // UI Interactions
+        function updateType(key) {
+            const data = bhTypes[key];
+            document.getElementById('type-title').innerText = data.title;
+            document.getElementById('type-desc').innerText = data.desc;
+            document.getElementById('type-mass').innerText = data.mass;
+            document.getElementById('type-freq').innerText = data.freq;
+
+            // Update button styles
+            ['stellar', 'intermediate', 'supermassive'].forEach(k => {
+                const btn = document.getElementById(`btn-${k}`);
+                if (k === key) {
+                    btn.classList.add('bg-amber-600', 'text-white', 'border-amber-600');
+                    btn.classList.remove('text-stone-700');
+                } else {
+                    btn.classList.remove('bg-amber-600', 'text-white', 'border-amber-600');
+                    btn.classList.add('text-stone-700');
+                }
+            });
+        }
+
+        // Schwarzschild Calculation Logic
+        function calculateRadius() {
+            const mass = document.getElementById('massInput').value;
+            // Rs = 2GM / c^2 -> Approx 2.95 * mass
+            const radius = mass * 2.953;
+            const resDiv = document.getElementById('radiusResult');
+            
+            if(radius >= 1000) {
+                resDiv.innerText = (radius/1000).toFixed(2) + " km";
+            } else if (radius < 0.001) {
+                resDiv.innerText = (radius * 1000000).toFixed(2) + " µm";
+            } else if (radius < 1) {
+                resDiv.innerText = (radius * 1000).toFixed(2) + " m";
+            } else {
+                resDiv.innerText = radius.toFixed(2) + " km";
+            }
+
+            // Update Comparison Visualization
+            const barCalc = document.getElementById('bar-calc');
+            const compText = document.getElementById('comparisonText');
+            
+            // Scaled height for visualization
+            let height = Math.min(Math.max((Math.log10(mass + 1) * 30), 5), 100);
+            barCalc.style.height = height + "%";
+
+            if(mass < 1) compText.innerText = "Größe eines Berges";
+            else if(mass < 100) compText.innerText = "Größe einer Großstadt";
+            else if(mass < 1000000) compText.innerText = "Größe eines Planeten";
+            else compText.innerText = "Größe eines Sonnensystems";
+        }
+
+        // Initializing Charts
+        function initChart() {
+            const ctx = document.getElementById('massChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Cygnus X-1', 'Sgr A*', 'M87*', 'TON 618'],
+                    datasets: [{
+                        label: 'Masse in Sonnenmassen (logarithmisch)',
+                        data: [21, 4100000, 6500000000, 66000000000],
+                        backgroundColor: '#f59e0b',
+                        borderColor: '#92400e',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: {
+                        y: {
+                            type: 'logarithmic',
+                            beginAtZero: false,
+                            grid: { color: '#e5e7eb' },
+                            title: { display: true, text: 'Sonnenmassen (M☉)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1c1917',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Boot
+        window.onload = () => {
+            updateType('stellar');
+            calculateRadius();
+            initChart();
+        };
+    </script>
+</body>
+</html>
