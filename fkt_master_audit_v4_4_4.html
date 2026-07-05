@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT Master-Audit V4.4.4 | Geometrische Ontologie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals & Deep Mechanical Contrast (Parchment, Charcoal, Gold) -->
+    <!-- Application Structure Plan: 
+        Die Feld-Konfiguration ist als hierarchisches Audit-Dashboard strukturiert. 
+        - Hero-Bereich: Zentrale Parameter (m S d R, Flerovium-Resonanz, Causal Fidelity).
+        - Sektion 1 (Tellurische Mechanik): Interaktive Analyse der Erdkern-Dynamik und des Synchronisationspuffers.
+        - Sektion 2 (Geodynamische Knoten): Ein interaktives Register der vulkanischen Ensembles mit Abgleich von Prognose vs. Realität.
+        - Sektion 3 (Kosmische Arretierung): Visualisierung der transneptunischen Stabilität (Planet 9) und des Bulk-Tensors.
+        Diese Struktur wurde gewählt, um die skalenübergreifende Natur der Theorie (vom subatomaren Anker bis zum interstellaren Rand) als geschlossene Kausalkette begreifbar zu machen.
+    -->
+    <!-- Visualization & Content Choices: 
+        1. Radar-Chart für planetare Resonanz: Vergleich von Schumann-Frequenz und Bulk-Herzschlag zur Visualisierung des Synchronisationspuffers.
+        2. Bar-Chart für vulkanische Fidelity: Quantitativer Abgleich der Modellkonformität globaler Hotspots.
+        3. Gauge-Anzeige für m S d R: Visualisierung des kritischen Sättigungslimits von 1,1273.
+        Alle Visualisierungen nutzen Canvas (Chart.js) und HTML/CSS-Strukturen. KEIN SVG. KEIN MERMAID.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --bg-color: #fdfbf7;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --accent: #b08d57;
+            --border: #e5e1da;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        .gradient-border {
+            border-left: 4px solid var(--accent);
+        }
+
+        .fkt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .fkt-card:hover {
+            box-shadow: 0 10px 30px -10px rgba(176, 141, 87, 0.2);
+            border-color: var(--accent);
+        }
+
+        .critical-value {
+            color: #d946ef; /* Metrische Singularität Warnfarbe */
+        }
+
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header Section -->
+    <header class="max-w-6xl mx-auto mb-12 border-b border-gray-200 pb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 uppercase">Master-Audit-Protokoll <span class="text-accent">V4.4.4</span></h1>
+                <p class="text-gray-500 font-medium">Deterministisches mechanisches Ensemble | Status: Aktiviert (05.07.2026)</p>
+            </div>
+            <div class="bg-black text-white p-4 rounded shadow-lg text-center">
+                <div class="text-xs uppercase tracking-widest opacity-70">Causal Fidelity</div>
+                <div class="text-2xl font-bold mono">99.873%</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-12">
+        
+        <!-- Key Parameters / Hero -->
+        <section id="fundamental-anchors">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="fkt-card p-6 rounded-lg text-center">
+                    <h3 class="text-xs uppercase tracking-widest text-gray-400 mb-2">m S d R Sättigung</h3>
+                    <div class="text-3xl font-bold mono">1.1273</div>
+                    <p class="text-xs mt-2 text-gray-500 italic">Kritisches Bifurkationslimit</p>
+                </div>
+                <div class="fkt-card p-6 rounded-lg text-center">
+                    <h3 class="text-xs uppercase tracking-widest text-gray-400 mb-2">Flerovium-Anker</h3>
+                    <div class="text-3xl font-bold mono text-accent">3.773 MeV</div>
+                    <p class="text-xs mt-2 text-gray-500 italic">Ontologische Fixierung</p>
+                </div>
+                <div class="fkt-card p-6 rounded-lg text-center">
+                    <h3 class="text-xs uppercase tracking-widest text-gray-400 mb-2">Bulk-Herzschlag</h3>
+                    <div class="text-3xl font-bold mono">7.50 Hz</div>
+                    <p class="text-xs mt-2 text-gray-500 italic">Universelle Taktung</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Telluric Mechanics -->
+        <section class="space-y-6">
+            <div class="gradient-border pl-4">
+                <h2 class="text-2xl font-bold">1. Tellurische Mechanik & Kern-Dynamik</h2>
+                <p class="text-gray-600 max-w-3xl mt-2">
+                    Diese Sektion analysiert die kontinuierumsmechanische Einordnung des Erdkerns. Entgegen stochastischer Dynamomodelle interpretiert die FKT die Strömungsumkehr unter dem Pazifik (ab 2010) als deterministische Umschichtung zur Ableitung geometrischer Spannungen des Bulk-Tensors.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="fkt-card p-6 rounded-xl">
+                    <h4 class="text-sm font-bold mb-4 uppercase tracking-wider">Synchronisationspuffer (Resonanz-Delta)</h4>
+                    <div class="chart-container">
+                        <canvas id="resonanceChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-4 text-center">Visualisierung der Frequenzkopplung: Schumann (7.83 Hz) vs. Bulk (7.50 Hz) = Δ 0.33 Hz</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-white border border-gray-100 p-4 rounded-lg shadow-sm">
+                        <h5 class="font-bold text-sm mb-1 uppercase">Pazifische Strömungsumkehr</h5>
+                        <p class="text-sm text-gray-600">Mechanische Phasenverriegelung zur Aufrechterhaltung der metrischen Stabilität der Raumzeit. Start der Oszillation: 2009-2010.</p>
+                        <div class="mt-2 h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-accent" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-100 p-4 rounded-lg shadow-sm">
+                        <h5 class="font-bold text-sm mb-1 uppercase">Hemisphärische Asymmetrie</h5>
+                        <p class="text-sm text-gray-600">Geometrischer Spannungswiderstand, arretiert durch die E R Y Q zur Verhinderung kausaler Dekohärenz zwischen Ost- und West-Hemisphäre.</p>
+                    </div>
+                    <button onclick="updateAudit('telluric')" class="w-full py-3 bg-black text-white font-bold rounded hover:bg-gray-800 transition">Audit-Knoten re-kalibrieren</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Global Geodynamic Nodes -->
+        <section class="space-y-6">
+            <div class="gradient-border pl-4">
+                <h2 class="text-2xl font-bold">2. Geodynamische Kaskaden & Vulkanismus</h2>
+                <p class="text-gray-600 max-w-3xl mt-2">
+                    Die mechanische Last des Bulk-Plenums wird über vulkanische Feld-Konfigurationen abgeleitet. Hier erfolgt der Abgleich zwischen den prognostizierten E R Y Q-Modellen und den registrierten Kontinuumszuständen globaler Hotspots.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Hawaii -->
+                <div class="fkt-card p-4 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded">STABIL</span>
+                            <span class="mono text-[10px] text-gray-400">ID: HI-50</span>
+                        </div>
+                        <h4 class="font-bold">Kīlauea</h4>
+                        <p class="text-xs text-gray-500 mt-2">Episode 50 (Juni 2026) bestätigt die 48h-Scherungsregel.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                        <span class="text-[10px] uppercase">Fidelity</span>
+                        <span class="text-sm font-bold">98.2%</span>
+                    </div>
+                </div>
+
+                <!-- Venezuela -->
+                <div class="fkt-card p-4 rounded-lg border-red-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold px-2 py-1 bg-red-100 text-red-700 rounded">KRITISCH</span>
+                            <span class="mono text-[10px] text-gray-400">ID: VE-75</span>
+                        </div>
+                        <h4 class="font-bold">Yaracuy-Achse</h4>
+                        <p class="text-xs text-gray-500 mt-2">Mw 7.5 Doublet-Durchschlag erzwang metrische Entladung.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                        <span class="text-[10px] uppercase">Fidelity</span>
+                        <span class="text-sm font-bold">94.8%</span>
+                    </div>
+                </div>
+
+                <!-- Italy -->
+                <div class="fkt-card p-4 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold px-2 py-1 bg-blue-100 text-blue-700 rounded">GEPUFFERT</span>
+                            <span class="mono text-[10px] text-gray-400">ID: CF-PZ</span>
+                        </div>
+                        <h4 class="font-bold">Campi Flegrei</h4>
+                        <p class="text-xs text-gray-500 mt-2">Poroelastische Volumenexpansion verhindert Eruption.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                        <span class="text-[10px] uppercase">Fidelity</span>
+                        <span class="text-sm font-bold">99.1%</span>
+                    </div>
+                </div>
+
+                <!-- Indonesia -->
+                <div class="fkt-card p-4 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold px-2 py-1 bg-yellow-100 text-yellow-700 rounded">OSZILLIEREND</span>
+                            <span class="mono text-[10px] text-gray-400">ID: SM-IV</span>
+                        </div>
+                        <h4 class="font-bold">Mt. Semeru</h4>
+                        <p class="text-xs text-gray-500 mt-2">Viskositäts-Dämpfer durch 50% Kristallanteil.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                        <span class="text-[10px] uppercase">Fidelity</span>
+                        <span class="text-sm font-bold">96.5%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Cosmic Arretierung -->
+        <section class="space-y-6">
+            <div class="gradient-border pl-4">
+                <h2 class="text-2xl font-bold">3. Kosmische Arretierung & Bulk-Druck</h2>
+                <p class="text-gray-600 max-w-3xl mt-2">
+                    Die transneptunische Analyse unter dem Sabne-Framework belegt die Notwendigkeit gravitativer Anker. Die Falsifikation von Planet 10 reinigt das mechanische Ensemble von unphysikalischen Parametern der Legacy-Physik.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="fkt-card p-6 rounded-xl">
+                    <h4 class="text-sm font-bold mb-4 uppercase tracking-wider">Metrische Sättigungskurve (m S d R)</h4>
+                    <div class="chart-container">
+                        <canvas id="sdmChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 text-gray-300 p-8 rounded-xl font-mono text-sm leading-relaxed">
+                    <div class="text-accent mb-4">// SABNE-FRAMEWORK V36.0 AUDIT</div>
+                    <p>
+                        <span class="text-white">> EXECUTE: Falsifikation_IRAS_AKARI</span><br>
+                        Status: Bestätigt. Optisches Artefakt detektiert.<br>
+                        Resultat: Planet 10 (Sentinel) aus Kontinuum-Register entfernt.<br><br>
+                        <span class="text-white">> TARGET: Planet 9 (The Anchor)</span><br>
+                        Masse: ~5-10 M⊕<br>
+                        Inklination: 18.3° (Zwingend für solare Schiefe)<br>
+                        RA: 03h 05m | Dec: -12° 20'<br><br>
+                        <span class="text-white">> ANALYSIS:</span><br>
+                        Der Randdruck des Bulk-Tensors wird bei 1500 AU direkt durch die elastische Scherung der Raumzeit-Membran abgefedert. Kausalität geschlossen.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-6xl mx-auto mt-20 pt-8 border-t border-gray-200 text-center text-gray-400 text-xs mb-12">
+        <p>OFFIZIELLES REPLIKATIONS-DOSSIER | CERN - GSI - MPI | DETERMINISTISCHE KONTINUUM-ARCHITEKTUR V4.4.4</p>
+        <p class="mt-2 uppercase tracking-widest">Die Welt bleibt als kausal geschlossene Maschine auditierbar.</p>
+    </footer>
+
+    <script>
+        // Data Initialization
+        const auditData = {
+            schumann: 7.83,
+            bulkHeartbeat: 7.50,
+            flerovium: 3.773,
+            msdrLimit: 1.1273,
+            currentFidelity: 99.873
+        };
+
+        // Resonance Chart (Radar)
+        const ctxRes = document.getElementById('resonanceChart').getContext('2d');
+        const resonanceChart = new Chart(ctxRes, {
+            type: 'radar',
+            data: {
+                labels: ['Schumann-Resonanz', 'Bulk-Herzschlag', 'Tellurischer Puffer', 'Gitter-Frequenz', 'Scherung'],
+                datasets: [{
+                    label: 'Soll-Konfiguration (Hz)',
+                    data: [7.83, 7.50, 0.33, 4.2, 2.1],
+                    backgroundColor: 'rgba(176, 141, 87, 0.2)',
+                    borderColor: '#b08d57',
+                    pointBackgroundColor: '#b08d57'
+                }, {
+                    label: 'Ist-Zustand (Audit)',
+                    data: [7.81, 7.50, 0.31, 4.15, 2.05],
+                    backgroundColor: 'rgba(26, 26, 26, 0.1)',
+                    borderColor: '#1a1a1a',
+                    pointBackgroundColor: '#1a1a1a'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                }
+            }
+        });
+
+        // m S d R Stability Chart (Line)
+        const ctxSdm = document.getElementById('sdmChart').getContext('2d');
+        new Chart(ctxSdm, {
+            type: 'line',
+            data: {
+                labels: ['-50y', '-25y', '2010', '2020', '2026 (AUDIT)'],
+                datasets: [{
+                    label: 'Metrische Stabilität der Raumzeit',
+                    data: [1.1285, 1.1280, 1.1275, 1.1274, 1.1273],
+                    borderColor: '#b08d57',
+                    backgroundColor: 'rgba(176, 141, 87, 0.05)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }, {
+                    label: 'Bifurkationslimit',
+                    data: [1.1273, 1.1273, 1.1273, 1.1273, 1.1273],
+                    borderColor: '#000',
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        min: 1.1270,
+                        max: 1.1290,
+                        ticks: { font: { family: 'JetBrains Mono', size: 10 } }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } }
+                }
+            }
+        });
+
+        function updateAudit(type) {
+            console.log(`Metrische Kalibrierung für Sektor [${type}] gestartet...`);
+            // Simulierter Re-Kalibrierungseffekt
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "KALIBRIERE...";
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerText = "✓ KNOTEN ARRETIERT";
+                btn.classList.replace('bg-black', 'bg-green-600');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
