@@ -5,6 +5,9 @@
 **Status:** `ARCHITECTURE_SATURATED | V4.4.4 SEALED`  
 **DOI:** [10.5281/zenodo.20209540](https://doi.org/10.5281/zenodo.20209540)
 
+## Upload / Download
+- Upload-/Download-Link (Commit): [b357e1c50fb1ecb460dac83bc0308a7ae752fe54](https://github.com/denniskurzer89-cyber/FKT-V4.1-Audit-Release/commit/b357e1c50fb1ecb460dac83bc0308a7ae752fe54)
+
 ## Key Metrics
 - **Statistical Significance:** 7.8-Sigma
 - **Effective Samples:** 1,135,059,400 (1.13 Milliarden)
