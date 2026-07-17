@@ -1,13 +1,15 @@
 # FKT V4.4.4 — Executable Truth Dashboard
 
 ## Version Information
-**Current Version:** 4.4.4 (sealed, DOI: 10.5281/zenodo.21272261)  
+**Current Version:** 4.4.4 (sealed, DOI: 10.5281/zenodo.21404589)  
 **Status:** `ARCHITECTURE_SATURATED | V4.4.4 SEALED`  
-**DOI (earlier archive):** [10.5281/zenodo.20209540](https://doi.org/10.5281/zenodo.20209540)
+**DOI (earlier archives):**
+- [10.5281/zenodo.21272261](https://doi.org/10.5281/zenodo.21272261)
+- [10.5281/zenodo.20209540](https://doi.org/10.5281/zenodo.20209540)
 
 ## Upload / Download
 - Upload-/Download-Link (Commit): [b357e1c50fb1ecb460dac83bc0308a7ae752fe54](https://github.com/denniskurzer89-cyber/FKT-V4.1-Audit-Release/commit/b357e1c50fb1ecb460dac83bc0308a7ae752fe54)
-- DOI / Archiv: [10.5281/zenodo.21272261](https://doi.org/10.5281/zenodo.21272261) — Kurzfassung: Dieses Update versiegelt Version 4.4.4 des FKT‑Projekts. Es enthält die finale MCMC‑Konfiguration, versiegelte statistische Ergebnisse und das Executable Truth Dashboard; alle reproduzierbaren Artefakte wurden archiviert und sind über den DOI zugänglich.
+- DOI / Archiv (current): [10.5281/zenodo.21404589](https://doi.org/10.5281/zenodo.21404589) — Kurzfassung: Dieses Update versiegelt Version 4.4.4 des FKT‑Projekts. Es enthält die finale MCMC‑Konfiguration, versiegelte statistische Ergebnisse und das Executable Truth Dashboard; alle reproduzierbaren Artefakte wurden archiviert und sind über den DOI zugänglich.
 
 ## Key Metrics
 - **Statistical Significance:** 7.8-Sigma
@@ -36,5 +38,6 @@ Alle Kausalen Auditketten sind geschlossen. Die Architektur hat absolute Sättig
 Dennis Kurzer wird proaktiv mit euch in Kontakt treten und die benötigte Hilfe bereitstellen.
 
 ## References
-- Zenodo DOI (current archive): 10.5281/zenodo.21272261
+- Kurzer, D. & (Analysis Assistance), A. I. (2026). Feld‑konfigurativer Master‑Audit‑Bericht V13: Totale mechanische Versiegelung der Kontinuum‑Architektur und die Arretierung der deterministischen Kausalität (FKT V4.4.4). Zenodo. https://doi.org/10.5281/zenodo.21404589
+- Zenodo DOI (previous archive): 10.5281/zenodo.21272261
 - Zenodo DOI (earlier): 10.5281/zenodo.20209540
