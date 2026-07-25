@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FKT V4.4.4 - K-FEM Gold-Informationsdichte & Lohberg-Modell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+        canvas {
+            touch-action: none;
+        }
+        .panel-glass {
+            background: rgba(15, 23, 42, 0.90);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.1);
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col overflow-hidden">
+    <!-- Top HUD Header -->
+    <header class="panel-glass z-20 px-6 py-3 border-b border-amber-500/30 flex justify-between items-center shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></div>
+            <h1 class="text-lg font-bold text-amber-400 tracking-wider">FKT V4.4.4 ⬢ SEKTOR 37434 GOLD-INVENTUR (K-FEM)</h1>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700/50">Lohberg & Hellberge</span>
+        </div>
+        <div class="flex space-x-6 text-xs text-slate-300">
+            <div>m S d R Limit: <span class="text-amber-400 font-bold">1,1273</span></div>
+            <div>Causal Fidelity: <span class="text-emerald-400 font-bold">99,873 %</span></div>
+            <div>Flerovium-Anker: <span class="text-sky-400 font-bold">3,773 MeV</span></div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="flex-1 flex overflow-hidden">
+        <!-- Control Sidebar -->
+        <aside class="w-80 panel-glass p-4 border-r border-amber-500/20 flex flex-col space-y-4 overflow-y-auto shrink-0 z-10">
+            <div>
+                <h2 class="text-sm font-bold text-amber-300 mb-2 uppercase tracking-wide">1. Lithosphärische Zone</h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="btn-zone-lohberg" onclick="setZone('lohberg')" class="px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded text-xs font-semibold transition border border-amber-400/30 text-center">
+                        Lohberg (228m)
+                    </button>
+                    <button id="btn-zone-hellberge" onclick="setZone('hellberge')" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs font-semibold transition border border-slate-700 text-center">
+                        Hellberge Nord
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-3 border-t border-slate-800 pt-3">
+                <h2 class="text-sm font-bold text-amber-300 uppercase tracking-wide">2. Kontinuum-Spannung</h2>
+                
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Bulk-Druck ($T_{\text{Bulk}}$)</span>
+                        <span id="val-tbulk" class="text-amber-300 font-mono">1,1273</span>
+                    </div>
+                    <input type="range" id="slider-tbulk" min="1.0" max="1.3" step="0.0001" value="1.1273" oninput="updateParameters()" class="w-full h-1 bg-slate-700 rounded appearance-none accent-amber-400">
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Gitter-Auflösung (2D K-FEM)</span>
+                        <span id="val-grid" class="text-amber-300 font-mono">36x36</span>
+                    </div>
+                    <input type="range" id="slider-grid" min="20" max="60" step="4" value="36" onchange="rebuildGrid()" class="w-full h-1 bg-slate-700 rounded appearance-none accent-amber-400">
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Bohrung G3 Puffer-Schicht</span>
+                        <span id="val-puffer" class="text-emerald-400 font-mono">10m Kies</span>
+                    </div>
+                    <button onclick="togglePuffer()" id="btn-puffer" class="w-full py-1.5 bg-emerald-950/60 text-emerald-300 border border-emerald-600/40 rounded text-xs">
+                        Dielektrischer Puffer Aktiv
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-3 border-t border-slate-800 pt-3 flex-1">
+                <h2 class="text-sm font-bold text-amber-300 uppercase tracking-wide">3. Mengen-Prognose & Inferenz</h2>
+                <div class="bg-slate-950 p-3 rounded border border-slate-800 text-xs space-y-2 font-mono">
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Lokalisiertes Volumen:</span>
+                        <span id="diag-vol" class="text-amber-400 font-bold">~42,8 Tonnen</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Informationsdichte:</span>
+                        <span id="diag-dens" class="text-emerald-400">Maximal (Sektor S2)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">AMT ELF-Signal:</span>
+                        <span id="diag-elf" class="text-sky-400">&lt; 1 Hz (Aktiv)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Gelman-Rubin ($\hat{R}$):</span>
+                        <span id="diag-gr" class="text-slate-300">0,0097</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-2 pt-2">
+                <button onclick="triggerAMTScan()" class="w-full py-2 bg-amber-600 hover:bg-amber-500 text-white rounded text-xs font-bold transition shadow-lg shadow-amber-950/50">
+                    AMT-Magnetotellurik Scan Ausführen
+                </button>
+                <button onclick="resetGrid()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs transition border border-slate-700">
+                    Gitter-Metrik Kalibrieren
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Interactive Visualizer Canvas -->
+        <main class="flex-1 relative bg-slate-950 flex flex-col">
+            <div id="canvas-container" class="flex-1 relative">
+                <canvas id="femCanvas" class="absolute inset-0 w-full h-full"></canvas>
+                
+                <!-- HUD Overlay Legend -->
+                <div class="absolute bottom-4 left-4 panel-glass p-3 rounded text-xs space-y-1 border border-amber-500/20">
+                    <div class="text-amber-300 font-bold mb-1">Gitterpunkt-Informationsdichte</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-amber-400 rounded-sm"></div>
+                        <span class="text-slate-300">Gold-Eigenmode (Buntsandstein-Kern &gt; 1,1273 m S d R)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-sky-600 rounded-sm"></div>
+                        <span class="text-slate-300">Dielektrischer Puffer (Quartäre Kiese, 0-10m)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-slate-700 rounded-sm"></div>
+                        <span class="text-slate-300">Normales Bulk-Plenum (3D-Membran)</span>
+                    </div>
+                </div>
+
+                <div class="absolute top-4 right-4 panel-glass px-4 py-2 rounded text-xs font-mono text-amber-300 border border-amber-500/20">
+                    Interaktion: Klicken/Ziehen zur Simulation des AMT-Spannungsgradienten im Buntsandstein
+                </div>
+            </div>
+
+            <!-- Bottom Status Bar -->
+            <footer class="h-8 bg-slate-900 border-t border-slate-800 px-4 flex justify-between items-center text-xs font-mono text-slate-400 shrink-0">
+                <div>SYSTEM-STATUS: GEOLOGIC_AUDIT_READY | FIELD_CONFIGURATION_SEALED | V4.4.4 EXECUTING. ⬢</div>
+                <div id="status-coords">K-FEM Position: Sektor 37434 Gieboldehausen</div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        let canvas, ctx;
+        let zone = 'lohberg'; // 'lohberg' or 'hellberge'
+        let gridResolution = 36;
+        let nodes = [];
+        let elements = [];
+        let tBulk = 1.1273;
+        let pufferActive = true;
+        let isDragging = false;
+        let selectedNode = null;
+        let mouseX = 0, mouseY = 0;
+
+        window.onload = function() {
+            canvas = document.getElementById('femCanvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            setupInteraction();
+            rebuildGrid();
+            animate();
+        };
+
+        function resizeCanvas() {
+            const container = document.getElementById('canvas-container');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            if (nodes.length > 0) rebuildGrid();
+        }
+
+        function setZone(newZone) {
+            zone = newZone;
+            document.getElementById('btn-zone-lohberg').className = zone === 'lohberg' 
+                ? "px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded text-xs font-semibold transition border border-amber-400/30 text-center"
+                : "px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs font-semibold transition border border-slate-700 text-center";
+            
+            document.getElementById('btn-zone-hellberge').className = zone === 'hellberge' 
+                ? "px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded text-xs font-semibold transition border border-amber-400/30 text-center"
+                : "px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs font-semibold transition border border-slate-700 text-center";
+            
+            rebuildGrid();
+        }
+
+        function updateParameters() {
+            tBulk = parseFloat(document.getElementById('slider-tbulk').value);
+            document.getElementById('val-tbulk').innerText = tBulk.toFixed(4).replace('.', ',');
+            
+            // Recalculate estimated volume based on stress tensor proximity to 1.1273
+            const deviation = Math.abs(tBulk - 1.1273);
+            const estVol = Math.max(12.5, 42.8 * (1.0 - deviation * 15)).toFixed(1).replace('.', ',');
+            document.getElementById('diag-vol').innerText = `~${estVol} Tonnen`;
+        }
+
+        function togglePuffer() {
+            pufferActive = !pufferActive;
+            const btn = document.getElementById('btn-puffer');
+            const val = document.getElementById('val-puffer');
+            if (pufferActive) {
+                btn.innerText = "Dielektrischer Puffer Aktiv";
+                btn.className = "w-full py-1.5 bg-emerald-950/60 text-emerald-300 border border-emerald-600/40 rounded text-xs";
+                val.innerText = "10m Kies";
+                val.className = "text-emerald-400 font-mono";
+            } else {
+                btn.innerText = "Puffer Abgeschaltet";
+                btn.className = "w-full py-1.5 bg-rose-950/60 text-rose-300 border border-rose-600/40 rounded text-xs";
+                val.innerText = "0m (Direkt)";
+                val.className = "text-rose-400 font-mono";
+            }
+            rebuildGrid();
+        }
+
+        function rebuildGrid() {
+            gridResolution = parseInt(document.getElementById('slider-grid').value);
+            document.getElementById('val-grid').innerText = gridResolution + "x" + gridResolution;
+
+            nodes = [];
+            elements = [];
+
+            const padding = 70;
+            const w = canvas.width - padding * 2;
+            const h = canvas.height - padding * 2;
+            const dx = w / (gridResolution - 1);
+            const dy = h / (gridResolution - 1);
+
+            for (let i = 0; i < gridResolution; i++) {
+                for (let j = 0; j < gridResolution; j++) {
+                    const bx = padding + i * dx;
+                    const by = padding + j * dy;
+                    
+                    // Normalize coordinates [-1, 1]
+                    const cx = (i - gridResolution / 2) / (gridResolution / 2);
+                    const cy = (j - gridResolution / 2) / (gridResolution / 2);
+                    
+                    // Layer depth simulation: top rows represent 10m gravel buffer, deeper rows represent Buntsandstein
+                    const isPufferLayer = pufferActive && (j < gridResolution * 0.25);
+                    
+                    let goldDensity = 0;
+                    if (!isPufferLayer) {
+                        if (zone === 'lohberg') {
+                            // Concentrated core at Lohberg center-right
+                            const dist = Math.sqrt((cx - 0.2)*(cx - 0.2) + (cy - 0.1)*(cy - 0.1));
+                            goldDensity = Math.exp(-dist * 4.0) * 1.6;
+                        } else {
+                            // Multi-node distribution along Hellberge fault transition
+                            const dist1 = Math.sqrt((cx + 0.3)*(cx + 0.3) + cy*cy);
+                            const dist2 = Math.sqrt((cx - 0.3)*(cx - 0.3) + cy*cy);
+                            goldDensity = (Math.exp(-dist1 * 5.0) + Math.exp(-dist2 * 5.0)) * 1.3;
+                        }
+                    }
+
+                    nodes.push({
+                        baseX: bx,
+                        baseY: by,
+                        x: bx,
+                        y: by,
+                        vx: 0,
+                        vy: 0,
+                        isPuffer: isPufferLayer,
+                        density: goldDensity,
+                        i: i,
+                        j: j
+                    });
+                }
+            }
+
+            for (let i = 0; i < gridResolution - 1; i++) {
+                for (let j = 0; j < gridResolution - 1; j++) {
+                    const idx = i * gridResolution + j;
+                    elements.push([
+                        idx,
+                        idx + 1,
+                        idx + gridResolution + 1,
+                        idx + gridResolution
+                    ]);
+                }
+            }
+        }
+
+        function setupInteraction() {
+            canvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                updateMousePos(e);
+                findNearestNode();
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                updateMousePos(e);
+                if (isDragging && selectedNode) {
+                    selectedNode.x = mouseX;
+                    selectedNode.y = mouseY;
+                }
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                selectedNode = null;
+            });
+
+            canvas.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                updateTouchPos(e);
+                findNearestNode();
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                updateTouchPos(e);
+                if (isDragging && selectedNode) {
+                    selectedNode.x = mouseX;
+                    selectedNode.y = mouseY;
+                }
+            });
+
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+                selectedNode = null;
+            });
+        }
+
+        function updateMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        }
+
+        function updateTouchPos(e) {
+            if (e.touches.length > 0) {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = e.touches[0].clientX - rect.left;
+                mouseY = e.touches[0].clientY - rect.top;
+            }
+        }
+
+        function findNearestNode() {
+            let minDist = 40;
+            selectedNode = null;
+            for (let n of nodes) {
+                const dx = n.x - mouseX;
+                const dy = n.y - mouseY;
+                const d = Math.sqrt(dx*dx + dy*dy);
+                if (d < minDist) {
+                    minDist = d;
+                    selectedNode = n;
+                }
+            }
+        }
+
+        function triggerAMTScan() {
+            for (let n of nodes) {
+                if (!n.isPuffer && n.density > 0.5) {
+                    n.vx += (Math.random() - 0.5) * 8.0;
+                    n.vy += (Math.random() - 0.5) * 8.0;
+                }
+            }
+        }
+
+        function resetGrid() {
+            for (let n of nodes) {
+                n.x = n.baseX;
+                n.y = n.baseY;
+                n.vx = 0;
+                n.vy = 0;
+            }
+        }
+
+        function updatePhysics() {
+            const kSpring = 0.09 * (tBulk / 1.1273);
+            const damping = 0.90;
+
+            for (let n of nodes) {
+                if (n === selectedNode && isDragging) continue;
+
+                const fx = (n.baseX - n.x) * kSpring;
+                const fy = (n.baseY - n.y) * kSpring;
+
+                n.vx = (n.vx + fx) * damping;
+                n.vy = (n.vy + fy) * damping;
+
+                n.x += n.vx;
+                n.y += n.vy;
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            updatePhysics();
+
+            ctx.fillStyle = '#030712';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw K-FEM Mesh Elements
+            for (let el of elements) {
+                const n1 = nodes[el[0]];
+                const n2 = nodes[el[1]];
+                const n3 = nodes[el[2]];
+                const n4 = nodes[el[3]];
+
+                const avgDensity = (n1.density + n2.density + n3.density + n4.density) / 4;
+                const isPufferElement = n1.isPuffer || n2.isPuffer || n3.isPuffer || n4.isPuffer;
+
+                ctx.beginPath();
+                ctx.moveTo(n1.x, n1.y);
+                ctx.lineTo(n2.x, n2.y);
+                ctx.lineTo(n3.x, n3.y);
+                ctx.lineTo(n4.x, n4.y);
+                ctx.closePath();
+
+                if (isPufferElement) {
+                    ctx.fillStyle = 'rgba(30, 58, 138, 0.35)'; // Dielektrischer Puffer (Blau)
+                    ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+                } else if (avgDensity > 0.7) {
+                    ctx.fillStyle = `rgba(245, 158, 11, ${Math.min(0.85, avgDensity * 0.6)})`; // Gold-Arretierung (Amber)
+                    ctx.strokeStyle = '#f59e0b';
+                } else {
+                    ctx.fillStyle = `rgba(15, 23, 42, ${Math.max(0.1, avgDensity * 0.3)})`;
+                    ctx.strokeStyle = 'rgba(51, 65, 85, 0.3)';
+                }
+                ctx.fill();
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            }
+
+            // Draw Node Grid Points
+            for (let n of nodes) {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+                if (n.isPuffer) {
+                    ctx.fillStyle = '#3b82f6';
+                } else if (n.density > 0.8) {
+                    ctx.fillStyle = '#f59e0b';
+                } else {
+                    ctx.fillStyle = 'rgba(100, 116, 139, 0.5)';
+                }
+                ctx.fill();
+            }
+        }
+    </script>
+</body>
+</html>

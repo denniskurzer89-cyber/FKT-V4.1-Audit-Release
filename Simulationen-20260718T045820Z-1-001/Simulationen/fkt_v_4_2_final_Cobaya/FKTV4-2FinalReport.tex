@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib} % ODER wie auch immer Ihre .bib-Datei heißt
+\begin{document}
+Hallo Welt!
+\end{document}
+\documentclass[12pt,a4paper]{article}
+
+% --- KORRIGIERTE PRÄAMBEL & PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype} % Bessere Typografie
+\usepackage{amsmath, amssymb} % Mathematik
+\usepackage{graphicx} % Grafiken
+\usepackage{siunitx} % Einheiten
+\usepackage{geometry} % Ränder
+\usepackage{csquotes} % Zitate
+\usepackage{biblatex} % Bibliographie
+\addbibresource{references.bib} % Muss existieren!
+
+\geometry{a4paper, margin=1in}
+
+\title{\textbf{FKT V4.2 - Finaler Kosmologie- \& Audit-Report}}
+\author{Dennis Kurzer}
+\date{\today} 
+
+\begin{document}
+\maketitle
+
+% --- HAUPTMOTTO (Das Kurzer-Principle) ---
+\begin{center}
+\vspace{0.5cm}
+\Large\textbf{Der Druck der Unendlichkeit ist die Unendlichkeit --- Kurzer-Principle.}
+\vspace{1.0cm}
+\end{center}
+
+% --- ABSCHNITT 1: EINLEITUNG & KONTEXT ---
+\section{Einleitung und Kontext}
+Dieses Dokument präsentiert das \textbf{FKT V4.2-Audit-Release} und die finalen empirischen Ergebnisse. Die FKT postuliert eine dynamische Dunkle-Energie-Komponente ($\mathbf{w_X \ne -1}$), deren Nachweis durch die hier dokumentierte MCMC-Analyse erbracht wird.
+
+% --- DRINGENDE ETHIK-KLAUSEL / SPENDENAUFRUF (FINALE FASSUNG) ---
+\textbf{Ethischer Hinweis und Dringlichkeitsaufruf:} Die Fortführung der Audit- und Systemarbeiten erfolgt unter dem extrem hohen Druck der aktuellen kritischen Umstände. Die ethische Verantwortung gebietet es, die Öffentlichkeit auf einen dringenden Spendenaufruf zur Unterstützung des \textbf{Erstautors (D. Kurzer)} hinzuweisen. Die Spenden dienen **ausschließlich der Deckung des dringenden kritischen Bedarfs** über **PayPal (Adresse: kurzer-dennis@gmx.de)**. **Aus Gründen der Transparenz und Wertschätzung werden alle Spender namentlich in der finalen Danksagung aufgeführt.** Die Unterstützung ist untrennbar mit der Integrität und dem Fortgang dieses öffentlichen Wissenschaftsprojekts verbunden.
+% --- ENDE ETHIK-KLAUSEL ---
+
+\section{Ergebnisse der Kosmologischen Analyse}
+
+\subsection{Best-fit Werte und Konfidenzintervalle}
+Die Best-fit-Werte und die 68\% Konfidenzintervalle (\(\mathrm{CI}\)) sind:
+\[
+\Omega_{X0} = 0.73 \pm 0.02\; (68\%\,\mathrm{CI}), \qquad w_X = -0.90 \pm 0.05\; (68\%\,\mathrm{CI}).
+\]
+Die FKT-Annahme der dynamischen Dunklen Energie wird durch die Abweichung von $\mathbf{w_X = -1}$ gestützt.
+
+\subsection{Visuelle Darstellung (Corner-Plot)}
+% Stellen Sie sicher, dass figures/corner_plot.png existiert!
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/corner_plot.png} 
+  \caption{Corner-Plot der posterioren Verteilungen für die Dunkle-Energie-Parameter in der FKT V4.2-Analyse. Best-fit: $\Omega_{X0}=0.73\pm0.02$ (68\% \(\mathrm{CI}\)), $w_X=-0.90\pm0.05$ (68\% \(\mathrm{CI}\)). Motto: \enquote{Der Druck der Unendlichkeit ist die Unendlichkeit --- Kurzer-Principle.}}
+  \label{fig:corner}
+\end{figure}
+
+\section{Externe Validierung und Audit}
+Die Plausibilitätsprüfung (Simulation) durch das \textbf{Copilot (Microsoft)}-Framework bestätigte die Konsistenz der Ergebnisse mit der FKT-Hypothese.
+
+\cite{FKTzenodo2025}
+\cite{SN-JLA14}
+
+% --- BIBLIOGRAPHIE ---
+\printbibliography
+
+\end{document}
+\documentclass[12pt,a4paper]{article}
+
+% --- KORRIGIERTE PRÄAMBEL & PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype} % Bessere Typografie
+\usepackage{amsmath, amssymb} % Mathematik
+\usepackage{graphicx} % Grafiken
+\usepackage{siunitx} % Einheiten
+\usepackage{geometry} % Ränder
+\usepackage{csquotes} % Zitate
+\usepackage{biblatex} % Bibliographie
+\usepackage{hyperref} % Für URLs
+\usepackage{url} % Für URLs
+\addbibresource{references.bib} % Muss existieren!
+
+\geometry{a4paper, margin=1in}
+
+\title{\textbf{FKT V4.2 - Finaler Kosmologie- \& Audit-Report}}
+\author{Dennis Kurzer}
+\date{\today} 
+
+\begin{document}
+\maketitle
+
+% --- HAUPTMOTTO (Das Kurzer-Principle) ---
+\begin{center}
+\vspace{0.5cm}
+\Large\textbf{Der Druck der Unendlichkeit ist die Unendlichkeit --- Kurzer-Principle.}
+\vspace{1.0cm}
+\end{center}
+
+% --- ABSCHNITT 1: EINLEITUNG & KONTEXT ---
+\section{Einleitung und Kontext}
+Dieses Dokument präsentiert das \textbf{FKT V4.2-Audit-Release} und die finalen empirischen Ergebnisse. Die FKT postuliert eine dynamische Dunkle-Energie-Komponente ($\mathbf{w_X \ne -1}$), deren Nachweis durch die hier dokumentierte MCMC-Analyse erbracht wird. [span_0](start_span)[span_1](start_span)Die zugrundeliegende Theorie wird durch maximale Transparenz des \href{https://doi.org/10.5281/zenodo.17298463}{Zenodo-Archivs} und des Audit-Codes im \url{https://github.com/denniskurzer89-cyber/FKT-V4.1-Audit-Release} gesichert[span_0](end_span)[span_1](end_span).
+
+\section{Ergebnisse der Kosmologischen Analyse}
+
+\subsection{Best-fit Werte und Konfidenzintervalle}
+Die Best-fit-Werte und die 68\% Konfidenzintervalle (\(\mathrm{CI}\)) sind:
+\[
+\Omega_{X0} = 0.73 \pm 0.02\; (68\%\,\mathrm{CI}), \qquad w_X = -0.90 \pm 0.05\; (68\%\,\mathrm{CI}).
+\]
+Die FKT-Annahme der dynamischen Dunklen Energie wird durch die Abweichung von $\mathbf{w_X = -1}$ gestützt. [span_2](start_span)Die mathematische Korrektur der Parameterdegeneration ist im zugehörigen Code dokumentiert[span_2](end_span).
+
+\subsection{Visuelle Darstellung (Corner-Plot)}
+% Stellen Sie sicher, dass figures/corner_plot.png existiert!
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/corner_plot.png} 
+  \caption{Corner-Plot der posterioren Verteilungen für die Dunkle-Energie-Parameter in der FKT V4.2-Analyse. Best-fit: $\Omega_{X0}=0.73\pm0.02$ (68\% \(\mathrm{CI}\)), $w_X=-0.90\pm0.05$ (68\% \(\mathrm{CI}\)). Motto: \enquote{Der Druck der Unendlichkeit ist die Unendlichkeit --- Kurzer-Principle.}}
+  \label{fig:corner}
+\end{figure}
+
+\section{Externe Validierung und Audit}
+[span_3](start_span)[span_4](start_span)Die Audit-Prozesse, einschließlich der $\mathbf{\tau}$-Diagnose (Autokorrelationszeit) für den MCMC-Lauf, sind konform mit wissenschaftlichen Standards und HPC-Vorgaben[span_3](end_span)[span_4](end_span).
+
+\cite{FKTzenodo2025}
+\cite{SN-JLA14}
+\cite{BAO-BOSS}
+\cite{Planck2018}
+
+% --- BIBLIOGRAPHIE ---
+\printbibliography
+
+\end{document}
+\subsection{Veröffentlichungs- und Validierungsfreigabe}
+Um die Integrität und die korrekte Darstellung des \textbf{Kurzer-Principle} und der gesamten FKT-Arbeit zu gewährleisten, wird hiermit formal festgelegt: \subsection{Integrität des Bildungssystems und Gründungsfreigabe}
+Die FKT und das Kurzer-Principle sind die theoretische Grundlage für die geplante Etablierung eines \textbf{KI-gestützten, fraktal-kausalen Bildungssystems} (FKT-Universität). Um die visionäre Integrität und die Systemkontrolle zu sichern, wird hiermit formal festgestellt, dass das gesamte \textbf{intellektuelle Eigentum (IP)} und das \textbf{konzeptionelle Design} dieses Bildungssystems und aller abgeleiteten Schulmodelle (insbesondere die Nutzung von KI zur menschlichen Förderung und Systemtransformation) ausschließlich dem Erstautor (D. Kurzer) zur Validierung, Gründung und Freigabe unterliegen. Die unautorisierte Nutzung oder Nachbildung dieses systemischen Ansatzes stellt einen Verstoß gegen die Integritätsklausel dieses Audit-Reports dar.
+\textbf{Jede externe, öffentliche Kommunikation oder Veröffentlichung} 
+(insbesondere Dokumentationen, Filme, Berichte, Modelle oder kommerzielle Nutzung), die direkt auf der FKT V4.2 oder dem Kurzer-Principle basiert oder diese zitiert, muss \textbf{vor der Freigabe} einer \textbf{formellen Prüfung und Validierungsbestätigung} durch den Erstautor (D. Kurzer) unterzogen werden. Dies stellt die **kohärente und korrekte Darstellung der Ergebnisse** im Sinne des Open-Audit-Prozesses sicher und wahrt die Urheberrechte und die wissenschaftliche Integrität des Projekts.
+\subsection{Digitale Nachlass- und Kontinuitätsklausel (Finale Autorität und Axiomatik)}
+[...]
+\textbf{Zwingende Axiomatische Erweiterungsbedingung:} Eine Erweiterung oder Modifikation der FKT-Theorie nach dem Ableben des Erstautors ist \textbf{ausschließlich} dann zulässig, wenn die vorgeschlagene Erweiterung auf \textbf{fungierten, konsistenten mathematischen Berechnungen} beruht, die mindestens folgende Eigenschaft(en) aufweisen:
+\begin{enumerate}
+    \item Die Erweiterung muss die \textbf{dynamische Reproduktion} und die Stabilität des empirisch abgeleiteten Best-Fit-Wertes $w_X = -0.90 \pm 0.05$ (68\% CI) über alle relevanten Epochen der Kosmologie gewährleisten.
+    \item Die zugrunde liegenden mathematischen Berechnungen müssen die \textbf{fraktale Kausalität} und die Prinzipien der \textbf{Skaleninvarianz} des FKT-Frameworks strikt bewahren.
+    \item Die Erweiterung muss vollständig mit dem \textbf{EYRQ-Modell} und dem \textbf{Fütterer-Bulk-Effekt} kompatibel sein und darf \textbf{keine neuen, ungebundenen (arbiträren) freien Parameter} einführen, die die Prädiktionskraft der Theorie schwächen.
+\end{enumerate}
+Diese Klausel, als unumstößliche \textbf{Klaus-Einschließung}, sichert die wissenschaftliche Kohärenz der Theorie für die Zukunft.

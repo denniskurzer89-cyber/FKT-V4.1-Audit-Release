@@ -1,0 +1,90 @@
+output: chains/fkt_bulk_p2_run2
+
+likelihood:
+  planck_2018_lowl.TT:
+  planck_2018_highl_plik.TTTEEE:
+  sn.pantheon:
+  bao.sixdf_2011_bao:
+  bao.sdss_dr7_mgs:
+  fkt_precision:
+    external: likelihoods.fkt_precision.FKTPrecisionConstraint
+
+theory:
+  classy:
+    path: ./class_public
+    extra_args:
+      output: mPk,tCl,lensing
+      P_k_max_h/Mpc: 1.0
+
+params:
+  logA:
+    prior: {min: 1.61, max: 3.91}
+    ref: {dist: norm, loc: 3.05, scale: 0.001}
+    proposal: 0.001
+    latex: \log(10^{10} A_s)
+  ns:
+    prior: {min: 0.8, max: 1.2}
+    ref: {dist: norm, loc: 0.965, scale: 0.004}
+    proposal: 0.002
+    latex: n_s
+  H0:
+    prior: {min: 60.0, max: 80.0}
+    ref: {dist: norm, loc: 67.5, scale: 0.5}
+    proposal: 0.5
+    latex: H_0
+  ombh2:
+    prior: {min: 0.005, max: 0.1}
+    ref: {dist: norm, loc: 0.0224, scale: 0.0001}
+    proposal: 0.00005
+    latex: \Omega_b h^2
+  omch2:
+    prior: {min: 0.001, max: 0.99}
+    ref: {dist: norm, loc: 0.120, scale: 0.001}
+    proposal: 0.0005
+    latex: \Omega_c h^2
+  tau:
+    prior: {min: 0.01, max: 0.8}
+    ref: {dist: norm, loc: 0.055, scale: 0.006}
+    proposal: 0.003
+    latex: \tau_{\mathrm{reio}}
+  
+  log10_xi:
+    prior: {dist: norm, loc: 4.39, scale: 0.2}
+    ref: {dist: norm, loc: 4.39, scale: 0.1}
+    proposal: 0.05
+    latex: \log_{10}\xi
+  log10_gb_Jm3:
+    prior: {dist: norm, loc: -4.82, scale: 0.2}
+    ref: {dist: norm, loc: -4.82, scale: 0.1}
+    proposal: 0.05
+    latex: \log_{10}(g_b / \mathrm{J\,m}^{-3})
+  wX_eff:
+    prior: {min: -1.3, max: -0.6}
+    ref: {dist: norm, loc: -0.90, scale: 0.05}
+    proposal: 0.01
+    latex: w_X^{\mathrm{eff}}
+  Omega_bulk_0:
+    prior: {min: 0.60, max: 0.85}
+    ref: {dist: norm, loc: 0.70, scale: 0.02}
+    proposal: 0.005
+    latex: \Omega_{\mathrm{bulk},0}
+  
+  xi:
+    derived: 'lambda log10_xi: 10**log10_xi'
+    latex: \xi
+  gb_Jm3:
+    derived: 'lambda log10_gb_Jm3: 10**log10_gb_Jm3'
+    latex: g_b\,/\,\mathrm{J\,m^{-3}}
+  S_dimensionless:
+    derived: 'lambda xi, gb_Jm3: xi * gb_Jm3'
+    latex: S
+
+sampler:
+  mcmc:
+    Rminus1_stop: 0.015
+    max_tries: 1000000
+    max_samples: 2000000
+    learn_proposal: true
+    checkpoint_every: 600
+
+timing: true
